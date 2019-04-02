@@ -1,0 +1,9 @@
+cf:
+  butlers: 
+    pws: cf-butler-clanging-beaver.apps.pivotal.io
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,health,metrics,scheduledtasks,loggers,prometheus

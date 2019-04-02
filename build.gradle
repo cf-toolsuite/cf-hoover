@@ -1,0 +1,97 @@
+buildscript {
+    ext {
+        gitPropertiesPluginVersion = '2.0.0'
+        gradleVersionsPlugin = '0.21.0'
+        springBootVersion = '2.1.3.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:${gitPropertiesPluginVersion}")
+        classpath("com.github.ben-manes:gradle-versions-plugin:${gradleVersionsPlugin}")
+    }
+}
+
+ext['junit-jupiter.version'] = '5.4.0'
+ext['mockito.version'] = '2.25.1'
+
+apply plugin: 'java'
+apply plugin: 'jacoco'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.gorylenko.gradle-git-properties'
+apply plugin: 'com.github.ben-manes.versions'
+
+group = 'io.pivotal'
+version = '0.1-SNAPSHOT'
+sourceCompatibility = JavaVersion.VERSION_11
+
+gitProperties {
+	dateFormat = "yyyy-MM-dd'T'HH:mmZ"
+	dateFormatTimeZone = "UTC"
+	dotGitDirectory = "${project.rootDir}/.."
+}
+
+jacoco {
+	toolVersion = "0.8.3"
+}
+
+jacocoTestReport {
+	reports {
+		xml.enabled = true
+		html.enabled = true
+		csv.enabled = false
+	}
+}
+
+test {
+	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://repo.spring.io/snapshot" }
+	maven { url "https://repo.spring.io/milestone" }
+}
+
+bootRun {
+  // support passing -Dsystem.property=value to bootRun task
+  systemProperties = System.properties
+}
+
+dependencies {
+	annotationProcessor('org.projectlombok:lombok')
+    implementation('org.projectlombok:lombok')
+    implementation('org.springframework.boot:spring-boot-configuration-processor')
+    implementation('org.apache.commons:commons-lang3')
+    implementation('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+    implementation('org.springframework.credhub:spring-credhub-cloud-connector:2.0.1.RELEASE')
+    implementation('org.springframework.boot:spring-boot-starter-actuator')
+    implementation('org.springframework.boot:spring-boot-starter-webflux')
+    implementation('org.cloudfoundry:cloudfoundry-client-reactor:3.15.0.RELEASE')
+    implementation('org.cloudfoundry:cloudfoundry-operations:3.15.0.RELEASE')
+    implementation('io.projectreactor:reactor-core:3.2.6.RELEASE')
+    implementation('io.projectreactor.addons:reactor-extra:3.2.2.RELEASE')
+    implementation('io.projectreactor.ipc:reactor-netty:0.7.14.RELEASE')
+    implementation('io.micrometer:micrometer-registry-prometheus')
+    testImplementation('io.projectreactor:reactor-test')
+    testImplementation('org.junit.jupiter:junit-jupiter-api')
+    testImplementation('org.junit.jupiter:junit-jupiter-params')
+    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine')
+    testImplementation('org.mockito:mockito-core')
+    testImplementation('org.mockito:mockito-junit-jupiter')
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'junit', module: 'junit'
+	}
+}
+
+check.dependsOn jacocoTestReport

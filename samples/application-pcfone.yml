@@ -1,0 +1,9 @@
+cf:
+  butlers: 
+    pcfone: cf-butler-appropriate-eagle.apps.pcfone.io
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,health,metrics,scheduledtasks,loggers,logfile,prometheus
