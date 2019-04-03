@@ -16,6 +16,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.Builder.Default;
 
 @Builder
 @AllArgsConstructor(access=AccessLevel.PACKAGE)
@@ -31,8 +32,9 @@ public class ServiceInstanceCounts {
     @JsonProperty("by-service-and-plan")
     private Map<String, Long> byServiceAndPlan;
 
+    @Default
     @JsonProperty("total-service-instances")
-    private Long totalServiceInstances;
+    private Long totalServiceInstances = 0L;
 
     @JsonProperty("velocity")
     private Map<String,Long> velocity;

@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.Builder.Default;
 
 @Builder
 @AllArgsConstructor(access=AccessLevel.PACKAGE)
@@ -18,6 +19,7 @@ import lombok.ToString;
 @JsonPropertyOrder({ "total-users"})
 public class UserCounts {
 
+    @Default
     @JsonProperty("total-users")
-    private Integer totalUsers;
+    private Integer totalUsers = 0;
 }

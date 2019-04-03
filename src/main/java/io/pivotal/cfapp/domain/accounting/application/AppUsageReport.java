@@ -1,7 +1,6 @@
 package io.pivotal.cfapp.domain.accounting.application;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 

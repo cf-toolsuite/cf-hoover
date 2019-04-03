@@ -48,6 +48,11 @@ public class SpaceUsersService {
 										.uri("https://" + b.getValue() + "/users")
 										.retrieve()
 										.bodyToFlux(String.class))
+										.map(b -> b.replace("[", ""))
+										.map(e -> e.replace("]", ""))
+										.map(s -> s.split("\\s*,\\s*"))
+										.flatMap(sa -> Flux.fromArray(sa))
+										.map(un -> un.replace("\"",""))
 										.collectSortedList()
 										.map(l -> Set.copyOf(l));
 	}

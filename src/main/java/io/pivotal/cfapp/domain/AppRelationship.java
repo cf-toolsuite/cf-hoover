@@ -1,7 +1,5 @@
 package io.pivotal.cfapp.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import org.apache.commons.lang3.StringUtils;
 
 import lombok.AccessLevel;
