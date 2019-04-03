@@ -77,8 +77,6 @@ dependencies {
     implementation('org.springframework.credhub:spring-credhub-cloud-connector:2.0.1.RELEASE')
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation('org.springframework.boot:spring-boot-starter-webflux')
-    implementation('org.cloudfoundry:cloudfoundry-client-reactor:3.15.0.RELEASE')
-    implementation('org.cloudfoundry:cloudfoundry-operations:3.15.0.RELEASE')
     implementation('io.projectreactor:reactor-core:3.2.6.RELEASE')
     implementation('io.projectreactor.addons:reactor-extra:3.2.2.RELEASE')
     implementation('io.projectreactor.ipc:reactor-netty:0.7.14.RELEASE')
