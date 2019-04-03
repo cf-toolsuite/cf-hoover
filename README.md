@@ -117,7 +117,7 @@ These REST endpoints have been exposed for administrative purposes.
 ```
 GET /space-users
 ```
-> Provides details and light metrics for users by role within all organizations and spaces on a foundation
+> Provides details and light metrics for users by role within all organizations and spaces across all registered foundations
 
 Sample output
 ```
@@ -169,19 +169,19 @@ GET /space-users/{foundation}/{organization}/{space}
 ```
 GET /users
 ```
-> Lists all unique user accounts on a foundation
+> Lists all unique user accounts across all registered foundations
 
 ```
 GET /users/count
 ```
-> Counts the number of user accounts on a foundation
+> Counts the number of user accounts across all registered foundations
 
 ### Snapshot
 
 ```
 GET /snapshot/summary
 ```
-> Provides summary metrics for applications, service instances, and users on a foundation
+> Provides summary metrics for applications, service instances, and users across all registered foundations
 
 > **Note**: this summary report does not take the place of an official foundation Accounting Report. The Accounting Report is focussed on calculating aggregates (on a monthly basis) such as: (a) the total hours of application instance usage, (b) the largest # of application instances running (a.k.a. maximum concurrent application instances), c) the total hours of service instance usage and (d) the largest # of service instances running (a.k.a. maximum concurrent service instances).
 
@@ -313,18 +313,18 @@ foundation,organization,space,service id,name,service,description,plan,type,boun
 ```
 GET /accounting/applications
 ```
-> Produces a system-wide account report of [application usage](https://docs.pivotal.io/pivotalcf/2-4/opsguide/accounting-report.html#app-usage)
+> Produces an aggregate system-wide account report of [application usage](https://docs.pivotal.io/pivotalcf/2-4/opsguide/accounting-report.html#app-usage)
 
 > **Note**: Report excludes application instances in the `system` org
 
 ```
 GET /accounting/services
 ```
-> Produces a system-wide account report of [service usage](https://docs.pivotal.io/pivotalcf/2-4/opsguide/accounting-report.html#service-usage)
+> Produces an aggregate system-wide account report of [service usage](https://docs.pivotal.io/pivotalcf/2-4/opsguide/accounting-report.html#service-usage)
 
 > **Note**: Report excludes user-provided service instances
 
 ```
 GET /accounting/tasks
 ```
-> Produces a system-wide account report of [task usage](https://docs.pivotal.io/pivotalcf/2-4/opsguide/accounting-report.html#task-usage)
+> Produces an aggregate system-wide account report of [task usage](https://docs.pivotal.io/pivotalcf/2-4/opsguide/accounting-report.html#task-usage)
