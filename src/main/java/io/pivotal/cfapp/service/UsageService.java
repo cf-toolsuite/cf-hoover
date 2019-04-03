@@ -70,12 +70,10 @@ public class UsageService {
                                         .map(l -> AppUsageReport.aggregate(l));
     }
 
-    /*
     public Mono<ServiceUsageReport> getServiceReport() {
         Flux<Map.Entry<String, String>> butlers = Flux.fromIterable(settings.getButlers().entrySet());
         return butlers.flatMap(b -> getServiceReport(b.getValue()))
                                         .collectList()
                                         .map(l -> ServiceUsageReport.aggregate(l));
     }
-    */
 }

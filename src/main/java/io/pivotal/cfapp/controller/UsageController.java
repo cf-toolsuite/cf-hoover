@@ -1,7 +1,6 @@
 package io.pivotal.cfapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,11 +30,9 @@ public class UsageController {
         return service.getApplicationReport();
     }
 
-    /*
     @GetMapping(value = "accounting/services")
     public Mono<ServiceUsageReport> getServiceReport() {
         return service.getServiceReport();
     }
-    */
 
 }

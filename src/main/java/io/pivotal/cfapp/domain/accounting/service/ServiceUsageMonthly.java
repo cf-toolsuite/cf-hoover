@@ -1,5 +1,6 @@
 package io.pivotal.cfapp.domain.accounting.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -23,5 +24,17 @@ public class ServiceUsageMonthly {
 
     @JsonProperty("maximum_instances")
     public Integer maximumInstances;
+
+    @JsonIgnore
+    public boolean combine(ServiceUsageMonthly usage) {
+        boolean combined = false;
+        if (usage.getYear().equals(year) && usage.getMonth().equals(month)) {
+            this.durationInHours += usage.getDurationInHours();
+            this.averageInstances += usage.getAverageInstances();
+            this.maximumInstances += usage.getMaximumInstances();
+            combined = true;
+        }
+        return combined;
+    }
 
 }

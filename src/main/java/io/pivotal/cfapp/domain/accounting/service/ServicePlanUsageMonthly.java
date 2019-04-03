@@ -2,6 +2,7 @@ package io.pivotal.cfapp.domain.accounting.service;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -19,5 +20,17 @@ public class ServicePlanUsageMonthly {
 
     @JsonProperty("service_plan_guid")
     public String servicePlanGuid;
+
+    @JsonIgnore
+    public boolean combine(ServicePlanUsageYearly usage) {
+        boolean combined = false;
+        if (usage.getServicePlanName().equals(servicePlanName)) {
+            String newPlanGuid = String.join(",", this.servicePlanGuid, usage.getServicePlanGuid());
+            this.servicePlanGuid = newPlanGuid;
+            // TODO iterate and combine yearly service plan usager
+            combined = true;
+        }
+        return combined;
+    }
 
 }
