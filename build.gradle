@@ -2,7 +2,7 @@ buildscript {
     ext {
         gitPropertiesPluginVersion = '2.0.0'
         gradleVersionsPlugin = '0.21.0'
-        springBootVersion = '2.1.3.RELEASE'
+        springBootVersion = '2.1.4.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -17,7 +17,7 @@ buildscript {
     }
 }
 
-ext['junit-jupiter.version'] = '5.4.0'
+ext['junit-jupiter.version'] = '5.4.1'
 ext['mockito.version'] = '2.25.1'
 
 apply plugin: 'java'
@@ -77,9 +77,9 @@ dependencies {
     implementation('org.springframework.credhub:spring-credhub-cloud-connector:2.0.1.RELEASE')
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation('org.springframework.boot:spring-boot-starter-webflux')
-    implementation('io.projectreactor:reactor-core:3.2.6.RELEASE')
+    implementation('io.projectreactor:reactor-core:3.2.8.RELEASE')
     implementation('io.projectreactor.addons:reactor-extra:3.2.2.RELEASE')
-    implementation('io.projectreactor.ipc:reactor-netty:0.7.14.RELEASE')
+    implementation('io.projectreactor.ipc:reactor-netty:0.7.15.RELEASE')
     implementation('io.micrometer:micrometer-registry-prometheus')
     testImplementation('io.projectreactor:reactor-test')
     testImplementation('org.junit.jupiter:junit-jupiter-api')
