@@ -16,6 +16,19 @@ management:
     prometheus:
       enabled: true
 
+spring:
+  cloud:
+    config:
+      enabled: false
+
+---
+spring:
+  profiles: cloud
+
+  cloud:
+    config:
+      enabled: true
+
 ---
 ## Assumes naming convention for secrets service
 ## Name of credhub service instance must be cf-butler-secrets
