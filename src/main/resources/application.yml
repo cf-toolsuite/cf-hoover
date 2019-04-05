@@ -28,22 +28,3 @@ spring:
   cloud:
     config:
       enabled: true
-
----
-## Assumes naming convention for secrets service
-## Name of credhub service instance must be cf-butler-secrets
-spring:
-  profiles: secrets
-
-  credhub:
-    url: https://credhub.service.cf.internal:8844
-
-cf:
-  butlers: ${vcap.services.cf-hoover-secrets.credentials.CF_BUTLERS}
-  sslValidationSkipped: ${vcap.services.cf-hoover-secrets.credentials.CF_SKIP_SSL_VALIDATION:false}
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: ${vcap.services.cf-hoover-secrets.credentials.EXPOSED_ACTUATOR_ENDPOINTS:info,health,metrics,scheduledtasks,loggers}

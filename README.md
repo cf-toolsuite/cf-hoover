@@ -1,8 +1,8 @@
 # Pivotal Application Service > Hoover
- 
+
 [![Build Status](https://travis-ci.org/pacphi/cf-hoover.svg?branch=master)](https://travis-ci.org/pacphi/cf-hoover) [![Known Vulnerabilities](https://snyk.io/test/github/pacphi/cf-hoover/badge.svg)](https://snyk.io/test/github/pacphi/cf-hoover)
 
-> Status: Work-in-progress
+> Status: Incubating
 
 You're already aware of and are using [cf-butler](https://github.com/pacphi/cf-butler) to help report on and manage application and service instances.  Wouldn't it be nice to easily aggregate reporting across multiple foundations? This is `cf-hoover`'s raison d'être.
 
@@ -34,29 +34,29 @@ Make a copy of then edit the contents of the `application.yml` file located in `
 
 > You really should not bundle configuration with the application. To take some of the sting away, you might consider externalizing and/or [encrypting](https://blog.novatec-gmbh.de/encrypted-properties-spring/) this configuration.
 
-### Managing secrets
+### Managing external configuration
 
-Place secrets in `config/secrets.json`, e.g.,
+Create a [Git](https://git-scm.com/docs/gittutorial) repository or work with a [Vault](https://www.baeldung.com/vault) instance as the home your configuration.  Cf-hoover has a dependency on the [Spring Cloud Config](https://cloud.spring.io/spring-cloud-static/spring-cloud-config/2.1.0.RELEASE/single/spring-cloud-config.html#_locating_remote_configuration_resources) client, but is disabled by default.
 
-```
-{
-	"CF_BUTLERS": ["xxxxx", "xxxxx"]
-}
-```
+The `cloud` [profile](https://spring.io/understanding/profiles) enables the client, so when you [cf push](https://docs.run.pivotal.io/devguide/deploy-apps/deploy-app.html#push) cf-hoover, [bind](https://cli.cloudfoundry.org/en-US/cf/bind-service.html) it to a [properly configured](https://docs.pivotal.io/spring-cloud-services/2-0/common/config-server/configuring-with-git.html#general-configuration) Config Server [service instance](https://docs.pivotal.io/spring-cloud-services/2-0/common/config-server/managing-service-instances.html), and start the app instance, it will consult the [Git](https://docs.pivotal.io/spring-cloud-services/2-0/common/config-server/configuration-properties.html#git-global-configuration) repo or [Vault](https://docs.pivotal.io/spring-cloud-services/2-0/common/config-server/configuration-properties.html#vault-global-configuration) instance for configuration to target and aggregate results from one or more previously deployed [cf-butler](https://github.com/pacphi/cf-butler) instances.
 
-We'll use this file later as input configuration for the creation of either a [credhub](https://docs.pivotal.io/credhub-service-broker/using.html) or [user-provided](https://docs.cloudfoundry.org/devguide/services/user-provided.html#credentials) service instance.
-
-> Replace occurrences of `xxxxx` above with appropriate values
+A sample repository exists for your perusal [here](https://github.com/pacphi/cf-hoover-config).
 
 ### Minimum required keys
 
 At a minimum you should supply values for the following keys
 
-* `cf.butlers` -  an array of cf-butler routes (e.g., cf-butler-grateful-mouse.cfapps.io)
+* `cf.butlers` -  a map of cf-butler routes
+
+    ```
+    cf:
+      butlers:
+        pws: cf-butler-grateful-mouse.cfapps.io
+    ```
 
 ### General configuration notes
 
-If you copied and appended a suffix to the original `application.yml` then you would set `spring.profiles.active` to be that suffix 
+If you copied and appended a suffix to the original `application.yml` then you would set `spring.profiles.active` to be that suffix
 
 E.g., if you had a configuration file named `application-pws.yml`
 
@@ -89,19 +89,17 @@ where `{target_foundation_profile}` is something like `pws` or `pcfone`
 
 ### using scripts
 
-Deploy the app (w/ a user-provided service instance vending secrets)
+Deploy the app (bound to an instance of Spring Cloud Config Server)
+
+Create a file named `config-server.json` located in a `config` sub-directory off the root of this project. Look at the sample [here](samples/config-server.json) to get an idea of the contents.  Consult the Spring Cloud Services Config Server [documentation](https://docs.pivotal.io/spring-cloud-services/2-0/common/config-server/index.html) more advanced configuration options like [SSH repository access](https://docs.pivotal.io/spring-cloud-services/2-0/common/config-server/configuring-with-git.html#ssh-repository-access).
+
+Then execute
 
 ```
 ./deploy.sh
 ```
 
-Deploy the app (w/ a Credhub service instance vending secrets)
-
-```
-./deploy.sh --with-credhub
-```
-
-Shutdown and destroy the app and service instances
+Shutdown and destroy the app and service instances with
 
 ```
 ./destroy.sh
@@ -110,7 +108,7 @@ Shutdown and destroy the app and service instances
 
 ## Endpoints
 
-These REST endpoints have been exposed for administrative purposes.  
+These REST endpoints have been exposed for administrative purposes.
 
 ### User
 
