@@ -17,6 +17,7 @@ buildscript {
     }
 }
 
+ext['spring-cloud-services-connectors.version'] = '2.1.0.RELEASE'
 ext['junit-jupiter.version'] = '5.4.1'
 ext['mockito.version'] = '2.25.1'
 
@@ -87,7 +88,7 @@ dependencies {
     implementation('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation('org.springframework.boot:spring-boot-starter-webflux')
-    implementation('org.springframework.security:spring-security-config')
+    implementation('org.springframework.boot:spring-boot-starter-security')
     implementation('io.pivotal.spring.cloud:spring-cloud-services-starter-config-client')
     implementation('org.springframework.boot:spring-boot-starter-log4j2')
     implementation('io.projectreactor:reactor-core:3.2.8.RELEASE')
