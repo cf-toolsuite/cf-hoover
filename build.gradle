@@ -68,6 +68,10 @@ bootRun {
   systemProperties = System.properties
 }
 
+configurations {
+    implementation.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+}
+
 dependencies {
 	annotationProcessor('org.projectlombok:lombok')
     implementation('org.projectlombok:lombok')
@@ -76,9 +80,9 @@ dependencies {
     implementation('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
     implementation('org.springframework.credhub:spring-credhub-cloud-connector:2.0.1.RELEASE')
     implementation('org.springframework.boot:spring-boot-starter-actuator')
-    implementation('org.springframework.boot:spring-boot-starter-webflux')
+    implementation('org.springframework.boot:spring-boot-starter-webflux') {}
+    implementation('org.springframework.boot:spring-boot-starter-log4j2')
     implementation('io.projectreactor:reactor-core:3.2.8.RELEASE')
-    implementation('io.projectreactor.addons:reactor-extra:3.2.2.RELEASE')
     implementation('io.projectreactor.ipc:reactor-netty:0.7.15.RELEASE')
     implementation('io.micrometer:micrometer-registry-prometheus')
     testImplementation('io.projectreactor:reactor-test')

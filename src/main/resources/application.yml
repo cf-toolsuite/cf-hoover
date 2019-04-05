@@ -3,11 +3,6 @@ cf:
     #- pws: cf-butler-interesting-eagle.cfapps.io
   sslValidationSkipped: false
 
-logging:
-  level:
-    org.springframework: WARN
-    #reactor.core: DEBUG
-
 management:
   endpoints:
     web:
