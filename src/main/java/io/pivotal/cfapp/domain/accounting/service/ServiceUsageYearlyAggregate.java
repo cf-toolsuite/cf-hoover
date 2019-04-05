@@ -40,7 +40,13 @@ public class ServiceUsageYearlyAggregate {
             this.averageInstances += usage.getAverageInstances();
             this.maximumInstances += usage.getMaximumInstances();
             this.durationInHours += usage.getDurationInHours();
-            // TODO iterate and combine yearly service/plan usage
+            for (ServicePlanUsageYearly pu: usage.getPlans()) {
+                for (ServicePlanUsageYearly spu: plans) {
+                    if(!spu.combine(pu)) {
+                        plans.add(pu);
+                    }
+                }
+            }
             if (!usage.getServiceGuid().contains(this.serviceGuid)) {
                 String newGuid = String.join(",", this.serviceGuid, usage.getServiceGuid());
                 this.serviceGuid = newGuid;

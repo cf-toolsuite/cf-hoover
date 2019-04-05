@@ -29,9 +29,24 @@ public class ServiceUsageMonthlyAggregate {
     public boolean combine(ServiceUsageMonthlyAggregate usage) {
         boolean combined = false;
         if (usage.getServiceName().equals(serviceName)) {
-            // TODO iterate and combine monthly service usage and service/plan usage
-            String newGuid = String.join(",", this.serviceGuid, usage.getServiceGuid());
-            this.serviceGuid = newGuid;
+            for (ServiceUsageMonthly su: usage.getUsages()) {
+                for (ServiceUsageMonthly suu: usages) {
+                    if(!suu.combine(su)) {
+                        usages.add(su);
+                    }
+                }
+            }
+            for (ServicePlanUsageMonthly pu: usage.getPlans()) {
+                for (ServicePlanUsageMonthly spu: plans) {
+                    if(!spu.combine(pu)) {
+                        plans.add(pu);
+                    }
+                }
+            }
+            if (!usage.getServiceGuid().contains(this.serviceGuid)) {
+                String newGuid = String.join(",", this.serviceGuid, usage.getServiceGuid());
+                this.serviceGuid = newGuid;
+            }
             combined = true;
         }
         return combined;

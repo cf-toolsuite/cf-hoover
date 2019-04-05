@@ -22,12 +22,18 @@ public class ServicePlanUsageMonthly {
     public String servicePlanGuid;
 
     @JsonIgnore
-    public boolean combine(ServicePlanUsageYearly usage) {
+    public boolean combine(ServicePlanUsageMonthly usage) {
         boolean combined = false;
         if (usage.getServicePlanName().equals(servicePlanName)) {
+            for (ServiceUsageMonthly su: usage.getUsages()) {
+                for (ServiceUsageMonthly suu: usages) {
+                    if(!suu.combine(su)) {
+                        usages.add(su);
+                    }
+                }
+            }
             String newPlanGuid = String.join(",", this.servicePlanGuid, usage.getServicePlanGuid());
             this.servicePlanGuid = newPlanGuid;
-            // TODO iterate and combine yearly service plan usager
             combined = true;
         }
         return combined;
