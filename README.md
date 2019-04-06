@@ -48,11 +48,22 @@ At a minimum you should supply values for the following keys
 
 * `cf.butlers` -  a map of cf-butler routes
 
+    For example 
+
+    properties
+    ```
+    cf.butlers.pws=cf-butler-grateful-mouse.cfapps.io
+    cf.butlers.pcfone=cf-butler-active-tasmaniandevil.apps.pcfone.io
+    ```
+
+    yaml
     ```
     cf:
       butlers:
         pws: cf-butler-grateful-mouse.cfapps.io
+        pcfone: cf-butler-active-tasmaniandevil.apps.pcfone.io
     ```
+    > Each key is an alias for a foundation and each value is the route to an application instance of cf-butler deployed on that foundation
 
 ### General configuration notes
 
