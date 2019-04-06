@@ -48,7 +48,7 @@ At a minimum you should supply values for the following keys
 
 * `cf.butlers` -  a map of cf-butler routes
 
-    For example 
+    For example
 
     properties
     ```
@@ -102,7 +102,7 @@ where `{target_foundation_profile}` is something like `pws` or `pcfone`
 
 Deploy the app (bound to an instance of Spring Cloud Config Server)
 
-Create a file named `config-server.json` located in a `config` sub-directory off the root of this project. Look at the sample [here](samples/config-server.json) to get an idea of the contents.  Consult the Spring Cloud Services Config Server [documentation](https://docs.pivotal.io/spring-cloud-services/2-0/common/config-server/index.html) more advanced configuration options like [SSH repository access](https://docs.pivotal.io/spring-cloud-services/2-0/common/config-server/configuring-with-git.html#ssh-repository-access).
+Create a file named `config-server.json` located in a `config` sub-directory off the root of this project. Look at the sample [here](samples/config-server.json) to get an idea of the contents.  Consult the Spring Cloud Services Config Server [documentation](https://docs.pivotal.io/spring-cloud-services/2-0/common/config-server/index.html) for more advanced configuration options like [SSH repository access](https://docs.pivotal.io/spring-cloud-services/2-0/common/config-server/configuring-with-git.html#ssh-repository-access).
 
 Then execute
 
