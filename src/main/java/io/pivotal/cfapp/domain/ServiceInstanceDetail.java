@@ -20,7 +20,7 @@ public class ServiceInstanceDetail {
 	private String foundation;
 	private String organization;
 	private String space;
-	private String serviceId;
+	private String serviceInstanceId;
 	private String name;
 	private String service;
 	private String description;
@@ -33,7 +33,7 @@ public class ServiceInstanceDetail {
 	private String requestedState;
 
 	public String toCsv() {
-		return String.join(",", wrap(getFoundation()), wrap(getOrganization()), wrap(getSpace()), wrap(getServiceId()), wrap(getName()),
+		return String.join(",", wrap(getFoundation()), wrap(getOrganization()), wrap(getSpace()), wrap(getServiceInstanceId()), wrap(getName()),
 				wrap(getService()), wrap(getDescription()), wrap(getPlan()), wrap(getType()),
 				wrap(String.join(",", getApplications())), wrap(getLastOperation()),
 				wrap(getLastUpdated() != null ? getLastUpdated().toString() : ""), wrap(getDashboardUrl()),
@@ -45,7 +45,7 @@ public class ServiceInstanceDetail {
 	}
 
 	public static String headers() {
-        return String.join(",", "foundation", "organization", "space", "service id",
+        return String.join(",", "foundation", "organization", "space", "service instance id",
                 "name", "service", "description", "plan", "type", "bound applications", "last operation", "last updated", "dashboard url", "requested state");
     }
 
@@ -55,7 +55,7 @@ public class ServiceInstanceDetail {
 					.foundation(detail.getFoundation())
                     .organization(detail.getOrganization())
                     .space(detail.getSpace())
-                    .serviceId(detail.getServiceId())
+                    .serviceInstanceId(detail.getServiceInstanceId())
                     .name(detail.getName())
                     .service(detail.getService())
                     .description(detail.getDescription())

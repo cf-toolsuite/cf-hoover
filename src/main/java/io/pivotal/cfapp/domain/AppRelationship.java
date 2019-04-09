@@ -19,14 +19,14 @@ public class AppRelationship {
 	private String space;
 	private String appId;
 	private String appName;
-	private String serviceId;
+	private String serviceInstanceId;
 	private String serviceName;
 	private String servicePlan;
 	private String serviceType;
 
 	public String toCsv() {
 		return String.join(",", wrap(getFoundation()), wrap(getOrganization()), wrap(getSpace()), wrap(getAppId()), wrap(getAppName()),
-				wrap(getServiceId()), wrap(getServiceName()), wrap(getServicePlan()), wrap(getServiceType()));
+				wrap(getServiceInstanceId()), wrap(getServiceName()), wrap(getServicePlan()), wrap(getServiceType()));
 	}
 
 	private String wrap(String value) {
@@ -35,7 +35,7 @@ public class AppRelationship {
 
 	public static String headers() {
         return String.join(",", "foundation", "organization", "space", "application id",
-                "application name", "service id", "service name", "service plan", "service type");
+                "application name", "service instance id", "service name", "service plan", "service type");
     }
 
 	public static AppRelationshipBuilder from(AppRelationship rel) {
@@ -46,7 +46,7 @@ public class AppRelationship {
 					.foundation(rel.getFoundation())
 					.organization(rel.getOrganization())
 					.space(rel.getSpace())
-					.serviceId(rel.getServiceId())
+					.serviceInstanceId(rel.getServiceInstanceId())
 					.serviceName(rel.getServiceName())
 					.servicePlan(rel.getServicePlan())
 					.serviceType(rel.getServiceType());
