@@ -97,6 +97,7 @@ where `{target_foundation_profile}` is something like `pws` or `pcfone`
 
 ## How to deploy to Pivotal Application Service
 
+Please review the [manifest.yml](manifest.yml) before deploying.
 
 ### using scripts
 
@@ -116,6 +117,7 @@ Shutdown and destroy the app and service instances with
 ./destroy.sh
 ```
 
+> Note: If you are seeing [OutOfMemory exceptions](https://dzone.com/articles/troubleshooting-problems-with-native-off-heap-memo) shortly after startup you may need to [cf scale](https://docs.run.pivotal.io/devguide/deploy-apps/cf-scale.html#vertical) the available memory when working with multiple foundations.
 
 ## Endpoints
 
