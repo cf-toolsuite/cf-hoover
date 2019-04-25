@@ -5,13 +5,17 @@ import org.apache.commons.lang3.StringUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Builder
 @AllArgsConstructor(access=AccessLevel.PACKAGE)
 @NoArgsConstructor(access=AccessLevel.PACKAGE)
 @Getter
+@EqualsAndHashCode
+@ToString
 public class AppRelationship {
 
 	private String foundation;
@@ -36,19 +40,20 @@ public class AppRelationship {
 	public static String headers() {
         return String.join(",", "foundation", "organization", "space", "application id",
                 "application name", "service instance id", "service name", "service plan", "service type");
-    }
+	}
 
 	public static AppRelationshipBuilder from(AppRelationship rel) {
 		return AppRelationship
 				.builder()
-					.appId(rel.getAppId())
-					.appName(rel.getAppName())
 					.foundation(rel.getFoundation())
 					.organization(rel.getOrganization())
 					.space(rel.getSpace())
+					.appId(rel.getAppId())
+					.appName(rel.getAppName())
 					.serviceInstanceId(rel.getServiceInstanceId())
 					.serviceName(rel.getServiceName())
 					.servicePlan(rel.getServicePlan())
 					.serviceType(rel.getServiceType());
 	}
+
 }

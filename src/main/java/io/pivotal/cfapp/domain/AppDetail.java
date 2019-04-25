@@ -1,6 +1,7 @@
 package io.pivotal.cfapp.domain;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -8,6 +9,8 @@ import org.apache.commons.lang3.StringUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Builder.Default;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -16,6 +19,7 @@ import lombok.ToString;
 @AllArgsConstructor(access=AccessLevel.PACKAGE)
 @NoArgsConstructor(access=AccessLevel.PACKAGE)
 @Getter
+@EqualsAndHashCode
 @ToString
 public class AppDetail {
 
@@ -27,10 +31,14 @@ public class AppDetail {
 	private String buildpack;
 	private String image;
 	private String stack;
-	private Integer runningInstances;
-	private Integer totalInstances;
-	private Long memoryUsage;
-	private Long diskUsage;
+	@Default
+	private Integer runningInstances = 0;
+	@Default
+	private Integer totalInstances = 0;
+	@Default
+	private Long memoryUsage = 0L;
+	@Default
+	private Long diskUsage = 0L;
 	private List<String> urls;
 	private LocalDateTime lastPushed;
 	private String lastEvent;
@@ -41,8 +49,10 @@ public class AppDetail {
 	public String toCsv() {
 		return String.join(",", wrap(getFoundation()), wrap(getOrganization()), wrap(getSpace()), wrap(getAppId()), wrap(getAppName()),
 				wrap(getBuildpack()), wrap(getImage()), wrap(getStack()), wrap(String.valueOf(getRunningInstances())),
-				wrap(String.valueOf(getTotalInstances())), wrap(Double.toString(toGigabytes(getMemoryUsage()))), wrap(Double.toString(toGigabytes(getDiskUsage()))), 
-				(wrap(String.join(",", getUrls()))), wrap(getLastPushed() != null ? getLastPushed().toString() : ""), wrap(getLastEvent()),
+				wrap(String.valueOf(getTotalInstances())), wrap(Double.toString(toGigabytes(getMemoryUsage()))),
+				wrap(Double.toString(toGigabytes(getDiskUsage()))),
+				(wrap(String.join(",", getUrls() != null ? getUrls(): Collections.emptyList()))),
+				wrap(getLastPushed() != null ? getLastPushed().toString() : ""), wrap(getLastEvent()),
 				wrap(getLastEventActor()), wrap(getLastEventTime() != null ? getLastEventTime().toString() : ""),
 				wrap(getRequestedState()));
 	}
