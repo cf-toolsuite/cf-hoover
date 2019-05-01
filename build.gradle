@@ -1,42 +1,50 @@
-buildscript {
-    ext {
-        gitPropertiesPluginVersion = '2.0.0'
-        gradleVersionsPlugin = '0.21.0'
-        springBootVersion = '2.1.4.RELEASE'
-    }
-    repositories {
-        mavenCentral()
-        maven { url "https://repo.spring.io/snapshot" }
-		maven { url "https://repo.spring.io/milestone" }
-        maven { url "https://plugins.gradle.org/m2/" }
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:${gitPropertiesPluginVersion}")
-        classpath("com.github.ben-manes:gradle-versions-plugin:${gradleVersionsPlugin}")
-    }
+plugins {
+    id 'com.github.ben-manes.versions' version '0.21.0'
+    id 'com.gorylenko.gradle-git-properties' version '2.0.0'
+    id 'org.springframework.boot' version '2.1.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.7.RELEASE'
+    id 'java'
+    id 'eclipse'
+    id 'idea'
+    id 'jacoco'
 }
 
-ext['spring-cloud-services-connectors.version'] = '2.1.0.RELEASE'
-ext['junit-jupiter.version'] = '5.4.1'
-ext['mockito.version'] = '2.25.1'
-
-apply plugin: 'java'
-apply plugin: 'jacoco'
-apply plugin: 'eclipse'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-apply plugin: 'com.gorylenko.gradle-git-properties'
-apply plugin: 'com.github.ben-manes.versions'
+gitProperties {
+    dateFormat = "yyyy-MM-dd'T'HH:mmZ"
+    dateFormatTimeZone = "UTC"
+}
 
 group = 'io.pivotal'
 version = '0.1-SNAPSHOT'
 sourceCompatibility = JavaVersion.VERSION_11
 
-gitProperties {
-	dateFormat = "yyyy-MM-dd'T'HH:mmZ"
-	dateFormatTimeZone = "UTC"
-	dotGitDirectory = "${project.rootDir}/.."
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('springCloudServicesVersion', '2.1.2.RELEASE')
+	set('springCloudVersion', 'Greenwich.SR1')
+    set('spring-cloud-services-connectors.version', '2.1.2.RELEASE')
+	set('jackson.version', '2.9.8')
+	set('junit-jupiter.version', '5.4.2')
+	set('mockito.version', '2.27.0')
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "io.pivotal.spring.cloud:spring-cloud-services-dependencies:${springCloudServicesVersion}"
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+bootRun {
+    // support passing -Dsystem.property=value to bootRun task
+    systemProperties = System.properties
+}
+
+configurations {
+    implementation.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
 }
 
 jacoco {
@@ -58,28 +66,6 @@ test {
 	}
 }
 
-repositories {
-    mavenCentral()
-    maven { url "https://repo.spring.io/snapshot" }
-	maven { url "https://repo.spring.io/milestone" }
-}
-
-bootRun {
-  // support passing -Dsystem.property=value to bootRun task
-  systemProperties = System.properties
-}
-
-configurations {
-    implementation.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
-}
-
-dependencyManagement {
-    imports {
-        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Greenwich.SR1'
-        mavenBom 'io.pivotal.spring.cloud:spring-cloud-services-dependencies:2.1.2.RELEASE'
-    }
-}
-
 dependencies {
 	annotationProcessor('org.projectlombok:lombok')
     implementation('org.projectlombok:lombok')
@@ -90,6 +76,7 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-webflux')
     implementation('org.springframework.boot:spring-boot-starter-security')
     implementation('io.pivotal.spring.cloud:spring-cloud-services-starter-config-client')
+    implementation('io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry')
     implementation('org.springframework.boot:spring-boot-starter-log4j2')
     implementation('io.projectreactor:reactor-core:3.2.8.RELEASE')
     implementation('io.projectreactor.netty:reactor-netty:0.8.6.RELEASE')

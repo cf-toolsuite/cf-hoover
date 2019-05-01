@@ -24,7 +24,7 @@ import lombok.Builder.Default;
 @Getter
 @ToString
 @JsonPropertyOrder({ "by-buildpack", "by-stack", "by-dockerimage", "by-status",
-"total-applications", "total-running-application-instances", "total-stopped-application-instances", "total-anomalous-application-instances",
+"total-applications", "total-running-application-instances", "total-stopped-application-instances", "total-crashed-application-instances",
 "total-application-instances", "total-memory-used-in-mb", "total-disk-used-in-mb", "velocity"})
 public class ApplicationCounts {
 
@@ -53,8 +53,8 @@ public class ApplicationCounts {
     private Long totalStoppedApplicationInstances = 0L;
 
     @Default
-    @JsonProperty("total-anomalous-application-instances")
-    private Long totalAnomalousApplicationInstances = 0L;
+    @JsonProperty("total-crashed-application-instances")
+    private Long totalCrashedApplicationInstances = 0L;
 
     @Default
     @JsonProperty("total-application-instances")
@@ -79,7 +79,7 @@ public class ApplicationCounts {
         Long totalApplications = counts.stream().mapToLong(c -> c.getTotalApplications()).sum();
         Long totalRunningApplicationInstances = counts.stream().mapToLong(c -> c.getTotalRunningApplicationInstances()).sum();
         Long totalStoppedApplicationInstances = counts.stream().mapToLong(c -> c.getTotalStoppedApplicationInstances()).sum();
-        Long totalAnomalousApplicationInstances = counts.stream().mapToLong(c -> c.getTotalAnomalousApplicationInstances()).sum();
+        Long totalCrashedApplicationInstances = counts.stream().mapToLong(c -> c.getTotalCrashedApplicationInstances()).sum();
         Long totalApplicationInstances = counts.stream().mapToLong(c -> c.getTotalApplicationInstances()).sum();
         Double totalMemoryUsed = counts.stream().mapToDouble(c -> c.getTotalMemoryUsed()).sum();
         Double totalDiskUsed = counts.stream().mapToDouble(c -> c.getTotalDiskUsed()).sum();
@@ -93,7 +93,7 @@ public class ApplicationCounts {
                     .totalApplications(totalApplications)
                     .totalRunningApplicationInstances(totalRunningApplicationInstances)
                     .totalStoppedApplicationInstances(totalStoppedApplicationInstances)
-                    .totalAnomalousApplicationInstances(totalAnomalousApplicationInstances)
+                    .totalCrashedApplicationInstances(totalCrashedApplicationInstances)
                     .totalApplicationInstances(totalApplicationInstances)
                     .totalMemoryUsed(totalMemoryUsed)
                     .totalDiskUsed(totalDiskUsed)
