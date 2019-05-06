@@ -94,6 +94,15 @@ where `{target_foundation_profile}` is something like `pws` or `pcfone`
 
 > You'll need to manually stop to the application with `Ctrl+C`
 
+Alternatively, if you intend to setup [cf-hoover-ui](https://github.com/pacphi/cf-hoover-ui), for a local development environment deployment then, you must first:
+
+    * Launch a standalone instance of [Eureka server](https://cloud.spring.io/spring-cloud-netflix/multi/multi_spring-cloud-eureka-server.html)
+
+Set an additional property before launching `cf-hoover`
+
+```
+-Dspring.cloud.discovery.enabled=true
+```
 
 ## How to deploy to Pivotal Application Service
 
@@ -118,6 +127,8 @@ Shutdown and destroy the app and service instances with
 ```
 
 > Note: If you are seeing [OutOfMemory exceptions](https://dzone.com/articles/troubleshooting-problems-with-native-off-heap-memo) shortly after startup you may need to [cf scale](https://docs.run.pivotal.io/devguide/deploy-apps/cf-scale.html#vertical) the available memory when working with multiple foundations.
+
+Alternative scripts exist for deploying `cf-hoover` when working with `cf-hoover-ui`.  See [deploy.with-registry.sh](deploy.with-registry.sh) and [destroy.with-registry.sh](destroy.with-registry.sh).
 
 ## Endpoints
 
