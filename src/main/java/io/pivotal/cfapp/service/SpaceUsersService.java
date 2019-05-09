@@ -33,7 +33,7 @@ public class SpaceUsersService {
 									.get()
 										.uri("https://" + b.getValue() + "/space-users")
 										.retrieve()
-										.bodyToMono(SpaceUsers.class)
+										.bodyToFlux(SpaceUsers.class)
 										.map(su -> SpaceUsers.from(su).foundation(b.getKey()).build()));
 	}
 
