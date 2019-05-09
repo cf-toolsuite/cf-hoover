@@ -20,6 +20,8 @@ spring:
   cloud:
     config:
       enabled: false
+    discovery:
+      enabled: false
 
 ---
 spring:
@@ -27,4 +29,6 @@ spring:
 
   cloud:
     config:
+      enabled: true
+    discovery:
       enabled: true

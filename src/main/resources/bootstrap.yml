@@ -2,10 +2,6 @@ spring:
   application:
     name: cf-hoover
 
-  cloud:
-    discovery:
-      enabled: false
-
 eureka:
   client:
     serviceUrl:
