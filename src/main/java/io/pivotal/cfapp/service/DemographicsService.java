@@ -31,7 +31,7 @@ public class DemographicsService {
 			butlers
 				.flatMap(b -> obtainDemographics("https://" + b.getValue()))
 				.collectList()
-				.map(dl -> Demographics.aggregate(dl));
+				.map(dl -> Demographics.aggregate(settings.getButlers().keySet(), dl));
     }
 
     protected Mono<Demographics> obtainDemographics(String baseUrl) {
