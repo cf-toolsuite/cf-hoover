@@ -103,7 +103,7 @@ public class SnapshotService {
                         .flatMap(b -> assembleApplicationRelationships()
                                         .map(ar -> b.applicationRelationships(ar)))
                         .flatMap(b -> spaceUsersService
-                                        .obtainUniqueUsernames()
+                                        .obtainAccountNames()
                                             .map(u -> b.users(u).build()));
     }
 
@@ -115,9 +115,12 @@ public class SnapshotService {
     }
 
     protected Mono<UserCounts> assembleUserCounts() {
-        return spaceUsersService
-                .count()
-                    .map(cbo -> UserCounts.builder().totalUsers(cbo).build());
+        Flux<Map.Entry<String, String>> butlers = Flux.fromIterable(settings.getButlers().entrySet());
+        return butlers
+                .flatMap(b -> obtainSnapshotSummary("https://" + b.getValue()))
+                                .map(sd -> sd.getUserCounts())
+                                .collectList()
+                                .map(acl -> UserCounts.aggregate(acl));
     }
 
     protected Mono<ApplicationCounts> assembleApplicationCounts() {

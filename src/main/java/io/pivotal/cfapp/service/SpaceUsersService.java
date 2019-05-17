@@ -37,11 +37,7 @@ public class SpaceUsersService {
 										.map(su -> SpaceUsers.from(su).foundation(b.getKey()).build()));
 	}
 
-	public Mono<Integer> count() {
-		return obtainUniqueUsernames().map(u -> u.size());
-	}
-
-	public Mono<Set<String>> obtainUniqueUsernames() {
+	public Mono<Set<String>> obtainAccountNames() {
 		Flux<Map.Entry<String, String>> butlers = Flux.fromIterable(settings.getButlers().entrySet());
 		return butlers.flatMap(b -> client
 									.get()
@@ -55,6 +51,10 @@ public class SpaceUsersService {
 										.map(un -> un.replace("\"",""))
 										.collectSortedList()
 										.map(l -> Set.copyOf(l));
+	}
+
+	public Mono<Integer> totalAccounts() {
+		return obtainAccountNames().map(u -> u.size());
 	}
 
 }

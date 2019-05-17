@@ -27,7 +27,7 @@ public class SpaceUsersController {
 	}
 
 	@GetMapping("/space-users")
-	public Mono<ResponseEntity<List<SpaceUsers>>> getAllUsers() {
+	public Mono<ResponseEntity<List<SpaceUsers>>> getAllSpaceUsers() {
 		return service
 					.findAll()
 						.collectList()
@@ -40,7 +40,7 @@ public class SpaceUsersController {
 		@PathVariable("foundation") String foundation,
 		@PathVariable("organization") String organization,
 		@PathVariable("space") String space) {
-		return getAllUsers()
+		return getAllSpaceUsers()
 					.flatMapMany(r -> Flux.fromIterable(r.getBody()))
 					.filter(su ->
 						su.getFoundation().equals(foundation) &&
@@ -52,12 +52,12 @@ public class SpaceUsersController {
 	}
 
 	@GetMapping("/users/count")
-	public Mono<Integer> getUserCount() {
-		return service.count();
+	public Mono<Integer> totalAccounts() {
+		return service.totalAccounts();
 	}
 
 	@GetMapping("/users")
-	public Mono<Set<String>> getUniqueUsernames() {
-		return service.obtainUniqueUsernames();
+	public Mono<Set<String>> getAllAccountNames() {
+		return service.obtainAccountNames();
 	}
 }

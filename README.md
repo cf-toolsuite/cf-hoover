@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/pacphi/cf-hoover.svg?branch=master)](https://travis-ci.org/pacphi/cf-hoover) [![Known Vulnerabilities](https://snyk.io/test/github/pacphi/cf-hoover/badge.svg)](https://snyk.io/test/github/pacphi/cf-hoover)
 
-> Status: Incubating
+> Status: Beta
 
 You're already aware of and are using [cf-butler](https://github.com/pacphi/cf-butler) to help report on and manage application and service instances.  Wouldn't it be nice to easily aggregate reporting across multiple foundations? This is `cf-hoover`'s raison d'être.
 
@@ -287,7 +287,8 @@ Sample output
       "zoo-labs": 1,
       "Northwest": 14
     },
-    "total-users": 14
+    "total-user-accounts": 12,
+    "total-service-accounts": 2
   }
 }
 ```
@@ -328,6 +329,22 @@ Sample output
 foundation,organization,space,service id,name,service,description,plan,type,bound applications,last operation,last updated,dashboard url,requested state
 "mvp","mvptime","default",,"reactive-cassy-secrets","credhub","Stores configuration parameters securely in CredHub","default","managed_service_instance","reactive-cassy","create","2018-11-20T00:00",,"succeeded"
 "mvp","planespotter","default",,"planespotter-vault","credhub","Stores configuration parameters securely in CredHub","default","managed_service_instance","planespotter-alpha","update","2019-03-21T00:00",,"succeeded"
+```
+
+```
+GET /snapshot/demographics
+```
+> Yields organization, space user account, and service account totals across all registered foundations
+
+Sample output
+
+```
+{
+  "total-organizations": 10,
+  "total-spaces": 40,
+  "total-user-accounts": 12,
+  "total-service-accounts": 4
+}
 ```
 
 ### Accounting
