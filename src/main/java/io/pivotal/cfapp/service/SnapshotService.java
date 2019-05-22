@@ -2,6 +2,8 @@ package io.pivotal.cfapp.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -104,6 +106,7 @@ public class SnapshotService {
                                         .map(ar -> b.applicationRelationships(ar)))
                         .flatMap(b -> spaceUsersService
                                         .obtainAccountNames()
+                                            .collect(Collectors.toCollection(TreeSet::new))
                                             .map(u -> b.users(u).build()));
     }
 
