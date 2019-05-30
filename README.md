@@ -134,10 +134,10 @@ Alternative scripts exist for deploying `cf-hoover` when working with `cf-hoover
 
 These REST endpoints have been exposed for administrative purposes.
 
-### User
+### Snapshot
 
 ```
-GET /space-users
+GET /snapshot/spaces/users
 ```
 > Provides details and light metrics for users by role within all organizations and spaces across all registered foundations
 
@@ -184,21 +184,19 @@ Sample output
 > `users` is the unique subset of all users from each role in the organization/space
 
 ```
-GET /space-users/{foundation}/{organization}/{space}
+GET /snapshot/{foundation}/{organization}/{space}/users
 ```
 > Provides details and light metrics for users by role within a targeted foundation (alias), organization and space
 
 ```
-GET /users
+GET /snapshot/users
 ```
 > Lists all unique user accounts across all registered foundations
 
 ```
-GET /users/count
+GET /snapshot/users/count
 ```
 > Counts the number of user accounts across all registered foundations
-
-### Snapshot
 
 ```
 GET /snapshot/summary

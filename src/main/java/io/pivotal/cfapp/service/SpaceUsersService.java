@@ -1,7 +1,6 @@
 package io.pivotal.cfapp.service;
 
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +30,7 @@ public class SpaceUsersService {
 		return
 			butlers.flatMap(b -> client
 									.get()
-										.uri("https://" + b.getValue() + "/space-users")
+										.uri("https://" + b.getValue() + "/snapshot/spaces/users")
 										.retrieve()
 										.bodyToFlux(SpaceUsers.class)
 										.map(su -> SpaceUsers.from(su).foundation(b.getKey()).build()));
@@ -41,7 +40,7 @@ public class SpaceUsersService {
 		Flux<Map.Entry<String, String>> butlers = Flux.fromIterable(settings.getButlers().entrySet());
 		return butlers.flatMap(b -> client
 									.get()
-										.uri("https://" + b.getValue() + "/users")
+										.uri("https://" + b.getValue() + "/snapshot/users")
 										.retrieve()
 										.bodyToFlux(String.class))
 										.map(b -> b.replace("[", ""))

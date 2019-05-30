@@ -27,7 +27,7 @@ public class SpaceUsersController {
 		this.service = service;
 	}
 
-	@GetMapping("/space-users")
+	@GetMapping("/snapshot/spaces/users")
 	public Mono<ResponseEntity<List<SpaceUsers>>> getAllSpaceUsers() {
 		return service
 					.findAll()
@@ -36,7 +36,7 @@ public class SpaceUsersController {
 							.defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 
-	@GetMapping("/space-users/{foundation}/{organization}/{space}")
+	@GetMapping("/snapshot/{foundation}/{organization}/{space}/users")
 	public Mono<ResponseEntity<SpaceUsers>> getUsersInOrganizationAndSpace(
 		@PathVariable("foundation") String foundation,
 		@PathVariable("organization") String organization,
@@ -52,7 +52,7 @@ public class SpaceUsersController {
 					.defaultIfEmpty(ResponseEntity.notFound().build());
 	}
 
-	@GetMapping("/users/count")
+	@GetMapping("/snapshot/users/count")
 	public Mono<ResponseEntity<Long>> totalAccounts() {
 		return service
 				.totalAccounts()
@@ -61,7 +61,7 @@ public class SpaceUsersController {
 
 	}
 
-	@GetMapping("/users")
+	@GetMapping("/snapshot/users")
 	public Mono<ResponseEntity<TreeSet<String>>> getAllAccountNames() {
 		return service
 				.obtainAccountNames()

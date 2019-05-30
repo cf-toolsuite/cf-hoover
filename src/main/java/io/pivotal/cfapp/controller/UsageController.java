@@ -21,7 +21,7 @@ public class UsageController {
         this.service = service;
     }
 
-    @GetMapping(value = "accounting/tasks")
+    @GetMapping(value = "/accounting/tasks")
     public Mono<ResponseEntity<TaskUsageReport>> getTaskReport() {
         return service
                 .getTaskReport()
@@ -29,7 +29,7 @@ public class UsageController {
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
-    @GetMapping(value = "accounting/applications")
+    @GetMapping(value = "/accounting/applications")
     public Mono<ResponseEntity<AppUsageReport>> getApplicationReport() {
         return service
                 .getApplicationReport()
@@ -37,7 +37,7 @@ public class UsageController {
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
-    @GetMapping(value = "accounting/services")
+    @GetMapping(value = "/accounting/services")
     public Mono<ResponseEntity<ServiceUsageReport>> getServiceReport() {
         return service
                 .getServiceReport()
