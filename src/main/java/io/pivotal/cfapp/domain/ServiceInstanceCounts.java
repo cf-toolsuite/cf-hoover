@@ -26,18 +26,21 @@ import lombok.Builder.Default;
 @JsonPropertyOrder({ "by-service", "by-service-and-plan", "total-service-instances", "velocity" })
 public class ServiceInstanceCounts {
 
+    @Default
     @JsonProperty("by-service")
-    private Map<String,Long> byService;
+    private Map<String,Long> byService = new HashMap<>();
 
+    @Default
     @JsonProperty("by-service-and-plan")
-    private Map<String, Long> byServiceAndPlan;
+    private Map<String, Long> byServiceAndPlan = new HashMap<>();
 
     @Default
     @JsonProperty("total-service-instances")
     private Long totalServiceInstances = 0L;
 
+    @Default
     @JsonProperty("velocity")
-    private Map<String,Long> velocity;
+    private Map<String,Long> velocity = new HashMap<>();
 
     public static ServiceInstanceCounts aggregate(List<ServiceInstanceCounts> counts) {
         Map<String, Long> byService = merge(counts.stream().map(c -> c.getByService().entrySet()));

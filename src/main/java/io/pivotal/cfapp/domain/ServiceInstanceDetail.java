@@ -2,6 +2,7 @@ package io.pivotal.cfapp.domain;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -13,6 +14,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.Builder.Default;
 
 @Builder
 @AllArgsConstructor(access=AccessLevel.PACKAGE)
@@ -31,7 +33,8 @@ public class ServiceInstanceDetail {
 	private String description;
 	private String plan;
 	private String type;
-	private List<String> applications;
+	@Default
+	private List<String> applications = new ArrayList<>();
 	private String lastOperation;
 	private LocalDateTime lastUpdated;
 	private String dashboardUrl;

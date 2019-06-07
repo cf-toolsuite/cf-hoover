@@ -28,17 +28,21 @@ import lombok.Builder.Default;
 "total-application-instances", "total-memory-used-in-mb", "total-disk-used-in-mb", "velocity"})
 public class ApplicationCounts {
 
+    @Default
     @JsonProperty("by-buildpack")
-    private Map<String, Long> byBuildpack;
+    private Map<String, Long> byBuildpack = new HashMap<>();
 
+    @Default
     @JsonProperty("by-stack")
-    private Map<String, Long> byStack;
+    private Map<String, Long> byStack = new HashMap<>();
 
+    @Default
     @JsonProperty("by-dockerimage")
-    private Map<String, Long> byDockerImage;
+    private Map<String, Long> byDockerImage = new HashMap<>();
 
+    @Default
     @JsonProperty("by-status")
-    private Map<String, Long> byStatus;
+    private Map<String, Long> byStatus = new HashMap<>();
 
     @Default
     @JsonProperty("total-applications")
@@ -68,8 +72,9 @@ public class ApplicationCounts {
     @JsonProperty("total-disk-used-in-gb")
     private Double totalDiskUsed = 0.0;
 
+    @Default
     @JsonProperty("velocity")
-    private Map<String, Long> velocity;
+    private Map<String, Long> velocity = new HashMap<>();
 
     public static ApplicationCounts aggregate(List<ApplicationCounts> counts) {
         Map<String, Long> byBuildpack = merge(counts.stream().map(c -> c.getByBuildpack().entrySet()));
