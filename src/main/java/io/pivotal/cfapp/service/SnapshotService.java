@@ -2,6 +2,7 @@ package io.pivotal.cfapp.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
@@ -17,7 +18,6 @@ import io.pivotal.cfapp.domain.ServiceInstanceCounts;
 import io.pivotal.cfapp.domain.ServiceInstanceDetail;
 import io.pivotal.cfapp.domain.SnapshotDetail;
 import io.pivotal.cfapp.domain.SnapshotSummary;
-import io.pivotal.cfapp.domain.UserCounts;
 import io.pivotal.cfapp.report.AppDetailCsvReport;
 import io.pivotal.cfapp.report.ServiceInstanceDetailCsvReport;
 import io.pivotal.cfapp.task.AppDetailRetrievedEvent;
@@ -29,16 +29,13 @@ import reactor.core.publisher.Mono;
 public class SnapshotService {
 
     private final WebClient client;
-    private final SpaceUsersService spaceUsersService;
     private final HooverSettings settings;
 
     @Autowired
     public SnapshotService(
         WebClient client,
-        SpaceUsersService spaceUsersService,
         HooverSettings settings) {
         this.client = client;
-        this.spaceUsersService = spaceUsersService;
         this.settings = settings;
     }
 
@@ -104,26 +101,32 @@ public class SnapshotService {
                                         .map(sid -> b.serviceInstances(sid)))
                         .flatMap(b -> assembleApplicationRelationships()
                                         .map(ar -> b.applicationRelationships(ar)))
-                        .flatMap(b -> spaceUsersService
-                                        .obtainAccountNames()
-                                            .collect(Collectors.toCollection(TreeSet::new))
-                                            .map(u -> b.users(u).build()));
+                        .flatMap(b -> assembleUserAccounts()
+                                        .map(ua -> b.userAccounts(ua)))
+                        .flatMap(b -> assembleServiceAccounts()
+                                            .map(sa -> b.serviceAccounts(sa).build()));
     }
 
     public Mono<SnapshotSummary> assembleSnapshotSummary() {
         return assembleApplicationCounts()
                 .map(ac -> SnapshotSummary.builder().applicationCounts(ac))
-                .flatMap(b -> assembleServiceInstanceCounts().map(sic -> b.serviceInstanceCounts(sic)))
-                .flatMap(b -> assembleUserCounts().map(uc -> b.userCounts(uc).build()));
+                .flatMap(b -> assembleServiceInstanceCounts().map(sic -> b.serviceInstanceCounts(sic).build()));
     }
 
-    protected Mono<UserCounts> assembleUserCounts() {
+    public Mono<Set<String>> assembleUserAccounts() {
         Flux<Map.Entry<String, String>> butlers = Flux.fromIterable(settings.getButlers().entrySet());
-        return butlers
-                .flatMap(b -> obtainSnapshotSummary("https://" + b.getValue()))
-                                .map(sd -> sd.getUserCounts())
-                                .collectList()
-                                .map(acl -> UserCounts.aggregate(acl));
+        Flux<String> accounts =
+            butlers.flatMap(b -> obtainSnapshotDetail("https://" + b.getValue())
+                                    .flatMapMany(sd -> Flux.fromIterable(sd.getUserAccounts())));
+        return accounts.collect(Collectors.toCollection(TreeSet::new));
+    }
+
+    public Mono<Set<String>> assembleServiceAccounts() {
+        Flux<Map.Entry<String, String>> butlers = Flux.fromIterable(settings.getButlers().entrySet());
+        Flux<String> accounts =
+            butlers.flatMap(b -> obtainSnapshotDetail("https://" + b.getValue())
+                                    .flatMapMany(sd -> Flux.fromIterable(sd.getServiceAccounts())));
+        return accounts.collect(Collectors.toCollection(TreeSet::new));
     }
 
     protected Mono<ApplicationCounts> assembleApplicationCounts() {

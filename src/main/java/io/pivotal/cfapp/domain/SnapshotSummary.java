@@ -15,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor(access=AccessLevel.PACKAGE)
 @Getter
 @ToString
-@JsonPropertyOrder({ "application-counts", "service-instance-counts", "user-counts" })
+@JsonPropertyOrder({ "application-counts", "service-instance-counts" })
 public class SnapshotSummary {
 
     @JsonProperty("application-counts")
@@ -23,8 +23,5 @@ public class SnapshotSummary {
 
     @JsonProperty("service-instance-counts")
     private ServiceInstanceCounts serviceInstanceCounts;
-
-    @JsonProperty("user-counts")
-    private UserCounts userCounts;
 
 }

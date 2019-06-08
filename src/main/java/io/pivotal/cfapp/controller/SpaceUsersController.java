@@ -1,8 +1,7 @@
 package io.pivotal.cfapp.controller;
 
 import java.util.List;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,10 +61,9 @@ public class SpaceUsersController {
 	}
 
 	@GetMapping("/snapshot/users")
-	public Mono<ResponseEntity<TreeSet<String>>> getAllAccountNames() {
+	public Mono<ResponseEntity<Set<String>>> getAllAccountNames() {
 		return service
 				.obtainAccountNames()
-				.collect(Collectors.toCollection(TreeSet::new))
 				.map(r -> ResponseEntity.ok(r))
 				.defaultIfEmpty(ResponseEntity.notFound().build());
 	}

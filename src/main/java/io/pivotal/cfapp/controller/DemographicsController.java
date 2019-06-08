@@ -20,7 +20,7 @@ public class DemographicsController {
     }
 
     @GetMapping("/snapshot/demographics")
-    public Mono<ResponseEntity<Demographics>> getDemographics() {
+    public Mono<ResponseEntity<Demographics>> aggregateDemographics() {
         return service.aggregateDemographics()
                 .map(d -> ResponseEntity.ok(d))
                 .defaultIfEmpty(ResponseEntity.notFound().build());

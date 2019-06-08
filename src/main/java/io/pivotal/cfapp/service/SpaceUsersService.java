@@ -1,12 +1,15 @@
 package io.pivotal.cfapp.service;
 
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import io.pivotal.cfapp.config.HooverSettings;
+import io.pivotal.cfapp.domain.SnapshotDetail;
 import io.pivotal.cfapp.domain.SpaceUsers;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -36,23 +39,26 @@ public class SpaceUsersService {
 										.map(su -> SpaceUsers.from(su).foundation(b.getKey()).build()));
 	}
 
-	public Flux<String> obtainAccountNames() {
+	public Mono<Set<String>> obtainAccountNames() {
 		Flux<Map.Entry<String, String>> butlers = Flux.fromIterable(settings.getButlers().entrySet());
 		return butlers.flatMap(b -> client
 									.get()
-										.uri("https://" + b.getValue() + "/snapshot/users")
+										.uri("https://" + b.getValue() + "/snapshot/detail")
 										.retrieve()
-										.bodyToFlux(String.class))
-										.map(b -> b.replace("[", ""))
-										.map(e -> e.replace("]", ""))
-										.map(s -> s.split("\\s*,\\s*"))
-										.flatMap(sa -> Flux.fromArray(sa))
-										.map(un -> un.replace("\"",""))
-										.distinct();
+										.bodyToFlux(SnapshotDetail.class))
+										.flatMap(sd ->
+													Flux.concat(
+														Flux.fromIterable(sd.getServiceAccounts()),
+														Flux.fromIterable(sd.getUserAccounts())
+													)
+										)
+										.collect(Collectors.toSet());
 	}
 
 	public Mono<Long> totalAccounts() {
-		return obtainAccountNames().count();
+		return obtainAccountNames()
+				.flatMapMany(s -> Flux.fromIterable(s))
+				.count();
 	}
 
 }
