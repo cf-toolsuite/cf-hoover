@@ -201,7 +201,7 @@ GET /snapshot/users/count
 ```
 GET /snapshot/summary
 ```
-> Provides summary metrics for applications, service instances, and users across all registered foundations
+> Provides summary metrics for applications and service instances across all registered foundations
 
 > **Note**: this summary report does not take the place of an official foundation Accounting Report. The Accounting Report is focussed on calculating aggregates (on a monthly basis) such as: (a) the total hours of application instance usage, (b) the largest # of application instances running (a.k.a. maximum concurrent application instances), c) the total hours of service instance usage and (d) the largest # of service instances running (a.k.a. maximum concurrent service instances).
 
@@ -279,14 +279,6 @@ Sample output
       "between-six-months-and-one-year": 5,
       "beyond-one-year": 8
     }
-  },
-  "user-counts": {
-    "by-organization": {
-      "zoo-labs": 1,
-      "Northwest": 14
-    },
-    "total-user-accounts": 12,
-    "total-service-accounts": 2
   }
 }
 ```
@@ -332,7 +324,7 @@ foundation,organization,space,service id,name,service,description,plan,type,boun
 ```
 GET /snapshot/demographics
 ```
-> Yields organization, space user account, and service account totals across all registered foundations
+> Yields organization, space, user account, and service account totals across all registered foundations
 
 Sample output
 
