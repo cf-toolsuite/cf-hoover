@@ -338,10 +338,18 @@ Sample output
 
 ```
 {
-  "total-organizations": 10,
-  "total-spaces": 40,
-  "total-user-accounts": 12,
-  "total-service-accounts": 4
+  demographics: [
+    {
+      foundation: "mvp",
+      total-organizations: 4,
+      total-spaces: 11,
+      total-user-accounts: 3,
+      total-service-accounts: 3
+    }
+  ],
+  total-foundations: 1,
+  total-user-accounts: 3,
+  total-service-accounts: 3
 }
 ```
 
