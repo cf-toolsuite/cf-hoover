@@ -1,6 +1,8 @@
 package io.pivotal.cfapp.domain.accounting.application;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -51,8 +53,14 @@ public class AppUsageReport {
                 }
             }
         });
-        report.setMonthlyReports(monthlyReports);
-        report.setYearlyReports(yearlyReports);
+        List<AppUsageMonthly> sortedMonthlyReports = new ArrayList<>();
+        sortedMonthlyReports.addAll(monthlyReports);
+        sortedMonthlyReports.sort(Comparator.comparing(AppUsageMonthly::getYearAndMonth));
+        report.setMonthlyReports(sortedMonthlyReports);
+        List<AppUsageYearly> sortedYearlyReports = new ArrayList<>();
+        sortedYearlyReports.addAll(yearlyReports);
+        sortedYearlyReports.sort(Comparator.comparing(AppUsageYearly::getYear));
+        report.setYearlyReports(sortedYearlyReports);
         return report;
     }
 }

@@ -1,6 +1,8 @@
 package io.pivotal.cfapp.domain.accounting.task;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -51,8 +53,14 @@ public class TaskUsageReport {
                 }
             }
         });
-        report.setMonthlyReports(monthlyReports);
-        report.setYearlyReports(yearlyReports);
+        List<TaskUsageMonthly> sortedMonthlyReports = new ArrayList<>();
+        sortedMonthlyReports.addAll(monthlyReports);
+        sortedMonthlyReports.sort(Comparator.comparing(TaskUsageMonthly::getYearAndMonth));
+        report.setMonthlyReports(sortedMonthlyReports);
+        List<TaskUsageYearly> sortedYearlyReports = new ArrayList<>();
+        sortedYearlyReports.addAll(yearlyReports);
+        sortedYearlyReports.sort(Comparator.comparing(TaskUsageYearly::getYear));
+        report.setYearlyReports(sortedYearlyReports);
         return report;
     }
 }

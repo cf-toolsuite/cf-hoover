@@ -37,4 +37,9 @@ public class ServiceUsageMonthly {
         return combined;
     }
 
+    @JsonIgnore
+    public String getYearAndMonth() {
+        return String.join("-", String.valueOf(year), String.format("%02d", month));
+    }
+
 }
