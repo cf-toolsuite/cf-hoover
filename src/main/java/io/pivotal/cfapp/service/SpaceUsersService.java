@@ -35,7 +35,8 @@ public class SpaceUsersService {
 									.get()
 										.uri("https://" + b.getValue() + "/snapshot/spaces/users")
 										.retrieve()
-										.bodyToFlux(SpaceUsers.class)
+										.bodyToMono(SpaceUsers.class)
+										.timeout(settings.getTimeout(), Mono.just(SpaceUsers.builder().build()))
 										.map(su -> SpaceUsers.from(su).foundation(b.getKey()).build()));
 	}
 
@@ -45,7 +46,8 @@ public class SpaceUsersService {
 									.get()
 										.uri("https://" + b.getValue() + "/snapshot/detail")
 										.retrieve()
-										.bodyToFlux(SnapshotDetail.class))
+										.bodyToMono(SnapshotDetail.class))
+										.timeout(settings.getTimeout(), Mono.just(SnapshotDetail.builder().build()))
 										.flatMap(sd ->
 													Flux.concat(
 														Flux.fromIterable(sd.getServiceAccounts()),

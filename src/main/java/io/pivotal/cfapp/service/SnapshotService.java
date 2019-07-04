@@ -83,7 +83,8 @@ public class SnapshotService {
                 .get()
                     .uri(baseUrl + "/snapshot/detail")
                     .retrieve()
-                    .bodyToMono(SnapshotDetail.class);
+                    .bodyToMono(SnapshotDetail.class)
+                    .timeout(settings.getTimeout(), Mono.just(SnapshotDetail.builder().build()));
     }
 
     protected Mono<SnapshotSummary> obtainSnapshotSummary(String baseUrl) {
@@ -91,7 +92,8 @@ public class SnapshotService {
                 .get()
                     .uri(baseUrl + "/snapshot/summary")
                     .retrieve()
-                    .bodyToMono(SnapshotSummary.class);
+                    .bodyToMono(SnapshotSummary.class)
+                    .timeout(settings.getTimeout(), Mono.just(SnapshotSummary.builder().build()));
     }
 
     public Mono<SnapshotDetail> assembleSnapshotDetail() {

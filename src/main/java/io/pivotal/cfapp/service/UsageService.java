@@ -36,6 +36,7 @@ public class UsageService {
                     .uri(uri)
                         .retrieve()
                             .bodyToMono(TaskUsageReport.class);
+                            
     }
 
     protected Mono<AppUsageReport> getApplicationReport(String butlerRoute) {

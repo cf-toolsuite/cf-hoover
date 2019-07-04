@@ -54,6 +54,7 @@ public class DemographicsService {
                     .uri(baseUrl + "/snapshot/demographics")
                     .retrieve()
                     .bodyToMono(Demographic.class)
+                    .timeout(settings.getTimeout(), Mono.just(Demographic.builder().build()))
                     .map(d -> Demographic
                                     .builder()
                                         .foundation(foundation)

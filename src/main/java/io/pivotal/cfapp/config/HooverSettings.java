@@ -1,5 +1,6 @@
 package io.pivotal.cfapp.config;
 
+import java.time.Duration;
 import java.util.Map;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -16,5 +17,6 @@ public class HooverSettings {
 
 	private Map<String, String> butlers;
 	private boolean sslValidationSkipped;
+	private Duration timeout = Duration.ofSeconds(5);
 
 }
