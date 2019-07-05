@@ -6,13 +6,16 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import io.pivotal.cfapp.config.HooverSettings;
 import io.pivotal.cfapp.domain.Demographic;
 import io.pivotal.cfapp.domain.Demographics;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@Slf4j
 @Service
 public class DemographicsService {
 
@@ -49,12 +52,20 @@ public class DemographicsService {
     }
 
     protected Mono<Demographic> obtainDemographics(String foundation, String baseUrl) {
+        String uri = baseUrl + "/snapshot/demographics";
         return client
                 .get()
-                    .uri(baseUrl + "/snapshot/demographics")
+                    .uri(uri)
                     .retrieve()
                     .bodyToMono(Demographic.class)
                     .timeout(settings.getTimeout(), Mono.just(Demographic.builder().build()))
+                    .onErrorResume(
+                        WebClientResponseException.class,
+                        e -> {
+                            log.warn("Could not obtain Demographic from {}", uri);
+                            return Mono.just(Demographic.builder().build());
+                        }
+                    )
                     .map(d -> Demographic
                                     .builder()
                                         .foundation(foundation)

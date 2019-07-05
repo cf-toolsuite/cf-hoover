@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import io.pivotal.cfapp.config.HooverSettings;
 import io.pivotal.cfapp.domain.AppDetail;
@@ -22,9 +23,11 @@ import io.pivotal.cfapp.report.AppDetailCsvReport;
 import io.pivotal.cfapp.report.ServiceInstanceDetailCsvReport;
 import io.pivotal.cfapp.task.AppDetailRetrievedEvent;
 import io.pivotal.cfapp.task.ServiceInstanceDetailRetrievedEvent;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@Slf4j
 @Service
 public class SnapshotService {
 
@@ -79,21 +82,37 @@ public class SnapshotService {
     }
 
     protected Mono<SnapshotDetail> obtainSnapshotDetail(String baseUrl) {
+        String uri = baseUrl + "/snapshot/detail";
         return client
                 .get()
-                    .uri(baseUrl + "/snapshot/detail")
+                    .uri(uri)
                     .retrieve()
                     .bodyToMono(SnapshotDetail.class)
-                    .timeout(settings.getTimeout(), Mono.just(SnapshotDetail.builder().build()));
+                    .timeout(settings.getTimeout(), Mono.just(SnapshotDetail.builder().build()))
+                    .onErrorResume(
+                        WebClientResponseException.class,
+                        e -> {
+                            log.warn("Could not obtain SnapshotDetail from {}", uri);
+                            return Mono.just(SnapshotDetail.builder().build());
+                        }
+                    );
     }
 
     protected Mono<SnapshotSummary> obtainSnapshotSummary(String baseUrl) {
+        String uri = baseUrl + "/snapshot/summary";
         return client
                 .get()
-                    .uri(baseUrl + "/snapshot/summary")
+                    .uri(uri)
                     .retrieve()
                     .bodyToMono(SnapshotSummary.class)
-                    .timeout(settings.getTimeout(), Mono.just(SnapshotSummary.builder().build()));
+                    .timeout(settings.getTimeout(), Mono.just(SnapshotSummary.builder().build()))
+                    .onErrorResume(
+                        WebClientResponseException.class,
+                        e -> {
+                            log.warn("Could not obtain SnapshotSummary from {}", uri);
+                            return Mono.just(SnapshotSummary.builder().build());
+                        }
+                    );
     }
 
     public Mono<SnapshotDetail> assembleSnapshotDetail() {

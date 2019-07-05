@@ -6,29 +6,46 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Builder.Default;
+import lombok.Getter;
 
-@Data
+@Builder
+@Getter
 @JsonPropertyOrder({"report_time", "monthly_reports", "yearly_reports"})
 public class AppUsageReport {
 
     @JsonProperty("report_time")
     private String reportTime;
 
+    @Default
     @JsonProperty("monthly_reports")
-    private List<AppUsageMonthly> monthlyReports;
+    private List<AppUsageMonthly> monthlyReports = new ArrayList<>();
 
+    @Default
     @JsonProperty("yearly_reports")
-    private List<AppUsageYearly> yearlyReports;
+    private List<AppUsageYearly> yearlyReports = new ArrayList<>();
+
+    @JsonCreator
+    public AppUsageReport(
+        @JsonProperty("report_time") String reportTime,
+        @JsonProperty("monthly_reports") List<AppUsageMonthly> monthlyReports,
+        @JsonProperty("yearly_reports") List<AppUsageYearly> yearlyReports) {
+        this.reportTime = reportTime;
+        this.monthlyReports = monthlyReports;
+        this.yearlyReports = yearlyReports;
+    }
+
 
     public static AppUsageReport aggregate(List<AppUsageReport> source) {
-        AppUsageReport report = new AppUsageReport();
+        AppUsageReportBuilder report = AppUsageReport.builder();
         List<AppUsageMonthly> monthlyReports = new CopyOnWriteArrayList<>();
         List<AppUsageYearly> yearlyReports = new CopyOnWriteArrayList<>();
-        report.setReportTime(LocalDateTime.now().toString());
+        report.reportTime(LocalDateTime.now().toString());
         source.forEach(aur -> {
             if (monthlyReports.isEmpty()) {
                 monthlyReports.addAll(aur.getMonthlyReports());
@@ -56,11 +73,11 @@ public class AppUsageReport {
         List<AppUsageMonthly> sortedMonthlyReports = new ArrayList<>();
         sortedMonthlyReports.addAll(monthlyReports);
         sortedMonthlyReports.sort(Comparator.comparing(AppUsageMonthly::getYearAndMonth));
-        report.setMonthlyReports(sortedMonthlyReports);
+        report.monthlyReports(sortedMonthlyReports);
         List<AppUsageYearly> sortedYearlyReports = new ArrayList<>();
         sortedYearlyReports.addAll(yearlyReports);
         sortedYearlyReports.sort(Comparator.comparing(AppUsageYearly::getYear));
-        report.setYearlyReports(sortedYearlyReports);
-        return report;
+        report.yearlyReports(sortedYearlyReports);
+        return report.build();
     }
 }
