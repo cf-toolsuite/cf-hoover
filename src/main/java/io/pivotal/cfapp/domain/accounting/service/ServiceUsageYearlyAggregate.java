@@ -1,7 +1,10 @@
 package io.pivotal.cfapp.domain.accounting.service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -61,25 +64,42 @@ public class ServiceUsageYearlyAggregate {
     }
 
     @JsonIgnore
-    public boolean combine(ServiceUsageYearlyAggregate usage) {
-        boolean combined = false;
-        if (usage.getYear().equals(year) && usage.getServiceName().equals(serviceName)) {
-            this.averageInstances += usage.getAverageInstances();
-            this.maximumInstances += usage.getMaximumInstances();
-            this.durationInHours += usage.getDurationInHours();
-            for (ServicePlanUsageYearly pu: usage.getPlans()) {
+    public ServiceUsageYearlyAggregate combine(ServiceUsageYearlyAggregate usage) {
+        ServiceUsageYearlyAggregate result = null;
+        if (usage == null) {
+            result = this;
+        } else if (usage.getYear().equals(year) && usage.getServiceName().equals(serviceName)) {
+            Map<Integer, ServicePlanUsageYearly> yearlyPlanUsage = new HashMap<>();
+            usage.getPlans().forEach(pu -> {
                 for (ServicePlanUsageYearly spu: plans) {
-                    if(!spu.combine(pu)) {
-                        plans.add(pu);
+                    if (yearlyPlanUsage.isEmpty()) {
+                        yearlyPlanUsage.put(spu.getYear(), spu);
+                    } else {
+                        ServicePlanUsageYearly existing = yearlyPlanUsage.get(spu.getYear());
+                        yearlyPlanUsage.put(spu.getYear(), spu.combine(existing));
                     }
                 }
-            }
+            });
+            List<ServicePlanUsageYearly> sortedYearlyPlans = new ArrayList<>();
+            sortedYearlyPlans.addAll(yearlyPlanUsage.values());
+            sortedYearlyPlans.sort(Comparator.comparing(ServicePlanUsageYearly::getYear));
+            String newServiceGuid = usage.getServiceGuid();
             if (!usage.getServiceGuid().contains(this.serviceGuid)) {
-                String newGuid = String.join(",", this.serviceGuid, usage.getServiceGuid());
-                this.serviceGuid = newGuid;
+                newServiceGuid = String.join(",", this.serviceGuid, usage.getServiceGuid());
             }
-            combined = true;
+            result =
+                ServiceUsageYearlyAggregate
+                    .builder()
+                    .serviceName(usage.getServiceName())
+                    .serviceGuid(newServiceGuid)
+                    .averageInstances(this.averageInstances + usage.getAverageInstances())
+                    .maximumInstances(this.maximumInstances + usage.getMaximumInstances())
+                    .durationInHours(this.durationInHours + usage.getDurationInHours())
+                    .plans(sortedYearlyPlans)
+                    .build();
+        } else {
+            result = usage;
         }
-        return combined;
+        return result;
     }
 }

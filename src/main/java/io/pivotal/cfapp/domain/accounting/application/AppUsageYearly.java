@@ -42,14 +42,22 @@ public class AppUsageYearly {
     }
 
     @JsonIgnore
-    public boolean combine(AppUsageYearly usage) {
-        boolean combined = false;
-        if (usage.getYear().equals(year)) {
-            this.averageAppInstances += usage.getAverageAppInstances();
-            this.maximumAppInstances += usage.getMaximumAppInstances();
-            this.appInstanceHours += usage.getAppInstanceHours();
-            combined = true;
+    public AppUsageYearly combine(AppUsageYearly usage) {
+        AppUsageYearly result = null;
+        if (usage == null) {
+            result = this;
+        } else if (usage.getYear().equals(year)) {
+            result =
+                AppUsageYearly
+                    .builder()
+                        .year(usage.getYear())
+                        .appInstanceHours(this.appInstanceHours + usage.getAppInstanceHours())
+                        .averageAppInstances(this.averageAppInstances + usage.getAverageAppInstances())
+                        .maximumAppInstances(this.maximumAppInstances + usage.getMaximumAppInstances())
+                        .build();
+        } else {
+            result = usage;
         }
-        return combined;
+        return result;
     }
 }

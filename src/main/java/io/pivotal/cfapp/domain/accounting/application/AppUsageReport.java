@@ -3,8 +3,9 @@ package io.pivotal.cfapp.domain.accounting.application;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -43,39 +44,33 @@ public class AppUsageReport {
 
     public static AppUsageReport aggregate(List<AppUsageReport> source) {
         AppUsageReportBuilder report = AppUsageReport.builder();
-        List<AppUsageMonthly> monthlyReports = new CopyOnWriteArrayList<>();
-        List<AppUsageYearly> yearlyReports = new CopyOnWriteArrayList<>();
+        Map<String, AppUsageMonthly> monthlyReports = new HashMap<>();
+        Map<Integer, AppUsageYearly> yearlyReports = new HashMap<>();
         report.reportTime(LocalDateTime.now().toString());
         source.forEach(aur -> {
-            if (monthlyReports.isEmpty()) {
-                monthlyReports.addAll(aur.getMonthlyReports());
-            } else {
-                for (AppUsageMonthly mr: monthlyReports){
-                    for (AppUsageMonthly smr: aur.getMonthlyReports()) {
-                        if (!mr.combine(smr)) {
-                            monthlyReports.add(smr);
-                        }
+                for (AppUsageMonthly smr: aur.getMonthlyReports()) {
+                    if (monthlyReports.isEmpty()) {
+                        monthlyReports.put(smr.getYearAndMonth(), smr);
+                    } else {
+                        AppUsageMonthly existing = monthlyReports.get(smr.getYearAndMonth());
+                        monthlyReports.put(smr.getYearAndMonth(), smr.combine(existing));
                     }
                 }
-            }
-            if (yearlyReports.isEmpty()) {
-                yearlyReports.addAll(aur.getYearlyReports());
-            } else {
-                for (AppUsageYearly yr: yearlyReports){
-                    for (AppUsageYearly syr: aur.getYearlyReports()) {
-                        if (!yr.combine(syr)) {
-                            yearlyReports.add(syr);
-                        }
+                for (AppUsageYearly syr: aur.getYearlyReports()) {
+                    if (yearlyReports.isEmpty()) {
+                        yearlyReports.put(syr.getYear(), syr);
+                    } else {
+                        AppUsageYearly existing = yearlyReports.get(syr.getYear());
+                        yearlyReports.put(syr.getYear(), syr.combine(existing));
                     }
                 }
-            }
         });
         List<AppUsageMonthly> sortedMonthlyReports = new ArrayList<>();
-        sortedMonthlyReports.addAll(monthlyReports);
+        sortedMonthlyReports.addAll(monthlyReports.values());
         sortedMonthlyReports.sort(Comparator.comparing(AppUsageMonthly::getYearAndMonth));
         report.monthlyReports(sortedMonthlyReports);
         List<AppUsageYearly> sortedYearlyReports = new ArrayList<>();
-        sortedYearlyReports.addAll(yearlyReports);
+        sortedYearlyReports.addAll(yearlyReports.values());
         sortedYearlyReports.sort(Comparator.comparing(AppUsageYearly::getYear));
         report.yearlyReports(sortedYearlyReports);
         return report.build();

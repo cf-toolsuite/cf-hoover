@@ -47,15 +47,24 @@ public class TaskUsageMonthly {
     }
 
     @JsonIgnore
-    public boolean combine(TaskUsageMonthly usage) {
-        boolean combined = false;
-        if (usage.getMonth().equals(month) && usage.getYear().equals(year)) {
-            this.totalTaskRuns += usage.getTotalTaskRuns();
-            this.maximumConcurrentTasks += usage.getMaximumConcurrentTasks();
-            this.taskHours += usage.getTaskHours();
-            combined = true;
+    public TaskUsageMonthly combine(TaskUsageMonthly usage) {
+        TaskUsageMonthly result = null;
+        if (usage == null) {
+            result = this;
+        } else if (usage.getMonth().equals(month) && usage.getYear().equals(year)) {
+            result =
+                TaskUsageMonthly
+                    .builder()
+                        .year(usage.getYear())
+                        .month(usage.getMonth())
+                        .totalTaskRuns(this.totalTaskRuns + usage.getTotalTaskRuns())
+                        .maximumConcurrentTasks(this.maximumConcurrentTasks + usage.getMaximumConcurrentTasks())
+                        .taskHours(this.taskHours + usage.getTaskHours())
+                        .build();
+        } else {
+            result = usage;
         }
-        return combined;
+        return result;
     }
 
     @JsonIgnore

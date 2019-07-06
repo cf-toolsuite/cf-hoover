@@ -38,21 +38,32 @@ public class ServicePlanUsageMonthly {
     }
 
     @JsonIgnore
-    public boolean combine(ServicePlanUsageMonthly usage) {
-        boolean combined = false;
-        if (usage.getServicePlanName().equals(servicePlanName)) {
+    public ServicePlanUsageMonthly combine(ServicePlanUsageMonthly usage) {
+        ServicePlanUsageMonthly result = null;
+        if (usage == null) {
+            result = this;
+        } else if (usage.getServicePlanName().equals(servicePlanName)) {
+            List<ServiceUsageMonthly> u = new ArrayList<>();
             for (ServiceUsageMonthly su: usage.getUsages()) {
                 for (ServiceUsageMonthly suu: usages) {
-                    if(!suu.combine(su)) {
-                        usages.add(su);
-                    }
+                    u.add(suu.combine(su));
                 }
             }
-            String newPlanGuid = String.join(",", this.servicePlanGuid, usage.getServicePlanGuid());
-            this.servicePlanGuid = newPlanGuid;
-            combined = true;
+            String newServicePlanGuid = usage.getServicePlanGuid();
+            if (!usage.getServicePlanGuid().contains(this.servicePlanGuid)) {
+                newServicePlanGuid = String.join(",", this.servicePlanGuid, usage.getServicePlanGuid());
+            }
+            result =
+                ServicePlanUsageMonthly
+                    .builder()
+                        .servicePlanGuid(newServicePlanGuid)
+                        .servicePlanName(usage.getServicePlanName())
+                        .usages(u)
+                        .build();
+        } else {
+            result = usage;
         }
-        return combined;
+        return result;
     }
 
 }

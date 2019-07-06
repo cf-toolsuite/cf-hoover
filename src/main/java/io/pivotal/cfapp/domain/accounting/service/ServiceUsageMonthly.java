@@ -47,15 +47,24 @@ public class ServiceUsageMonthly {
     }
 
     @JsonIgnore
-    public boolean combine(ServiceUsageMonthly usage) {
-        boolean combined = false;
-        if (usage.getYear().equals(year) && usage.getMonth().equals(month)) {
-            this.durationInHours += usage.getDurationInHours();
-            this.averageInstances += usage.getAverageInstances();
-            this.maximumInstances += usage.getMaximumInstances();
-            combined = true;
+    public ServiceUsageMonthly combine(ServiceUsageMonthly usage) {
+        ServiceUsageMonthly result = null;
+        if (usage == null) {
+            result = this;
+        } else if (usage.getYear().equals(year) && usage.getMonth().equals(month)) {
+            result =
+                ServiceUsageMonthly
+                    .builder()
+                        .month(usage.getMonth())
+                        .year(usage.getYear())
+                        .durationInHours(this.durationInHours + usage.getDurationInHours())
+                        .averageInstances(this.averageInstances + usage.getAverageInstances())
+                        .maximumInstances(this.maximumInstances + usage.getMaximumInstances())
+                        .build();
+        } else {
+            result = usage;
         }
-        return combined;
+        return result;
     }
 
     @JsonIgnore

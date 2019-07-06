@@ -48,15 +48,24 @@ public class AppUsageMonthly {
 
 
     @JsonIgnore
-    public boolean combine(AppUsageMonthly usage) {
-        boolean combined = false;
-        if (usage.getMonth().equals(month) && usage.getYear().equals(year)) {
-            this.averageAppInstances += usage.getAverageAppInstances();
-            this.maximumAppInstances += usage.getMaximumAppInstances();
-            this.appInstanceHours += usage.getAppInstanceHours();
-            combined = true;
+    public AppUsageMonthly combine(AppUsageMonthly usage) {
+        AppUsageMonthly result = null;
+        if (usage == null) {
+            result = this;
+        } else if (usage.getMonth().equals(month) && usage.getYear().equals(year)) {
+            result =
+                AppUsageMonthly
+                    .builder()
+                        .year(usage.getYear())
+                        .month(usage.getMonth())
+                        .appInstanceHours(this.appInstanceHours + usage.getAppInstanceHours())
+                        .averageAppInstances(this.averageAppInstances + usage.getAverageAppInstances())
+                        .maximumAppInstances(this.maximumAppInstances + usage.getMaximumAppInstances())
+                        .build();
+        } else {
+            result = usage;
         }
-        return combined;
+        return result;
     }
 
     @JsonIgnore

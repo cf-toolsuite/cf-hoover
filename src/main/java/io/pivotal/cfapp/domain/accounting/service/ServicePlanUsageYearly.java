@@ -52,17 +52,29 @@ public class ServicePlanUsageYearly {
     }
 
     @JsonIgnore
-    public boolean combine(ServicePlanUsageYearly usage) {
-        boolean combined = false;
-        if (usage.getYear().equals(year) && usage.getServicePlanName().equals(servicePlanName)) {
-            this.durationInHours += usage.getDurationInHours();
-            this.averageInstances += usage.getAverageInstances();
-            this.maximumInstances += usage.getMaximumInstances();
-            String newPlanGuid = String.join(",", this.servicePlanGuid, usage.getServicePlanGuid());
-            this.servicePlanGuid = newPlanGuid;
-            combined = true;
+    public ServicePlanUsageYearly combine(ServicePlanUsageYearly usage) {
+        ServicePlanUsageYearly result = null;
+        if (usage == null) {
+            result = this;
+        } else if (usage.getYear().equals(year) && usage.getServicePlanName().equals(servicePlanName)) {
+            String newServicePlanGuid = usage.getServicePlanGuid();
+            if (!usage.getServicePlanGuid().contains(this.servicePlanGuid)) {
+                newServicePlanGuid = String.join(",", this.servicePlanGuid, usage.getServicePlanGuid());
+            }
+            result =
+                ServicePlanUsageYearly
+                    .builder()
+                        .year(usage.getYear())
+                        .servicePlanGuid(newServicePlanGuid)
+                        .servicePlanName(usage.getServicePlanName())
+                        .durationInHours(this.durationInHours + usage.getDurationInHours())
+                        .averageInstances(this.averageInstances + usage.getAverageInstances())
+                        .maximumInstances(this.maximumInstances + usage.getMaximumInstances())
+                        .build();
+        } else {
+            result = usage;
         }
-        return combined;
+        return result;
     }
 
 }

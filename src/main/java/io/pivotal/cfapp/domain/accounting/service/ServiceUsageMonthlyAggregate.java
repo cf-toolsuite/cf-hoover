@@ -2,7 +2,10 @@
 package io.pivotal.cfapp.domain.accounting.service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -45,30 +48,55 @@ public class ServiceUsageMonthlyAggregate {
     }
 
     @JsonIgnore
-    public boolean combine(ServiceUsageMonthlyAggregate usage) {
-        boolean combined = false;
-        if (usage.getServiceName().equals(serviceName)) {
-            for (ServiceUsageMonthly su: usage.getUsages()) {
+    public ServiceUsageMonthlyAggregate combine(ServiceUsageMonthlyAggregate usage) {
+        ServiceUsageMonthlyAggregate result = null;
+        if (usage == null) {
+            result = this;
+        } else if (usage.getServiceName().equals(serviceName)) {
+            Map<String, ServiceUsageMonthly> monthlyUsage = new HashMap<>();
+            Map<String, ServicePlanUsageMonthly> monthlyPlans = new HashMap<>();
+            usage.getUsages().forEach(su -> {
                 for (ServiceUsageMonthly suu: usages) {
-                    if(!suu.combine(su)) {
-                        usages.add(su);
+                    if (monthlyUsage.isEmpty()) {
+                        monthlyUsage.put(suu.getYearAndMonth(), suu);
+                    } else {
+                        ServiceUsageMonthly existing = monthlyUsage.get(suu.getYearAndMonth());
+                        monthlyUsage.put(suu.getYearAndMonth(), suu.combine(existing));
                     }
                 }
-            }
-            for (ServicePlanUsageMonthly pu: usage.getPlans()) {
+            });
+            usage.getPlans().forEach(pu -> {
                 for (ServicePlanUsageMonthly spu: plans) {
-                    if(!spu.combine(pu)) {
-                        plans.add(pu);
+                    if (monthlyPlans.isEmpty()) {
+                        monthlyPlans.put(spu.getServicePlanName(), spu);
+                    } else {
+                        ServicePlanUsageMonthly existing = monthlyPlans.get(spu.getServicePlanName());
+                        monthlyPlans.put(spu.getServicePlanName(), spu.combine(existing));
                     }
                 }
-            }
+            });
+            List<ServiceUsageMonthly> sortedMonthlyUsage = new ArrayList<>();
+            sortedMonthlyUsage.addAll(monthlyUsage.values());
+            sortedMonthlyUsage.sort(Comparator.comparing(ServiceUsageMonthly::getYearAndMonth));
+            List<ServicePlanUsageMonthly> sortedMonthlyPlans = new ArrayList<>();
+            sortedMonthlyPlans.addAll(monthlyPlans.values());
+            sortedMonthlyPlans.sort(Comparator.comparing(ServicePlanUsageMonthly::getServicePlanName));
+            String newServiceGuid = usage.getServiceGuid();
             if (!usage.getServiceGuid().contains(this.serviceGuid)) {
-                String newGuid = String.join(",", this.serviceGuid, usage.getServiceGuid());
-                this.serviceGuid = newGuid;
+                newServiceGuid = String.join(",", this.serviceGuid, usage.getServiceGuid());
             }
-            combined = true;
+            result =
+                ServiceUsageMonthlyAggregate
+                    .builder()
+                        .serviceGuid(newServiceGuid)
+                        .serviceName(usage.getServiceName())
+                        .usages(sortedMonthlyUsage)
+                        .plans(sortedMonthlyPlans)
+                        .build();
+        } else {
+            result = usage;
         }
-        return combined;
+        return result;
     }
 
 }

@@ -2,8 +2,10 @@ package io.pivotal.cfapp.domain.accounting.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -42,35 +44,35 @@ public class ServiceUsageReport {
 
     public static ServiceUsageReport aggregate(List<ServiceUsageReport> source) {
         ServiceUsageReportBuilder report = ServiceUsageReport.builder();
-        List<ServiceUsageMonthlyAggregate> monthlyReports = new CopyOnWriteArrayList<>();
-        List<ServiceUsageYearlyAggregate> yearlyReport = new CopyOnWriteArrayList<>();
+        Map<String, ServiceUsageMonthlyAggregate> monthlyReports = new HashMap<>();
+        Map<String, ServiceUsageYearlyAggregate> yearlyReport = new HashMap<>();
         report.reportTime(LocalDateTime.now().toString());
-        source.forEach(aur -> {
-            if (monthlyReports.isEmpty()) {
-                monthlyReports.addAll(aur.getMonthlyServiceReports());
-            } else {
-                for (ServiceUsageMonthlyAggregate mr: monthlyReports) {
-                    for (ServiceUsageMonthlyAggregate smr: aur.getMonthlyServiceReports()) {
-                        if (!mr.combine(smr)) {
-                            monthlyReports.add(smr);
-                        }
-                    }
+        source.forEach(sur -> {
+            for (ServiceUsageMonthlyAggregate smr: sur.getMonthlyServiceReports()) {
+                if (monthlyReports.isEmpty()) {
+                    monthlyReports.put(smr.getServiceName(), smr);
+                } else {
+                    ServiceUsageMonthlyAggregate existing = monthlyReports.get(smr.getServiceName());
+                    monthlyReports.put(smr.getServiceName(), smr.combine(existing));
                 }
             }
-            if (yearlyReport.isEmpty()) {
-                yearlyReport.addAll(aur.getYearlyServiceReport());
-            } else {
-                for (ServiceUsageYearlyAggregate yr: yearlyReport){
-                    for (ServiceUsageYearlyAggregate syr: aur.getYearlyServiceReport()) {
-                        if (!yr.combine(syr)) {
-                            yearlyReport.add(syr);
-                        }
-                    }
+            for (ServiceUsageYearlyAggregate syr: sur.getYearlyServiceReport()) {
+                if (yearlyReport.isEmpty()) {
+                    yearlyReport.put(syr.getServiceName(), syr);
+                } else {
+                    ServiceUsageYearlyAggregate existing = yearlyReport.get(syr.getServiceName());
+                    yearlyReport.put(syr.getServiceName(), syr.combine(existing));
                 }
             }
         });
-        report.monthlyServiceReports(monthlyReports);
-        report.yearlyServiceReport(yearlyReport);
+        List<ServiceUsageMonthlyAggregate> sortedMonthlyReports = new ArrayList<>();
+        sortedMonthlyReports.addAll(monthlyReports.values());
+        sortedMonthlyReports.sort(Comparator.comparing(ServiceUsageMonthlyAggregate::getServiceName));
+        report.monthlyServiceReports(sortedMonthlyReports);
+        List<ServiceUsageYearlyAggregate> sortedYearlyReports = new ArrayList<>();
+        sortedYearlyReports.addAll(yearlyReport.values());
+        sortedYearlyReports.sort(Comparator.comparing(ServiceUsageYearlyAggregate::getServiceName));
+        report.yearlyServiceReport(sortedYearlyReports);
         return report.build();
     }
 
