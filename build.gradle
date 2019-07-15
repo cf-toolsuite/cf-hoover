@@ -1,9 +1,9 @@
 plugins {
-    id 'com.github.ben-manes.versions' version '0.21.0'
     id 'com.gorylenko.gradle-git-properties' version '2.0.0'
-    id 'org.springframework.boot' version '2.1.6.RELEASE'
+    id 'org.springframework.boot' version '2.2.0.M4'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
-    id 'java'
+    id 'com.github.ben-manes.versions' version '0.21.0'
+	id 'java'
     id 'jacoco'
     id 'com.github.spotbugs' version '2.0.0'
 }
@@ -38,16 +38,15 @@ sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
 	mavenCentral()
+    maven { url "https://repo.spring.io/snapshot" }
+	maven { url "https://repo.spring.io/milestone" }
 }
 
 ext {
 	set('springCloudServicesVersion', '2.1.3.RELEASE')
-	set('springCloudVersion', 'Greenwich.SR1')
+	set('springCloudVersion', 'Hoxton.M1')
     set('spring-cloud-services-connectors.version', '2.1.3.RELEASE')
-	set('jackson.version', '2.9.9')
-	set('junit-jupiter.version', '5.4.2')
-    set('lombok.version', '1.18.8')
-	set('mockito.version', '2.27.0')
+    set('spring-framework.version', '5.2.0.BUILD-SNAPSHOT')
 }
 
 dependencyManagement {
@@ -67,7 +66,7 @@ configurations {
 }
 
 jacoco {
-	toolVersion = "0.8.3"
+	toolVersion = "0.8.4"
 }
 
 jacocoTestReport {
@@ -82,6 +81,10 @@ test {
 	useJUnitPlatform()
 	testLogging {
 		events "passed", "skipped", "failed"
+        exceptionFormat "full"
+        showCauses true
+        showExceptions true
+        showStackTraces true
 	}
 }
 
@@ -97,8 +100,8 @@ dependencies {
     implementation('io.pivotal.spring.cloud:spring-cloud-services-starter-config-client')
     implementation('io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry')
     implementation('org.springframework.boot:spring-boot-starter-log4j2')
-    implementation('io.projectreactor:reactor-core:3.2.10.RELEASE')
-    implementation('io.projectreactor.netty:reactor-netty:0.8.9.RELEASE')
+    implementation('io.projectreactor:reactor-core:3.3.0.M1')
+    implementation('io.projectreactor.netty:reactor-netty:0.9.0.M2')
     implementation('io.micrometer:micrometer-registry-prometheus')
     testImplementation('io.projectreactor:reactor-test')
     testImplementation('org.junit.jupiter:junit-jupiter-api')
