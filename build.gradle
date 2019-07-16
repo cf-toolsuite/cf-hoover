@@ -101,7 +101,7 @@ dependencies {
     implementation('io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry')
     implementation('org.springframework.boot:spring-boot-starter-log4j2')
     implementation('io.projectreactor:reactor-core:3.3.0.M1')
-    implementation('io.projectreactor.netty:reactor-netty:0.9.0.M2')
+    implementation('io.projectreactor.netty:reactor-netty:0.9.0.BUILD-SNAPSHOT')
     implementation('io.micrometer:micrometer-registry-prometheus')
     testImplementation('io.projectreactor:reactor-test')
     testImplementation('org.junit.jupiter:junit-jupiter-api')
