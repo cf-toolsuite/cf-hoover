@@ -7,10 +7,10 @@ jdk:
 build:
   ci:
     - sdk use gradle 5.5
-    - mkdir -p shippable/testresults
-    - mkdir -p shippable/codecoverage
+    #- mkdir -p shippable/testresults
+    #- mkdir -p shippable/codecoverage
     - gradle clean build
   on_failure:
     - gradle dependencies
-  always:
-    - cp -r build/reports/tests/test shippable/codecoverage
+  #always:
+    #- cp -r build/reports/tests/test shippable/codecoverage
