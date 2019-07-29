@@ -1,6 +1,6 @@
 # Pivotal Application Service > Hoover
 
-[![Build Status](https://travis-ci.org/pacphi/cf-hoover.svg?branch=master)](https://travis-ci.org/pacphi/cf-hoover) [![Known Vulnerabilities](https://snyk.io/test/github/pacphi/cf-hoover/badge.svg)](https://snyk.io/test/github/pacphi/cf-hoover)
+[![Beta](https://img.shields.io/badge/Stability-Beta-orange)](https://img.shields.io/badge/Stability-Beta-orange) [![Build Status](https://travis-ci.org/pacphi/cf-hoover.svg?branch=master)](https://travis-ci.org/pacphi/cf-hoover) [![Known Vulnerabilities](https://snyk.io/test/github/pacphi/cf-hoover/badge.svg?style=plastic)](https://snyk.io/test/github/pacphi/cf-hoover) [![Release](https://jitpack.io/v/pacphi/cf-hoover.svg)](https://jitpack.io/#pacphi/cf-hoover/master-SNAPSHOT) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 > Status: Beta
 
