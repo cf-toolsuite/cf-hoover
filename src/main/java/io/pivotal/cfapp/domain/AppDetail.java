@@ -30,6 +30,7 @@ public class AppDetail {
 	private String appId;
 	private String appName;
 	private String buildpack;
+	private String buildpackVersion;
 	private String image;
 	private String stack;
 	@Default
@@ -50,7 +51,7 @@ public class AppDetail {
 
 	public String toCsv() {
 		return String.join(",", wrap(getFoundation()), wrap(getOrganization()), wrap(getSpace()), wrap(getAppId()), wrap(getAppName()),
-				wrap(getBuildpack()), wrap(getImage()), wrap(getStack()), wrap(String.valueOf(getRunningInstances())),
+				wrap(getBuildpack()), wrap(getBuildpackVersion()), wrap(getImage()), wrap(getStack()), wrap(String.valueOf(getRunningInstances())),
 				wrap(String.valueOf(getTotalInstances())), wrap(Double.toString(toGigabytes(getMemoryUsage()))),
 				wrap(Double.toString(toGigabytes(getDiskUsage()))),
 				(wrap(String.join(",", getUrls() != null ? getUrls(): Collections.emptyList()))),
@@ -59,7 +60,7 @@ public class AppDetail {
 				wrap(getRequestedState()));
 	}
 
-	private String wrap(String value) {
+	private static String wrap(String value) {
 		return value != null ? StringUtils.wrap(value, '"') : StringUtils.wrap("", '"');
 	}
 
@@ -68,7 +69,7 @@ public class AppDetail {
 	}
 
 	public static String headers() {
-		return String.join(",", "foundation", "organization", "space", "application id", "application name", "buildpack", "image",
+		return String.join(",", "foundation", "organization", "space", "application id", "application name", "buildpack", "buildpack version", "image",
 				"stack", "running instances", "total instances", "memory used (in gb)", "disk used (in gb)", "urls", "last pushed", "last event",
 				"last event actor", "last event time", "requested state");
 	}
@@ -82,6 +83,7 @@ public class AppDetail {
 						.appId(detail.getAppId())
 						.appName(detail.getAppName())
 						.buildpack(detail.getBuildpack())
+						.buildpackVersion(detail.getBuildpackVersion())
 						.image(detail.getImage())
 						.stack(detail.getStack())
 						.runningInstances(detail.getRunningInstances())

@@ -1,8 +1,8 @@
 plugins {
-    id 'com.gorylenko.gradle-git-properties' version '2.0.0'
-    id 'org.springframework.boot' version '2.2.0.M4'
+    id 'com.gorylenko.gradle-git-properties' version '2.1.0'
+    id 'org.springframework.boot' version '2.2.0.M5'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
-    id 'com.github.ben-manes.versions' version '0.21.0'
+    id 'com.github.ben-manes.versions' version '0.22.0'
     id 'io.franzbecker.gradle-lombok' version '3.1.0'
 	id 'java'
     id 'jacoco'
@@ -58,7 +58,7 @@ ext {
 	set('springCloudServicesVersion', '2.1.4.RELEASE')
 	set('springCloudVersion', 'Hoxton.M1')
     set('spring-cloud-services-connectors.version', '2.1.4.RELEASE')
-    set('spring-framework.version', '5.2.0.BUILD-SNAPSHOT')
+    set('spring-framework.version', '5.2.0.RC1')
 }
 
 dependencyManagement {
@@ -112,8 +112,8 @@ dependencies {
     implementation('io.pivotal.spring.cloud:spring-cloud-services-starter-config-client')
     implementation('io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry')
     implementation('org.springframework.boot:spring-boot-starter-log4j2')
-    implementation('io.projectreactor:reactor-core:3.3.0.M1')
-    implementation('io.projectreactor.netty:reactor-netty:0.9.0.M2')
+    implementation('io.projectreactor:reactor-core:3.3.0.M3')
+    implementation('io.projectreactor.netty:reactor-netty:0.9.0.M3')
     implementation('io.micrometer:micrometer-registry-prometheus')
     testImplementation('io.projectreactor:reactor-test')
     testImplementation('org.junit.jupiter:junit-jupiter-api')
