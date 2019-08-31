@@ -6,6 +6,22 @@
 
 You're already aware of and are using [cf-butler](https://github.com/pacphi/cf-butler) to help report on and manage application and service instances.  Wouldn't it be nice to easily aggregate reporting across multiple foundations? This is `cf-hoover`'s raison d'être.
 
+# Table of Contents
+
+  * [Prerequisites](#prerequisites)
+  * [Tools](#tools)
+  * [Clone](#clone)
+  * [How to configure](#how-to-configure)
+      * [Managing external configuration](#managing-external-configuration)
+      * [Minimum required keys](#minimum-required-keys)
+      * [General configuration notes](#general-configuration-notes)
+  * [How to Build](#how-to-build)
+  * [How to Run with Gradle](#how-to-run-with-gradle)
+  * [How to deploy to Pivotal Application Service](#how-to-deploy-to-pivotal-application-service)
+      * [Using scripts](#using-scripts)
+  * [Endpoints](#endpoints)
+      * [Snapshot](#snapshot)
+      * [Accounting](#accounting)
 
 ## Prerequisites
 
@@ -113,7 +129,7 @@ Set an additional property before launching `cf-hoover`
 
 Please review the [manifest.yml](manifest.yml) before deploying.
 
-### using scripts
+### Using scripts
 
 Deploy the app (bound to an instance of Spring Cloud Config Server)
 
