@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration>
+<Configuration status="debug">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout
-                pattern="%style{%d{ISO8601}}{black} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%C{1.}}{bright,yellow}: %msg%n%throwable" />
+                pattern="%style{%d{ISO8601}}{black} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%c{1.}}{bright,yellow}: %msg%n%throwable" />
         </Console>
 
-        <RollingFile name="RollingFile"
+        <RollingRandomAccessFile name="RollingFile"
             fileName="./logs/cf-hoover.log"
             filePattern="./logs/$${date:yyyy-MM}/cf-hoover-%d{-dd-MMMM-yyyy}-%i.log.gz">
             <PatternLayout>
@@ -15,11 +15,10 @@
             <Policies>
                 <!-- rollover on startup, daily and when the file reaches 10 MegaBytes -->
                 <OnStartupTriggeringPolicy />
-                <SizeBasedTriggeringPolicy
-                    size="10 MB" />
-                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10 MB" />
+                <DefaultRolloverStrategy max="30"/>
             </Policies>
-        </RollingFile>
+        </RollingRandomAccessFile>
     </Appenders>
 
     <Loggers>
