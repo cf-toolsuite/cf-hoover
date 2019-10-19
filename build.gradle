@@ -1,13 +1,15 @@
 plugins {
     id 'com.gorylenko.gradle-git-properties' version '2.2.0'
-    id 'org.springframework.boot' version '2.2.0.M6'
+    id 'org.springframework.boot' version '2.2.0.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
-    id 'com.github.ben-manes.versions' version '0.26.0'
+    id 'com.github.ben-manes.versions' version '0.27.0'
     id 'io.franzbecker.gradle-lombok' version '3.2.0'
 	id 'java'
     id 'jacoco'
+    id 'com.google.cloud.tools.jib' version '1.7.0'
     id 'maven-publish'
     id 'com.github.spotbugs' version '2.0.0'
+    id 'info.solidsoft.pitest' version '1.4.5'
 }
 
 gitProperties {
@@ -58,7 +60,7 @@ ext {
 	set('springCloudServicesVersion', '2.1.4.RELEASE')
 	set('springCloudVersion', 'Hoxton.M3')
     set('spring-cloud-services-connectors.version', '2.1.4.RELEASE')
-    set('spring-framework.version', '5.2.0.RC2')
+    set('spring-framework.version', '5.2.0.RELEASE')
 }
 
 dependencyManagement {
@@ -78,7 +80,7 @@ configurations {
 }
 
 jacoco {
-	toolVersion = "0.8.4"
+	toolVersion = "0.8.5"
 }
 
 jacocoTestReport {
@@ -100,6 +102,14 @@ test {
 	}
 }
 
+pitest {
+    testPlugin = "junit5"
+    jvmArgs = ['-Xmx1024m']
+    threads = 5
+    targetClasses = ['io.pivotal.cfapp.*']
+    outputFormats = ['XML', 'HTML']
+}
+
 dependencies {
 	annotationProcessor('org.projectlombok:lombok')
     implementation('org.projectlombok:lombok')
@@ -118,12 +128,14 @@ dependencies {
     implementation('io.projectreactor.netty:reactor-netty:0.9.0.RELEASE')
     implementation('io.micrometer:micrometer-registry-prometheus')
     testImplementation('io.projectreactor:reactor-test')
+    testImplementation('org.assertj:assertj-core:3.13.2')
     testImplementation('org.junit.jupiter:junit-jupiter-api')
     testImplementation('org.junit.jupiter:junit-jupiter-params')
     testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine')
     testImplementation('org.mockito:mockito-core')
     testImplementation('org.mockito:mockito-junit-jupiter')
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 		exclude group: 'junit', module: 'junit'
 	}
 }
@@ -193,4 +205,4 @@ javadoc {
     }
 }
 
-check.dependsOn jacocoTestReport
+check.dependsOn jacocoTestReport, javadoc
