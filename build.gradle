@@ -57,9 +57,9 @@ repositories {
 }
 
 ext {
-	set('springCloudServicesVersion', '2.1.4.RELEASE')
-	set('springCloudVersion', 'Hoxton.M3')
-    set('spring-cloud-services-connectors.version', '2.1.4.RELEASE')
+	set('springCloudServicesVersion', '3.0.1.RELEASE')
+	set('springCloudVersion', 'Hoxton.RELEASE')
+    set('spring-cloud-services-connectors.version', '3.0.1.RELEASE')
 }
 
 dependencyManagement {
