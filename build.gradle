@@ -123,7 +123,7 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-log4j2')
     implementation('com.lmax:disruptor:3.4.2')
     implementation('org.apache.httpcomponents:httpclient:4.5.10')
-    implementation('io.projectreactor:reactor-core:3.3.1.RELEASE')
+    implementation('io.projectreactor:reactor-core:3.3.2.RELEASE')
     implementation('io.projectreactor.netty:reactor-netty:0.9.2.RELEASE')
     implementation('io.micrometer:micrometer-registry-prometheus')
     testImplementation('io.projectreactor:reactor-test')
