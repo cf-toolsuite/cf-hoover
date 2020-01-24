@@ -58,7 +58,7 @@ repositories {
 
 ext {
 	set('springCloudServicesVersion', '3.0.1.RELEASE')
-	set('springCloudVersion', 'Hoxton.RELEASE')
+	set('springCloudVersion', 'Hoxton.SR1')
     set('spring-cloud-services-connectors.version', '3.0.1.RELEASE')
 }
 
