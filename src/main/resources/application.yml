@@ -17,6 +17,8 @@ management:
       enabled: true
 
 spring:
+  codec:
+    max-in-memory-size: 512000000
   cloud:
     config:
       enabled: false
