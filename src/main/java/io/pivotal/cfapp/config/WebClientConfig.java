@@ -17,26 +17,29 @@ import reactor.netty.tcp.TcpClient;
 
 @RefreshScope
 @Configuration
-public class HooverConfig {
+public class WebClientConfig {
 
     // @see https://stackoverflow.com/questions/45418523/spring-5-webclient-using-ssl/53147631#53147631
 
     @Bean
-    @ConditionalOnProperty(prefix="cf", name="sslValidationSkipped", havingValue="true")
-    public WebClient insecureWebClient() throws SSLException {
-        SslContext sslContext = SslContextBuilder
+    @ConditionalOnProperty(name = "cf.sslValidationSkipped", havingValue="true")
+    public WebClient insecureWebClient(WebClient.Builder builder) throws SSLException {
+        SslContext sslContext =
+            SslContextBuilder
                 .forClient()
                 .trustManager(InsecureTrustManagerFactory.INSTANCE)
                 .build();
         TcpClient tcpClient = TcpClient.create().secure(sslProviderBuilder -> sslProviderBuilder.sslContext(sslContext));
         HttpClient httpClient = HttpClient.from(tcpClient);
-        return WebClient.builder().clientConnector(new ReactorClientHttpConnector(httpClient)).build();
+        return builder
+                .clientConnector(new ReactorClientHttpConnector(httpClient))
+                .build();
     }
 
     @Bean
-    @ConditionalOnProperty(prefix="cf", name="sslValidationSkipped", havingValue="false", matchIfMissing=true)
-    public WebClient secureWebClient() throws SSLException {
-        return WebClient.builder().build();
+    @ConditionalOnProperty(name = "cf.sslValidationSkipped", havingValue="false", matchIfMissing=true)
+    public WebClient secureWebClient(WebClient.Builder builder) {
+          return builder
+                    .build();
     }
-
 }
