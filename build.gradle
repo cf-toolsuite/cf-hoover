@@ -8,7 +8,7 @@ plugins {
     id 'jacoco'
     id 'com.google.cloud.tools.jib' version '2.1.0'
     id 'maven-publish'
-    id 'com.github.spotbugs' version '4.0.0'
+    id 'com.github.spotbugs' version '4.0.2'
     id 'info.solidsoft.pitest' version '1.4.7'
 }
 
@@ -60,7 +60,7 @@ repositories {
 
 ext {
 	set('springCloudServicesVersion', '3.1.1.RELEASE')
-	set('springCloudVersion', 'Hoxton.SR1')
+	set('springCloudVersion', 'Hoxton.SR2')
     set('spring-cloud-services-connectors.version', '3.1.1.RELEASE')
 }
 
@@ -124,7 +124,7 @@ dependencies {
     implementation('io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry')
     implementation('org.springframework.boot:spring-boot-starter-log4j2')
     implementation('com.lmax:disruptor:3.4.2')
-    implementation('org.apache.httpcomponents:httpclient:4.5.11')
+    implementation('org.apache.httpcomponents:httpclient:4.5.12')
     implementation('io.projectreactor:reactor-core:3.3.3.RELEASE')
     implementation('io.projectreactor.netty:reactor-netty:0.9.5.RELEASE')
     implementation('io.micrometer:micrometer-registry-prometheus')
