@@ -6,9 +6,9 @@ plugins {
     id 'io.franzbecker.gradle-lombok' version '4.0.0'
 	id 'java'
     id 'jacoco'
-    id 'com.google.cloud.tools.jib' version '2.2.0'
+    id 'com.google.cloud.tools.jib' version '2.3.0'
     id 'maven-publish'
-    id 'com.github.spotbugs' version '4.2.0'
+    id 'com.github.spotbugs' version '4.2.4'
     id 'info.solidsoft.pitest' version '1.5.1'
 }
 
