@@ -1,12 +1,12 @@
 plugins {
-    id 'com.gorylenko.gradle-git-properties' version '2.2.3'
-    id 'org.springframework.boot' version '2.3.3.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'com.gorylenko.gradle-git-properties' version '2.2.4'
+    id 'org.springframework.boot' version '2.4.2'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'com.github.ben-manes.versions' version '0.36.0'
     id 'io.franzbecker.gradle-lombok' version '4.0.0'
 	id 'java'
     id 'jacoco'
-    id 'com.google.cloud.tools.jib' version '2.7.0'
+    id 'com.google.cloud.tools.jib' version '2.7.1'
     id 'maven-publish'
     id 'com.github.spotbugs' version '4.6.0'
     id 'info.solidsoft.pitest' version '1.5.2'
@@ -50,7 +50,7 @@ repositories {
 
 ext {
 	set('springCloudServicesVersion', '3.1.2.RELEASE')
-	set('springCloudVersion', "2020.0.0-M2")
+	set('springCloudVersion', "2020.0.0")
     set('spring-cloud-services-connectors.version', '3.1.2.RELEASE')
 }
 
@@ -76,7 +76,7 @@ java {
 }
 
 jacoco {
-	toolVersion = "0.8.5"
+	toolVersion = "0.8.6"
 }
 
 jacocoTestReport {
@@ -120,8 +120,8 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-log4j2')
     implementation('com.lmax:disruptor:3.4.2')
     implementation('org.apache.httpcomponents:httpclient:4.5.13')
-    implementation('io.projectreactor:reactor-core:3.3.9.RELEASE')
-    implementation('io.projectreactor.netty:reactor-netty:0.9.11.RELEASE')
+    implementation('io.projectreactor:reactor-core:3.4.2')
+    implementation('io.projectreactor.netty:reactor-netty:1.0.3')
     implementation('io.micrometer:micrometer-registry-prometheus')
     testImplementation('io.projectreactor:reactor-test')
     testImplementation('org.assertj:assertj-core:3.18.1')
