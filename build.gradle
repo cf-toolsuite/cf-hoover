@@ -18,7 +18,7 @@ gitProperties {
 }
 
 spotbugs {
-    toolVersion = '4.0.3'
+    toolVersion = '4.2.1'
     ignoreFailures = true
     effort = 'max'
     reportLevel = 'low'
@@ -49,9 +49,9 @@ repositories {
 }
 
 ext {
-	set('springCloudServicesVersion', '3.1.2.RELEASE')
-	set('springCloudVersion', "2020.0.0")
-    set('spring-cloud-services-connectors.version', '3.1.2.RELEASE')
+	set('springCloudServicesVersion', '3.2.0.RELEASE')
+	set('springCloudVersion', "2020.0.1")
+    set('spring-cloud-services-connectors.version', '3.2.0.RELEASE')
 }
 
 dependencyManagement {
