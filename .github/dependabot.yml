@@ -1,0 +1,40 @@
+version: 2
+updates:
+- package-ecosystem: gradle
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "13:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: com.gorylenko.gradle-git-properties
+    versions:
+    - 2.3.0
+  - dependency-name: org.springframework.boot
+    versions:
+    - 2.4.3
+    - 2.4.4
+  - dependency-name: io.projectreactor.netty:reactor-netty
+    versions:
+    - 1.0.4
+    - 1.0.5
+  - dependency-name: io.projectreactor:reactor-core
+    versions:
+    - 3.4.3
+    - 3.4.4
+  - dependency-name: com.github.spotbugs
+    versions:
+    - 4.6.2
+    - 4.7.0
+  - dependency-name: info.solidsoft.pitest
+    versions:
+    - 1.6.0
+  - dependency-name: com.github.ben-manes.versions
+    versions:
+    - 0.38.0
+  - dependency-name: com.google.cloud.tools.jib
+    versions:
+    - 2.8.0
+  - dependency-name: org.assertj:assertj-core
+    versions:
+    - 3.19.0
