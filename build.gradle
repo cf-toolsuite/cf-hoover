@@ -1,5 +1,5 @@
 plugins {
-    id 'com.gorylenko.gradle-git-properties' version '2.2.4'
+    id 'com.gorylenko.gradle-git-properties' version '2.3.1'
     id 'org.springframework.boot' version '2.4.5'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'com.github.ben-manes.versions' version '0.38.0'
@@ -18,7 +18,7 @@ gitProperties {
 }
 
 spotbugs {
-    toolVersion = '4.2.1'
+    toolVersion = '4.2.3'
     ignoreFailures = true
     effort = 'max'
     reportLevel = 'low'
@@ -121,7 +121,7 @@ dependencies {
     implementation('com.lmax:disruptor:3.4.4')
     implementation('org.apache.httpcomponents:httpclient:4.5.13')
     implementation('io.projectreactor:reactor-core:3.4.5')
-    implementation('io.projectreactor.netty:reactor-netty:1.0.3')
+    implementation('io.projectreactor.netty:reactor-netty:1.0.6')
     implementation('io.micrometer:micrometer-registry-prometheus')
     testImplementation('io.projectreactor:reactor-test')
     testImplementation('org.assertj:assertj-core:3.19.0')
