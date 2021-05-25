@@ -24,8 +24,3 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle
       - name: Build with Gradle
         run: ./gradlew build
-      # - name: Upload Artifacts
-      #   uses: actions/upload-artifact@v1
-      #   with:
-      #     name: Package
-      #     path: build/libs
