@@ -3,20 +3,9 @@ cf:
     #- pws: cf-butler-interesting-eagle.cfapps.io
   sslValidationSkipped: false
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: info,health,metrics,scheduledtasks,loggers,prometheus
-  endpoint:
-    health:
-      show-details: always
-    metrics:
-      enabled: true
-    prometheus:
-      enabled: true
-
 spring:
+  application:
+    name: cf-hoover
   codec:
     max-in-memory-size: 512000000
   cloud:
@@ -25,12 +14,36 @@ spring:
     discovery:
       enabled: false
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${vcap.services.hooverRegistry.credentials.uri:http://localhost:8761}/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,httptrace,loggers,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  info:
+    git:
+      mode: full
+
 ---
 spring:
-  profiles: cloud
+  config:
+    activate:
+      on-profile: cloud
 
   cloud:
     config:
       enabled: true
     discovery:
       enabled: true
+
+management:
+  cloudfoundry:
+    enabled: true
+    skip-ssl-validation: true
