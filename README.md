@@ -96,7 +96,7 @@ E.g., if you had a configuration file named `application-pws.yml`
 ./gradlew bootRun -Dspring.profiles.active=pws
 ```
 
-> See the [samples](samples) directory for some examples of configuration when deploying to [Pivotal Web Services](https://login.run.pivotal.io/login) or [PCF One](https://login.run.pcfone.io/login).
+> Consult the [samples](samples) directory for examples.
 
 
 ## How to Build
