@@ -1,4 +1,4 @@
-# Pivotal Application Service > Hoover
+# VMware Tanzu Application Service > Hoover
 
 [![Beta](https://img.shields.io/badge/Stability-Beta-orange)](https://img.shields.io/badge/Stability-Beta-orange) [![Build Status](https://travis-ci.org/pacphi/cf-hoover.svg?branch=master)](https://travis-ci.org/pacphi/cf-hoover) [![Known Vulnerabilities](https://snyk.io/test/github/pacphi/cf-hoover/badge.svg?style=plastic)](https://snyk.io/test/github/pacphi/cf-hoover) [![Release](https://jitpack.io/v/pacphi/cf-hoover.svg)](https://jitpack.io/#pacphi/cf-hoover/master-SNAPSHOT) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
@@ -17,7 +17,7 @@ You're already aware of and are using [cf-butler](https://github.com/pacphi/cf-b
       * [General configuration notes](#general-configuration-notes)
   * [How to Build](#how-to-build)
   * [How to Run with Gradle](#how-to-run-with-gradle)
-  * [How to deploy to Pivotal Application Service](#how-to-deploy-to-pivotal-application-service)
+  * [How to deploy to VMware Tanzu Application Service](#how-to-deploy-to-vmware-tanzu-application-service)
       * [Using scripts](#using-scripts)
   * [Endpoints](#endpoints)
       * [Snapshot](#snapshot)
@@ -27,12 +27,12 @@ You're already aware of and are using [cf-butler](https://github.com/pacphi/cf-b
 
 Required
 
-* [Pivotal Application Service](https://pivotal.io/platform/pivotal-application-service) account
-* [Pivotal Spring Cloud Services, Config Server](https://docs.pivotal.io/spring-cloud-services/3-0/common/config-server/configuring-with-git.html) 3.0.0 or better
+* [VMware Tanzu Application Service](https://tanzu.vmware.com/platform/vmware-tanzu-application-service) account
+* [Spring Cloud Services, Config Server](https://docs.pivotal.io/spring-cloud-services/3-0/common/config-server/configuring-with-git.html) 3.0.0 or better
 
 Optional
 
-* [Pivotal Spring Cloud Services, Service Registry](https://docs.pivotal.io/spring-cloud-services/2-0/common/service-registry/managing-service-instances.html) 2.0.0 or better
+* [Spring Cloud Services, Service Registry](https://docs.pivotal.io/spring-cloud-services/2-0/common/service-registry/managing-service-instances.html) 2.0.0 or better
 
 
 ## Tools
@@ -51,7 +51,7 @@ git clone https://github.com/pacphi/cf-hoover.git
 
 ## How to configure
 
-Make a copy of then edit the contents of the `application.yml` file located in `src/main/resources`.  A best practice is to append a suffix representating the target deployment environment (e.g., `application-pws.yml`, `application-pcfone.yml`). You will need to provide administrator credentials to Apps Manager for the foundation if you want the butler to keep your entire foundation tidy.
+Make a copy of then edit the contents of the `application.yml` file located in `src/main/resources`.  A best practice is to append a suffix representing the target deployment environment (e.g., `application-pws.yml`, `application-pcfone.yml`). You will need to provide administrator credentials to Apps Manager for the foundation if you want the butler to keep your entire foundation tidy.
 
 > You really should not bundle configuration with the application. To take some of the sting away, you might consider externalizing and/or [encrypting](https://blog.novatec-gmbh.de/encrypted-properties-spring/) this configuration.
 
@@ -125,7 +125,7 @@ Set an additional property before launching `cf-hoover`
 -Dspring.cloud.discovery.enabled=true
 ```
 
-## How to deploy to Pivotal Application Service
+## How to deploy to VMware Tanzu Application Service
 
 Please review the [manifest.yml](manifest.yml) before deploying.
 
@@ -147,7 +147,7 @@ Shutdown and destroy the app and service instances with
 ./destroy.sh
 ```
 
-> Note: If you are seeing [OutOfMemory exceptions](https://dzone.com/articles/troubleshooting-problems-with-native-off-heap-memo) shortly after startup you may need to [cf scale](https://docs.run.pivotal.io/devguide/deploy-apps/cf-scale.html#vertical) the available memory when working with multiple foundations.
+> Note: If you are seeing [OutOfMemory exceptions](https://dzone.com/articles/troubleshooting-problems-with-native-off-heap-memo) shortly after startup you may need to [cf scale](https://docs.pivotal.io/application-service/2-10/devguide/deploy-apps/cf-scale.html#verticall) the available memory when working with multiple foundations.
 
 Alternative scripts exist for deploying `cf-hoover` when working with `cf-hoover-ui`.  See [deploy.with-registry.sh](deploy.with-registry.sh) and [destroy.with-registry.sh](destroy.with-registry.sh).
 
