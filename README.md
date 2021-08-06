@@ -27,12 +27,12 @@ You're already aware of and are using [cf-butler](https://github.com/pacphi/cf-b
 
 Required
 
-* [VMware Tanzu Application Service](https://tanzu.vmware.com/platform/vmware-tanzu-application-service) account
-* [Spring Cloud Services, Config Server](https://docs.pivotal.io/spring-cloud-services/3-0/common/config-server/configuring-with-git.html) 3.0.0 or better
+* [VMware Tanzu Application Service](https://pivotal.io/platform/pivotal-application-service) 2.9 or better
+* [Spring Cloud Services, Config Server](https://docs.pivotal.io/spring-cloud-services/3-1/common/config-server/configuring-with-git.html) 3.1.x or better
 
 Optional
 
-* [Spring Cloud Services, Service Registry](https://docs.pivotal.io/spring-cloud-services/2-0/common/service-registry/managing-service-instances.html) 2.0.0 or better
+* [Spring Cloud Services, Service Registry](https://docs.pivotal.io/spring-cloud-services/3-1/common/service-registry/index.html) 3.1.x or better
 
 
 ## Tools
