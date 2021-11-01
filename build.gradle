@@ -5,7 +5,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'com.github.ben-manes.versions' version '0.39.0'
     id 'io.franzbecker.gradle-lombok' version '5.0.0'
-	id 'java'
+    id 'java'
     id 'jacoco'
     id 'com.google.cloud.tools.jib' version '3.1.4'
     id 'maven-publish'
@@ -43,20 +43,20 @@ group = 'io.pivotal'
 sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
-	maven { url 'https://repo.spring.io/release' }
+    maven { url 'https://repo.spring.io/release' }
     mavenCentral()
 }
 
 ext {
-	set('springCloudServicesVersion', '3.3.0')
-	set('springCloudVersion', '2020.0.4')
+    set('springCloudServicesVersion', '3.3.0')
+    set('springCloudVersion', '2020.0.4')
     set('spring-cloud-services-connectors.version', '3.3.0')
 }
 
 dependencyManagement {
 	imports {
-		mavenBom "io.pivotal.spring.cloud:spring-cloud-services-dependencies:${springCloudServicesVersion}"
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	    mavenBom "io.pivotal.spring.cloud:spring-cloud-services-dependencies:${springCloudServicesVersion}"
+	    mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
 	}
 }
 
@@ -82,14 +82,14 @@ configurations {
 }
 
 test {
-	useJUnitPlatform()
-	testLogging {
-		events "passed", "skipped", "failed"
+    useJUnitPlatform()
+    testLogging {
+	events "passed", "skipped", "failed"
         exceptionFormat "full"
         showCauses true
         showExceptions true
         showStackTraces true
-	}
+    }
 }
 
 java {
@@ -98,15 +98,15 @@ java {
 }
 
 jacoco {
-	toolVersion = "0.8.7"
+    toolVersion = "0.8.7"
 }
 
 jacocoTestReport {
-	reports {
-		xml.enabled = true
-		html.enabled = true
-		csv.enabled = false
-	}
+    reports {
+	xml.enabled = true
+	html.enabled = true
+	csv.enabled = false
+    }
 }
 
 
@@ -119,7 +119,7 @@ pitest {
 }
 
 dependencies {
-	annotationProcessor('org.projectlombok:lombok')
+    annotationProcessor('org.projectlombok:lombok')
     implementation('org.projectlombok:lombok')
     implementation('org.springframework.boot:spring-boot-configuration-processor')
     implementation('org.apache.commons:commons-lang3')
@@ -143,16 +143,15 @@ dependencies {
     testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine')
     testImplementation('org.mockito:mockito-core')
     testImplementation('org.mockito:mockito-junit-jupiter')
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-		exclude group: 'junit', module: 'junit'
-	}
+	exclude group: 'junit', module: 'junit'
+    }
 }
 
 publishing {
     publications {
         gpr(MavenPublication) {
-
             from components.java
             versionMapping {
                 usage('java-api') {
