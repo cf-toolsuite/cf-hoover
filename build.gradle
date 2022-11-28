@@ -10,7 +10,7 @@ plugins {
     id 'com.google.cloud.tools.jib' version '3.1.4'
     id 'maven-publish'
     id 'com.github.spotbugs' version '4.7.9'
-    id 'info.solidsoft.pitest' version '1.7.0'
+    id 'info.solidsoft.pitest' version '1.9.11'
 }
 
 gitProperties {
