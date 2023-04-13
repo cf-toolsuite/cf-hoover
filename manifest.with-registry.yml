@@ -10,4 +10,4 @@ applications:
     JAVA_OPTS: -XX:MaxDirectMemorySize=512m -Djava.security.egd=file:///dev/urandom
     SPRING_CLOUD_DISCOVERY_ENABLED: true
     SPRING_PROFILES_ACTIVE: secrets,cloud
-    JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ } }'
+    JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 17.+ } }'
