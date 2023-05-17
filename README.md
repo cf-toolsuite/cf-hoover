@@ -1,6 +1,6 @@
 # VMware Tanzu Application Service > Hoover
 
-[![Beta](https://img.shields.io/badge/Stability-Beta-orange)](https://img.shields.io/badge/Stability-Beta-orange) [![Build Status](https://travis-ci.org/pacphi/cf-hoover.svg?branch=master)](https://travis-ci.org/pacphi/cf-hoover) [![Known Vulnerabilities](https://snyk.io/test/github/pacphi/cf-hoover/badge.svg?style=plastic)](https://snyk.io/test/github/pacphi/cf-hoover) [![Release](https://jitpack.io/v/pacphi/cf-hoover.svg)](https://jitpack.io/#pacphi/cf-hoover/master-SNAPSHOT) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Beta](https://img.shields.io/badge/Release-GA-darkgreen)](https://img.shields.io/badge/Release-GA-darkgreen) ![Github Action CI Workflow Status](https://github.com/pacphi/cf-hoover/actions/workflows/ci.yml/badge.svg) [![Known Vulnerabilities](https://snyk.io/test/github/pacphi/cf-hoover/badge.svg?style=plastic)](https://snyk.io/test/github/pacphi/cf-hoover) [![Release](https://jitpack.io/v/pacphi/cf-hoover.svg)](https://jitpack.io/#pacphi/cf-hoover/master-SNAPSHOT) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 > Status: Beta
 
