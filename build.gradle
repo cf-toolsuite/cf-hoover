@@ -1,7 +1,6 @@
 plugins {
     id 'com.gorylenko.gradle-git-properties' version '2.4.1'
-    id 'org.springframework.boot' version '3.0.6'
-    // id 'org.springframework.experimental.aot' version '0.9.2'
+    id 'org.springframework.boot' version '3.0.7'
     id 'io.spring.dependency-management' version '1.1.0'
     id 'com.github.ben-manes.versions' version '0.46.0'
     id 'io.freefair.lombok' version '8.0.1'
@@ -60,13 +59,6 @@ dependencyManagement {
 	}
 }
 
-// bootBuildImage {
-//     builder = "paketobuildpacks/builder:tiny"
-//     environment = [
-//         "BP_NATIVE_IMAGE" : "true"
-//     ]
-// }
-
 bootRun {
     // support passing -Dsystem.property=value to bootRun task
     systemProperties = System.properties
@@ -114,7 +106,7 @@ dependencies {
     implementation('org.projectlombok:lombok')
     implementation('org.springframework.boot:spring-boot-configuration-processor')
     implementation('org.apache.commons:commons-lang3')
-    implementation('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+    implementation('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.1')
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation('org.springframework.boot:spring-boot-starter-webflux')
     implementation('org.springframework.boot:spring-boot-starter-security')
@@ -126,14 +118,14 @@ dependencies {
     implementation('org.apache.httpcomponents:httpclient:4.5.14')
     implementation('io.projectreactor:reactor-core:3.5.6')
     implementation('io.projectreactor.netty:reactor-netty:1.1.7')
-    implementation('io.micrometer:micrometer-registry-prometheus')
+    implementation('io.micrometer:micrometer-registry-prometheus:1.11.0')
     testImplementation('io.projectreactor:reactor-test')
     testImplementation('org.assertj:assertj-core:3.24.2')
     testImplementation('org.junit.jupiter:junit-jupiter-api')
     testImplementation('org.junit.jupiter:junit-jupiter-params')
     testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine')
-    testImplementation('org.mockito:mockito-core')
-    testImplementation('org.mockito:mockito-junit-jupiter')
+    testImplementation('org.mockito:mockito-core:5.3.1')
+    testImplementation('org.mockito:mockito-junit-jupiter:5.3.1')
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	exclude group: 'junit', module: 'junit'
