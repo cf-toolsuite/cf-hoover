@@ -1,6 +1,6 @@
 plugins {
     id 'com.gorylenko.gradle-git-properties' version '2.4.1'
-    id 'org.springframework.boot' version '3.0.7'
+    id 'org.springframework.boot' version '3.1.0'
     id 'io.spring.dependency-management' version '1.1.0'
     id 'com.github.ben-manes.versions' version '0.46.0'
     id 'io.freefair.lombok' version '8.0.1'
@@ -82,6 +82,7 @@ test {
         showExceptions true
         showStackTraces true
     }
+    finalizedBy jacocoTestReport
 }
 
 java {
@@ -90,7 +91,16 @@ java {
 }
 
 jacoco {
-    toolVersion = "0.8.8"
+    toolVersion = "0.8.10"
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
 }
 
 pitest {
@@ -190,4 +200,3 @@ javadoc {
 bootJar.enabled = true
 jar.enabled = false
 
-test.finalizedBy jacocoTestReport
