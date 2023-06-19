@@ -1,4 +1,4 @@
-package io.pivotal.cfapp.service;
+package io.pivotal.cfapp.client;
 
 import java.util.Map;
 import java.util.Set;
@@ -17,20 +17,20 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Service
-public class SpaceUsersService {
+public class SpaceUsersClient {
 
 	private final WebClient client;
 	private final HooverSettings settings;
-	private final SnapshotService snapshotService;
+	private final SnapshotClient snapshotClient;
 
     @Autowired
-    public SpaceUsersService(
+    public SpaceUsersClient(
         WebClient client,
 		HooverSettings settings,
-		SnapshotService snapshotService) {
+		SnapshotClient snapshotClient) {
         this.client = client;
 		this.settings = settings;
-		this.snapshotService = snapshotService;
+		this.snapshotClient = snapshotClient;
 	}
 
 	public Flux<SpaceUsers> findAll() {
@@ -58,7 +58,7 @@ public class SpaceUsersService {
     }
 
 	public Mono<Set<String>> obtainAccountNames() {
-		return snapshotService.assembleSnapshotDetail()
+		return snapshotClient.assembleSnapshotDetail()
 				.flatMapMany(
 					sd ->
 						Flux.concat(

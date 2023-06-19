@@ -1,4 +1,4 @@
-package io.pivotal.cfapp.service;
+package io.pivotal.cfapp.client;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,18 +17,18 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Service
-public class DemographicsService {
+public class DemographicsClient {
 
-    private final SnapshotService snapshotService;
+    private final SnapshotClient snapshotClient;
 	private final WebClient client;
     private final HooverSettings settings;
 
     @Autowired
-    public DemographicsService(
-        SnapshotService snapshotService,
+    public DemographicsClient(
+        SnapshotClient snapshotClient,
         WebClient client,
         HooverSettings settings) {
-        this.snapshotService = snapshotService;
+        this.snapshotClient = snapshotClient;
         this.client = client;
         this.settings = settings;
 	}
@@ -36,8 +36,8 @@ public class DemographicsService {
     // We're going to get raw counts from each cf-butler instance registered w/ cf-hoover
     // User and service accounts represent a special case, we collect and merge sets before counting
 	public Mono<Demographics> aggregateDemographics() {
-        Mono<Long> serviceAccounts = snapshotService.assembleServiceAccounts().flatMapMany(sa -> Flux.fromIterable(sa)).count();
-        Mono<Long> userAccounts = snapshotService.assembleUserAccounts().flatMapMany(sa -> Flux.fromIterable(sa)).count();
+        Mono<Long> serviceAccounts = snapshotClient.assembleServiceAccounts().flatMapMany(sa -> Flux.fromIterable(sa)).count();
+        Mono<Long> userAccounts = snapshotClient.assembleUserAccounts().flatMapMany(sa -> Flux.fromIterable(sa)).count();
         Flux<Map.Entry<String, String>> butlers = Flux.fromIterable(settings.getButlers().entrySet());
         return
 			butlers

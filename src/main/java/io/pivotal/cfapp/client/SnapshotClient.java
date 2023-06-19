@@ -1,4 +1,4 @@
-package io.pivotal.cfapp.service;
+package io.pivotal.cfapp.client;
 
 import java.util.List;
 import java.util.Map;
@@ -29,13 +29,13 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Service
-public class SnapshotService {
+public class SnapshotClient {
 
     private final WebClient client;
     private final HooverSettings settings;
 
     @Autowired
-    public SnapshotService(
+    public SnapshotClient(
         WebClient client,
         HooverSettings settings) {
         this.client = client;

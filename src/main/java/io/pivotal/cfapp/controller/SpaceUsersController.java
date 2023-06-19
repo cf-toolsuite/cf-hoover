@@ -11,24 +11,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.pivotal.cfapp.domain.SpaceUsers;
-import io.pivotal.cfapp.service.SpaceUsersService;
+import io.pivotal.cfapp.client.SpaceUsersClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
 public class SpaceUsersController {
 
-	private final SpaceUsersService service;
+	private final SpaceUsersClient client;
 
 	@Autowired
 	public SpaceUsersController(
-		SpaceUsersService service) {
-		this.service = service;
+		SpaceUsersClient client) {
+		this.client = client;
 	}
 
 	@GetMapping("/snapshot/spaces/users")
 	public Mono<ResponseEntity<List<SpaceUsers>>> getAllSpaceUsers() {
-		return service
+		return client
 					.findAll()
 						.collectList()
 							.map(users -> ResponseEntity.ok(users))
@@ -53,7 +53,7 @@ public class SpaceUsersController {
 
 	@GetMapping("/snapshot/users/count")
 	public Mono<ResponseEntity<Long>> totalAccounts() {
-		return service
+		return client
 				.totalAccounts()
 				.map(t -> ResponseEntity.ok(t))
 				.defaultIfEmpty(ResponseEntity.notFound().build());
@@ -62,7 +62,7 @@ public class SpaceUsersController {
 
 	@GetMapping("/snapshot/users")
 	public Mono<ResponseEntity<Set<String>>> getAllAccountNames() {
-		return service
+		return client
 				.obtainAccountNames()
 				.map(r -> ResponseEntity.ok(r))
 				.defaultIfEmpty(ResponseEntity.notFound().build());

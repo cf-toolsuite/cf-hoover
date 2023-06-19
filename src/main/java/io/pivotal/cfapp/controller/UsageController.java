@@ -8,22 +8,22 @@ import org.springframework.web.bind.annotation.RestController;
 import io.pivotal.cfapp.domain.accounting.application.AppUsageReport;
 import io.pivotal.cfapp.domain.accounting.service.ServiceUsageReport;
 import io.pivotal.cfapp.domain.accounting.task.TaskUsageReport;
-import io.pivotal.cfapp.service.UsageService;
+import io.pivotal.cfapp.client.UsageClient;
 import reactor.core.publisher.Mono;
 
 @RestController
 public class UsageController {
 
-    private final UsageService service;
+    private final UsageClient client;
 
     @Autowired
-    public UsageController(UsageService service) {
-        this.service = service;
+    public UsageController(UsageClient client) {
+        this.client = client;
     }
 
     @GetMapping(value = "/accounting/tasks")
     public Mono<ResponseEntity<TaskUsageReport>> getTaskReport() {
-        return service
+        return client
                 .getTaskReport()
                 .map(r -> ResponseEntity.ok(r))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
@@ -31,15 +31,15 @@ public class UsageController {
 
     @GetMapping(value = "/accounting/applications")
     public Mono<ResponseEntity<AppUsageReport>> getApplicationReport() {
-        return service
+        return client
                 .getApplicationReport()
                 .map(r -> ResponseEntity.ok(r))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
-    @GetMapping(value = "/accounting/services")
+    @GetMapping(value = "/accounting/clients")
     public Mono<ResponseEntity<ServiceUsageReport>> getServiceReport() {
-        return service
+        return client
                 .getServiceReport()
                 .map(r -> ResponseEntity.ok(r))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
