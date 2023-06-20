@@ -319,7 +319,7 @@ GET /snapshot/detail/ai
 Sample output
 
 ```
-organization,space,application id,application name,buildpack,buildpack version,image,stack,running instances,total instances,memory used (in gb),memory quota (in gb),disk used (in gb),disk quota (in gb),urls,last pushed,last event,last event actor,last event time,requested state
+foundation,organization,space,application id,application name,buildpack,buildpack version,image,stack,running instances,total instances,memory used (in gb),memory quota (in gb),disk used (in gb),disk quota (in gb),urls,last pushed,last event,last event actor,last event time,requested state
 "npike-foundation","arul","dev","ff1f2147-079c-4f58-bbe7-ad0fb905a2e8","pcfdemo",,,,"cflinuxfs3","0","1","0.0","0.0","pcfdemo.apps.sangabriel.cf-app.com",,"audit.app.update","bcbc230c-2ecc-4dc9-91de-6b49776ad403","2023-05-12T16:10:12","stopped"
 "npike-foundation","arul","dev","655aab3a-8b77-42ce-a87b-aa5848cc9d7d","rabbitmq-example-app",,,,"cflinuxfs3","0","2","0.0","0.0","rabbitmq-example-app.apps.sangabriel.cf-app.com","2023-05-12T16:10:14","audit.app.build.create","bcbc230c-2ecc-4dc9-91de-6b49776ad403","2023-05-12T16:10:27","stopped"
 "npike-foundation","arul","dev","b814712d-03e9-44b2-ac28-1946cbdbc82c","spring-music","java","v4.54",,"cflinuxfs3","1","1","0.21608664747327566","0.16757965087890625","spring-music-noisy-kookaburra-eg.apps.sangabriel.cf-app.com","2023-05-12T16:10:14","audit.app.restart","bcbc230c-2ecc-4dc9-91de-6b49776ad403","2023-05-12T16:11:28","started"
@@ -387,6 +387,25 @@ Sample output
     "total-user-accounts": 0
 }
 ```
+
+```
+GET /collect
+```
+> Returns time keeping records (i.e., the date/time of collection of snapshot data from each cf-butler instance registered with cf-hoover)
+
+Sample output
+
+```
+{
+    "time-keepers": [
+        {
+            "collectionDateTime": "2023-06-20T03:13:29",
+            "foundation": "npike-foundation"
+        }
+    ]
+}
+```
+
 
 ### Accounting
 

@@ -25,7 +25,7 @@ public class AppInit {
 						PathRequest.toStaticResources().atCommonLocations(),
 						EndpointRequest.toAnyEndpoint())
 						.permitAll()
-					.pathMatchers("/accounting/**","/snapshot/**", "/space-users", "/users/**")
+					.pathMatchers("/accounting/**","/snapshot/**", "/space-users", "/users/**", "/collect")
 						.permitAll()
 					.and().build();
 	}
