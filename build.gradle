@@ -47,9 +47,9 @@ repositories {
 }
 
 ext {
-    set('springCloudServicesVersion', '4.0.2')
+    set('springCloudServicesVersion', '4.0.3')
     set('springCloudVersion', '2022.0.2')
-    set('spring-cloud-services-connectors.version', '4.0.2')
+    set('spring-cloud-services-connectors.version', '4.0.3')
 }
 
 dependencyManagement {
