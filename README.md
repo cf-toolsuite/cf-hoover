@@ -158,6 +158,17 @@ These REST endpoints have been exposed for administrative purposes.
 ### Snapshot
 
 ```
+GET /snapshot/organizations
+```
+> Assembles list of organizations per foundation registered
+
+```
+GET /snapshot/spaces
+```
+> Assembles list of spaces per foundation registered
+
+
+```
 GET /snapshot/spaces/users
 ```
 > Provides details and light metrics for users by role within all organizations and spaces across all registered foundations
