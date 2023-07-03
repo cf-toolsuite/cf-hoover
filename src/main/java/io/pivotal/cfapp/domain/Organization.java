@@ -12,12 +12,15 @@ import lombok.ToString;
 @Builder
 @Getter
 @EqualsAndHashCode
-@JsonPropertyOrder({ "foundation", "name"})
+@JsonPropertyOrder({ "foundation", "id", "name"})
 @ToString
 public class Organization {
 
     @JsonProperty("foundation")
     private String foundation;
+
+    @JsonProperty("id")
+    private final String id;
 
     @JsonProperty("name")
     private final String name;
@@ -25,8 +28,10 @@ public class Organization {
     @JsonCreator
     public Organization(
             @JsonProperty("foundation") String foundation,
+            @JsonProperty("id") String id,
             @JsonProperty("name") String name) {
         this.foundation = foundation;
+        this.id = id;
         this.name = name;
     }
 
@@ -34,6 +39,7 @@ public class Organization {
         return Organization
 					.builder()
 						.foundation(organization.getFoundation())
+                        .id(organization.getId())
 						.name(organization.getName());
 	}
 
