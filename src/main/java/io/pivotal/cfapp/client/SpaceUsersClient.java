@@ -51,7 +51,7 @@ public class SpaceUsersClient {
                     .onErrorResume(
                         WebClientResponseException.class,
                         e -> {
-                            log.warn("Could not obtain SpaceUsers from {}", uri);
+                            log.warn(String.format("Could not obtain SpaceUsers from %s", uri), e.getMessage());
                             return Flux.just(SpaceUsers.builder().build());
                         }
                     );

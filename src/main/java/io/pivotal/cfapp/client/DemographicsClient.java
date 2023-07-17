@@ -62,7 +62,7 @@ public class DemographicsClient {
                     .onErrorResume(
                         WebClientResponseException.class,
                         e -> {
-                            log.warn("Could not obtain Demographic from {}", uri);
+                            log.warn(String.format("Could not obtain Demographic from %s", uri), e.getMessage());
                             return Mono.just(Demographic.builder().build());
                         }
                     )

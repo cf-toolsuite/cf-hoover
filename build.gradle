@@ -1,7 +1,7 @@
 plugins {
     id 'com.gorylenko.gradle-git-properties' version '2.4.1'
     id 'org.springframework.boot' version '3.1.1'
-    id 'io.spring.dependency-management' version '1.1.0'
+    id 'io.spring.dependency-management' version '1.1.2'
     id 'com.github.ben-manes.versions' version '0.47.0'
     id 'io.freefair.lombok' version '8.1.0'
     id 'java'
@@ -126,9 +126,9 @@ dependencies {
     implementation('com.lmax:disruptor:3.4.4')
     implementation('com.github.ben-manes.caffeine:caffeine:3.1.6')
     implementation('org.apache.httpcomponents:httpclient:4.5.14')
-    implementation('io.projectreactor:reactor-core:3.5.7')
-    implementation('io.projectreactor.netty:reactor-netty:1.1.8')
-    implementation('io.micrometer:micrometer-registry-prometheus:1.11.1')
+    implementation('io.projectreactor:reactor-core:3.5.8')
+    implementation('io.projectreactor.netty:reactor-netty:1.1.9')
+    implementation('io.micrometer:micrometer-registry-prometheus:1.11.2')
     testImplementation('io.projectreactor:reactor-test')
     testImplementation('org.assertj:assertj-core:3.24.2')
     testImplementation('org.junit.jupiter:junit-jupiter-api')

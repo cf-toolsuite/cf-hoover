@@ -52,7 +52,7 @@ public class TimeKeeperClient {
                     .onErrorResume(
                         WebClientResponseException.class,
                         e -> {
-                            log.warn("Could not obtain X-DateTime-Collected from {}", uri);
+                            log.warn(String.format("Could not obtain X-DateTime-Collected from %s", uri), e.getMessage());
                             return Mono.empty();
                         }
                     );

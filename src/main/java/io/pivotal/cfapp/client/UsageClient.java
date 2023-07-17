@@ -43,7 +43,7 @@ public class UsageClient {
                             .onErrorResume(
                                 WebClientResponseException.class,
                                 e -> {
-                                    log.warn("Could not obtain TaskUsageReport from {}", uri);
+                                    log.warn(String.format("Could not obtain TaskUsageReport from %s", uri), e.getMessage());
                                     return Mono.just(TaskUsageReport.builder().build());
                                 }
                             );
@@ -60,7 +60,7 @@ public class UsageClient {
                             .onErrorResume(
                                 WebClientResponseException.class,
                                 e -> {
-                                    log.warn("Could not obtain AppUsageReport from {}", uri);
+                                    log.warn(String.format("Could not obtain AppUsageReport from %s", uri), e.getMessage());
                                     return Mono.just(AppUsageReport.builder().build());
                                 }
                             );
@@ -77,7 +77,7 @@ public class UsageClient {
                             .onErrorResume(
                                 WebClientResponseException.class,
                                 e -> {
-                                    log.warn("Could not obtain ServiceUsageReport from {}", uri);
+                                    log.warn(String.format("Could not obtain ServiceUsageReport from %s", uri), e.getMessage());
                                     return Mono.just(ServiceUsageReport.builder().build());
                                 }
                             );
