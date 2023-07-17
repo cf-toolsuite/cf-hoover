@@ -50,7 +50,7 @@ public class OrganizationsClient {
                     .onErrorResume(
                         WebClientResponseException.class,
                         e -> {
-                            log.warn(String.format("Could not obtain organizations from %s", uri), e.getMessage());
+                            log.warn(String.format("Could not obtain organizations from %s", uri), e);
                             return Mono.empty();
                         }
                     );

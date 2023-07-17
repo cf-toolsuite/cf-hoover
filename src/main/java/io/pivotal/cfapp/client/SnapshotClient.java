@@ -92,7 +92,7 @@ public class SnapshotClient {
                     .onErrorResume(
                         WebClientResponseException.class,
                         e -> {
-                            log.warn(String.format("Could not obtain SnapshotDetail from %s", uri), e.getMessage());
+                            log.warn(String.format("Could not obtain SnapshotDetail from %s", uri), e);
                             return Mono.just(SnapshotDetail.builder().build());
                         }
                     );
@@ -109,7 +109,7 @@ public class SnapshotClient {
                     .onErrorResume(
                         WebClientResponseException.class,
                         e -> {
-                            log.warn(String.format("Could not obtain SnapshotSummary from %s", uri), e.getMessage());
+                            log.warn(String.format("Could not obtain SnapshotSummary from %s", uri), e);
                             return Mono.just(SnapshotSummary.builder().build());
                         }
                     );
