@@ -37,7 +37,7 @@ public class UsageController {
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
-    @GetMapping(value = "/accounting/clients")
+    @GetMapping(value = "/accounting/services")
     public Mono<ResponseEntity<ServiceUsageReport>> getServiceReport() {
         return client
                 .getServiceReport()
