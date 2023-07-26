@@ -1,5 +1,6 @@
 {
   "git": {
-    "uri": "https://github.com/pacphi/cf-hoover-config.git"
+    "uri": "https://github.com/pacphi/cf-hoover-config.git",
+    "label": "main"
   }
 }
