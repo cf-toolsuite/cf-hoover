@@ -128,7 +128,7 @@ dependencies {
     implementation('org.apache.httpcomponents:httpclient:4.5.14')
     implementation('io.projectreactor:reactor-core:3.5.9')
     implementation('io.projectreactor.netty:reactor-netty:1.1.10')
-    implementation('io.micrometer:micrometer-registry-prometheus:1.11.3')
+    implementation('io.micrometer:micrometer-registry-prometheus:1.11.4')
     testImplementation('io.projectreactor:reactor-test')
     testImplementation('org.assertj:assertj-core:3.24.2')
     testImplementation('org.junit.jupiter:junit-jupiter-api')
