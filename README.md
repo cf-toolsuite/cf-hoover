@@ -15,6 +15,7 @@ You're already aware of and are using [cf-butler](https://github.com/pacphi/cf-b
       * [General configuration notes](#general-configuration-notes)
   * [How to Build](#how-to-build)
   * [How to Run with Gradle](#how-to-run-with-gradle)
+  * [How to check code quality with Sonarqube](#how-to-check-code-quality-with-sonarqube)
   * [How to deploy to VMware Tanzu Application Service](#how-to-deploy-to-vmware-tanzu-application-service)
       * [Using scripts](#using-scripts)
   * [Endpoints](#endpoints)
@@ -115,13 +116,31 @@ where `{target_foundation_profile}` is something like `pws` or `pcfone`
 
 Alternatively, if you intend to setup [cf-hoover-ui](https://github.com/pacphi/cf-hoover-ui), for a local development environment deployment then, you must first:
 
-    * Launch a standalone instance of [Eureka server](https://cloud.spring.io/spring-cloud-netflix/multi/multi_spring-cloud-eureka-server.html)
+* Launch a standalone instance of [Eureka server](https://cloud.spring.io/spring-cloud-netflix/multi/multi_spring-cloud-eureka-server.html)
 
 Set an additional property before launching `cf-hoover`
 
 ```
 -Dspring.cloud.discovery.enabled=true
 ```
+
+
+## How to check code quality with Sonarqube
+
+Launch an instance of Sonarqube on your workstation with Docker
+
+```
+docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube
+```
+
+Then make sure to add goal and required arguments when building with Maven. For example:
+
+```
+gradle clean sonar -Dsonar.login=admin -Dsonar.password=admin
+```
+
+Then visit `http://localhost:9000` in your favorite browser to inspect results of scan.
+
 
 ## How to deploy to VMware Tanzu Application Service
 
