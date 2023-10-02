@@ -124,7 +124,7 @@ dependencies {
     implementation('io.pivotal.spring.cloud:spring-cloud-services-starter-config-client')
     implementation('io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry')
     implementation('org.springframework.boot:spring-boot-starter-log4j2')
-    implementation('com.lmax:disruptor:3.4.4')
+    implementation('com.lmax:disruptor:4.0.0')
     implementation('com.github.ben-manes.caffeine:caffeine:3.1.8')
     implementation('org.apache.httpcomponents:httpclient:4.5.14')
     implementation('io.projectreactor:reactor-core:3.5.10')
