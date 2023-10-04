@@ -16,6 +16,6 @@ jobs:
           website: oracle.com
           release: 21
       - name: Publish package
-        run: ./gradlew -Pversion=${{ github.event.release.tag_name }} publish
+        run: ./mvnw versions:set -DnewVersion=${{ github.event.release.tag_name }} && ./mvnw --batch-mode --update-snapshots clean deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
