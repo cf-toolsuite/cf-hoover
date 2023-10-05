@@ -14,7 +14,7 @@ You're already aware of and are using [cf-butler](https://github.com/pacphi/cf-b
       * [Minimum required keys](#minimum-required-keys)
       * [General configuration notes](#general-configuration-notes)
   * [How to Build](#how-to-build)
-  * [How to Run with Gradle](#how-to-run-with-gradle)
+  * [How to Run with Maven](#how-to-run-with-maven)
   * [How to check code quality with Sonarqube](#how-to-check-code-quality-with-sonarqube)
   * [How to deploy to VMware Tanzu Application Service](#how-to-deploy-to-vmware-tanzu-application-service)
       * [Using scripts](#using-scripts)
@@ -92,7 +92,7 @@ If you copied and appended a suffix to the original `application.yml` then you w
 E.g., if you had a configuration file named `application-pws.yml`
 
 ```
-./gradlew bootRun -Dspring.profiles.active=pws
+./mvnw spring-boot:run -Dspring.profiles.active=pws
 ```
 
 > Consult the [samples](samples) directory for examples.
@@ -101,14 +101,37 @@ E.g., if you had a configuration file named `application-pws.yml`
 ## How to Build
 
 ```
-./gradlew build
+./mvnw clean package
+```
+### Alternatives
+
+The below represent a collection of Maven profiles available in the Maven POM.
+
+* Log4J2 logging (log4j2)
+  * swaps out [Logback](http://logback.qos.ch/documentation.html) logging provider for [Log4J2](https://logging.apache.org/log4j/2.x/manual/async.html) and [Disruptor](https://lmax-exchange.github.io/disruptor/user-guide/index.html#_introduction)
+* Native image (native)
+  * uses [Spring AOT](https://docs.spring.io/spring-native/docs/current/reference/htmlsingle/#spring-aot-maven) to compile a native executable with [GraalVM](https://www.graalvm.org/docs/introduction/)
+
+
+```
+./mvnw clean package -Plog4j2
+```
+> Swap out default "lossy" logging provider
+
+
+```
+# Using Cloud Native Buildpacks image
+./mvnw spring-boot:build-image -Pnative
+
+# Using pre-installed Graal CE
+./mvnw native:compile -Pnative -DskipTests
 ```
 
 
-## How to Run with Gradle
+## How to Run with Maven
 
 ```
-./gradlew bootRun -Dspring.profiles.active={target_foundation_profile}
+./mvnw spring-boot:run -Dspring.profiles.active={target_foundation_profile}
 ```
 where `{target_foundation_profile}` is something like `pws` or `pcfone`
 
@@ -136,7 +159,7 @@ docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube
 Then make sure to add goal and required arguments when building with Maven. For example:
 
 ```
-gradle clean sonar -Dsonar.login=admin -Dsonar.password=admin
+mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=admin
 ```
 
 Then visit `http://localhost:9000` in your favorite browser to inspect results of scan.
