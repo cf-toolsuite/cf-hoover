@@ -1,6 +1,5 @@
 cf:
-  butlers:
-    #- pws: cf-butler-interesting-eagle.cfapps.io
+  butlers: []
   sslValidationSkipped: false
 
 spring:

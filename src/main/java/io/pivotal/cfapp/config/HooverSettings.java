@@ -1,6 +1,7 @@
 package io.pivotal.cfapp.config;
 
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -13,7 +14,7 @@ import lombok.Data;
 @ConfigurationProperties(prefix = "cf")
 public class HooverSettings {
 
-	private Map<String, String> butlers;
+	private Map<String, String> butlers = new HashMap<>();
 	private boolean sslValidationSkipped;
 	private Duration timeout = Duration.ofSeconds(5);
 
