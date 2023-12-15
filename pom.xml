@@ -52,7 +52,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.1.5</version>
+    <version>3.2.0</version>
     <relativePath/>
     <!-- lookup parent from repository -->
   </parent>
@@ -67,9 +67,8 @@
   <properties>
     <java.version>17</java.version>
     <commons-lang3.version>3.13.0</commons-lang3.version>
-    <jackson.version>2.15.2</jackson.version>
-    <mockito.version>5.5.0</mockito.version>
-    <netty.version>4.1.99.Final</netty.version>
+    <jackson.version>2.16.0</jackson.version>
+    <mockito.version>5.8.0</mockito.version>
     <snakeyaml.version>2.2</snakeyaml.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -184,14 +183,14 @@
       <dependency>
         <groupId>io.pivotal.spring.cloud</groupId>
         <artifactId>spring-cloud-services-dependencies</artifactId>
-        <version>4.0.3</version>
+        <version>4.1.0</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
-        <version>2022.0.4</version>
+        <version>2023.0.0</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
@@ -365,27 +364,25 @@
         <artifactId>native-maven-plugin</artifactId>
       </plugin>
       <plugin>
-        <groupId>pl.project13.maven</groupId>
-        <artifactId>git-commit-id-plugin</artifactId>
-        <version>4.9.10</version>
-        <configuration>
-          <failOnNoGitDirectory>false</failOnNoGitDirectory>
-        </configuration>
+        <groupId>io.github.git-commit-id</groupId>
+        <artifactId>git-commit-id-maven-plugin</artifactId>
+        <version>7.0.0</version>
         <executions>
           <execution>
             <id>get-the-git-infos</id>
             <goals>
               <goal>revision</goal>
             </goals>
-          </execution>
-          <execution>
-            <id>validate-the-git-infos</id>
-            <goals>
-              <goal>validateRevision</goal>
-            </goals>
-            <phase>package</phase>
+            <phase>initialize</phase>
           </execution>
         </executions>
+        <configuration>
+          <!-- this is false by default, forces the plugin to generate the git.properties file -->
+          <generateGitPropertiesFile>true</generateGitPropertiesFile>
+          <!-- The path for the properties file to be generated. See Super Pom for default variable reference https://maven.apache.org/guides/introduction/introduction-to-the-pom.html -->
+          <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+          <commitIdGenerationMode>full</commitIdGenerationMode>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -532,7 +529,7 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>3.1.5</version>
+        <version>3.2.0</version>
         <configuration>
           <image>
             <builder>paketobuildpacks/builder-jammy-tiny</builder>
@@ -633,7 +630,7 @@
         <dependency>
           <groupId>com.lmax</groupId>
           <artifactId>disruptor</artifactId>
-          <version>4.0.0</version>
+          <version>3.4.4</version>
           <scope>runtime</scope>
         </dependency>
       </dependencies>
