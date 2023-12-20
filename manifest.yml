@@ -2,8 +2,7 @@
 applications:
 - name: cf-hoover
   memory: 2G
-  random-route: true
-  stack: cflinuxfs3
+  stack: cflinuxfs4
   path: target/cf-hoover-1.0-SNAPSHOT.jar
   instances: 1
   env:
