@@ -16,6 +16,6 @@ public class HooverSettings {
 
 	private Map<String, String> butlers = new HashMap<>();
 	private boolean sslValidationSkipped;
-	private Duration timeout = Duration.ofSeconds(5);
+	private Duration timeout = Duration.ofMinutes(2);
 
 }
