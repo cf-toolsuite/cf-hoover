@@ -69,7 +69,7 @@
     <commons-lang3.version>3.14.0</commons-lang3.version>
     <jackson.version>2.16.1</jackson.version>
     <logback.version>1.4.14</logback.version>
-    <mockito.version>5.9.0</mockito.version>
+    <mockito.version>5.10.0</mockito.version>
     <snakeyaml.version>2.2</snakeyaml.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
