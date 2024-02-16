@@ -53,7 +53,7 @@ public class SpringApplicationClient {
                     .onErrorResume(
                         WebClientResponseException.class,
                         e -> {
-                            log.warn(String.format("Could not obtain JavaAppDetail from %s", uri), e);
+                            log.warn(String.format("Could not obtain Spring application details from %s", uri), e);
                             return Mono.just(JavaAppDetail.builder().build());
                         }
                     );
