@@ -1,8 +1,8 @@
 # VMware Tanzu Application Service > Hoover
 
-[![GA](https://img.shields.io/badge/Release-GA-darkgreen)](https://img.shields.io/badge/Release-GA-darkgreen) ![Github Action CI Workflow Status](https://github.com/pacphi/cf-hoover/actions/workflows/ci.yml/badge.svg) [![Known Vulnerabilities](https://snyk.io/test/github/pacphi/cf-hoover/badge.svg?style=plastic)](https://snyk.io/test/github/pacphi/cf-hoover) [![Release](https://jitpack.io/v/pacphi/cf-hoover.svg)](https://jitpack.io/#pacphi/cf-hoover/master-SNAPSHOT) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![GA](https://img.shields.io/badge/Release-GA-darkgreen)](https://img.shields.io/badge/Release-GA-darkgreen) ![Github Action CI Workflow Status](https://github.com/cf-toolsuite/cf-hoover/actions/workflows/ci.yml/badge.svg) [![Known Vulnerabilities](https://snyk.io/test/github/cf-toolsuite/cf-hoover/badge.svg?style=plastic)](https://snyk.io/test/github/cf-toolsuite/cf-hoover) [![Release](https://jitpack.io/v/cf-toolsuite/cf-hoover.svg)](https://jitpack.io/#cf-toolsuite/cf-hoover/master-SNAPSHOT) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-You're already aware of and are using [cf-butler](https://github.com/pacphi/cf-butler) to help report on and manage application and service instances.  Wouldn't it be nice to easily aggregate reporting across multiple foundations? This is `cf-hoover`'s raison d'être.
+You're already aware of and are using [cf-butler](https://github.com/cf-toolsuite/cf-butler) to help report on and manage application and service instances.  Wouldn't it be nice to easily aggregate reporting across multiple foundations? This is `cf-hoover`'s raison d'être.
 
 # Table of Contents
 
@@ -44,7 +44,7 @@ Optional
 ## Clone
 
 ```
-git clone https://github.com/pacphi/cf-hoover.git
+git clone https://github.com/cf-toolsuite/cf-hoover.git
 ```
 
 
@@ -58,9 +58,9 @@ Make a copy of then edit the contents of the `application.yml` file located in `
 
 Create a [Git](https://git-scm.com/docs/gittutorial) repository or work with a [Vault](https://www.baeldung.com/vault) instance as the home your configuration.  Cf-hoover has a dependency on the [Spring Cloud Config](https://cloud.spring.io/spring-cloud-static/spring-cloud-config/2.1.0.RELEASE/single/spring-cloud-config.html#_locating_remote_configuration_resources) client, but is disabled by default.
 
-The `cloud` [profile](https://spring.io/understanding/profiles) enables the client, so when you [cf push](https://docs.run.pivotal.io/devguide/deploy-apps/deploy-app.html#push) cf-hoover, [bind](https://cli.cloudfoundry.org/en-US/cf/bind-service.html) it to a [properly configured](https://docs.pivotal.io/spring-cloud-services/2-0/common/config-server/configuring-with-git.html#general-configuration) Config Server [service instance](https://docs.pivotal.io/spring-cloud-services/2-0/common/config-server/managing-service-instances.html), and start the app instance, it will consult the [Git](https://docs.pivotal.io/spring-cloud-services/2-0/common/config-server/configuration-properties.html#git-global-configuration) repo or [Vault](https://docs.pivotal.io/spring-cloud-services/2-0/common/config-server/configuration-properties.html#vault-global-configuration) instance for configuration to target and aggregate results from one or more previously deployed [cf-butler](https://github.com/pacphi/cf-butler) instances.
+The `cloud` [profile](https://spring.io/understanding/profiles) enables the client, so when you [cf push](https://docs.run.pivotal.io/devguide/deploy-apps/deploy-app.html#push) cf-hoover, [bind](https://cli.cloudfoundry.org/en-US/cf/bind-service.html) it to a [properly configured](https://docs.pivotal.io/spring-cloud-services/2-0/common/config-server/configuring-with-git.html#general-configuration) Config Server [service instance](https://docs.pivotal.io/spring-cloud-services/2-0/common/config-server/managing-service-instances.html), and start the app instance, it will consult the [Git](https://docs.pivotal.io/spring-cloud-services/2-0/common/config-server/configuration-properties.html#git-global-configuration) repo or [Vault](https://docs.pivotal.io/spring-cloud-services/2-0/common/config-server/configuration-properties.html#vault-global-configuration) instance for configuration to target and aggregate results from one or more previously deployed [cf-butler](https://github.com/cf-toolsuite/cf-butler) instances.
 
-A sample repository exists for your perusal [here](https://github.com/pacphi/cf-hoover-config).
+A sample repository exists for your perusal [here](https://github.com/cf-toolsuite/cf-hoover-config).
 
 ### Minimum required keys
 
@@ -137,7 +137,7 @@ where `{target_foundation_profile}` is something like `pws` or `pcfone`
 
 > You'll need to manually stop to the application with `Ctrl+C`
 
-Alternatively, if you intend to setup [cf-hoover-ui](https://github.com/pacphi/cf-hoover-ui), for a local development environment deployment then, you must first:
+Alternatively, if you intend to setup [cf-hoover-ui](https://github.com/cf-toolsuite/cf-hoover-ui), for a local development environment deployment then, you must first:
 
 * Launch a standalone instance of [Eureka server](https://cloud.spring.io/spring-cloud-netflix/multi/multi_spring-cloud-eureka-server.html)
 

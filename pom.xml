@@ -11,9 +11,9 @@
   <description>Easily aggregate accounting and snapshot usage reporting across multiple foundations.</description>
 
   <scm>
-    <connection>scm:git:git://github.com/pacphi/cf-hoover.git</connection>
-    <developerConnection>scm:git:ssh://github.com/pacphi/cf-hoover.git</developerConnection>
-    <url>https://github.com/pacphi/cf-hoover</url>
+    <connection>scm:git:git://github.com/cf-toolsuite/cf-hoover.git</connection>
+    <developerConnection>scm:git:ssh://github.com/cf-toolsuite/cf-hoover.git</developerConnection>
+    <url>https://github.com/cf-toolsuite/cf-hoover</url>
   </scm>
 
   <developers>
@@ -35,24 +35,24 @@
     <site>
       <id>github</id>
       <name>Deployment through Maven's SCM Publish Plugin</name>
-      <url>scm:git:git@github.com:pacphi/cf-hoover.git</url>
+      <url>scm:git:git@github.com:cf-toolsuite/cf-hoover.git</url>
     </site>
     <repository>
       <id>github</id>
       <name>GitHub Packages</name>
-      <url>https://maven.pkg.github.com/pacphi/cf-hoover</url>
+      <url>https://maven.pkg.github.com/cf-toolsuite/cf-hoover</url>
     </repository>
   </distributionManagement>
 
   <issueManagement>
-    <url>https://github.com/pacphi/cf-hoover/issues</url>
+    <url>https://github.com/cf-toolsuite/cf-hoover/issues</url>
     <system>GitHub Issues</system>
   </issueManagement>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.2.2</version>
+    <version>3.2.3</version>
     <relativePath/>
     <!-- lookup parent from repository -->
   </parent>
@@ -530,7 +530,7 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>3.2.2</version>
+        <version>3.2.3</version>
         <configuration>
           <image>
             <builder>paketobuildpacks/builder-jammy-tiny</builder>
