@@ -666,6 +666,17 @@
     </profile>
 
     <profile>
+      <id>expose-runtime-metadata</id>
+      <dependencies>
+        <dependency>
+          <groupId>io.pivotal.app.actuator</groupId>
+          <artifactId>spring-boot-starter-runtime-metadata</artifactId>
+          <version>0.1.0</version>
+        </dependency>
+      </dependencies>
+    </profile>
+
+    <profile>
       <id>wavefront</id>
       <dependencies>
         <dependency>
