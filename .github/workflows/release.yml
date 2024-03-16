@@ -16,6 +16,6 @@ jobs:
           distribution: liberica
           java-version: 21
       - name: Publish package
-        run: ./mvnw versions:set -DnewVersion=${{ github.event.release.tag_name }} && ./mvnw --batch-mode --update-snapshots clean deploy
+        run: ./mvnw versions:set -DnewVersion=${{ github.event.release.tag_name }} && ./mvnw --batch-mode --update-snapshots -Pexpose-runtime-metadata clean deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
