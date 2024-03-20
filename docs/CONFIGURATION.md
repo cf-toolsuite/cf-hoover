@@ -44,7 +44,7 @@ If you copied and appended a suffix to the original `application.yml` then you w
 E.g., if you had a configuration file named `application-pws.yml`
 
 ```
-./mvnw spring-boot:run -Dspring.profiles.active=pws
+./mvnw spring-boot:run -Dspring-boot.run.profiles=pws
 ```
 
 > Consult the [samples](../samples) directory for examples.
