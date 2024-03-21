@@ -41,7 +41,7 @@ public class DemographicsClient {
         Flux<Map.Entry<String, String>> butlers = Flux.fromIterable(settings.getButlers().entrySet());
         return
 			butlers
-				.flatMap(b -> obtainDemographics(b.getKey(), "https://" + b.getValue()))
+				.flatMap(b -> obtainDemographics(b.getKey(), b.getValue()))
 				.collect(Collectors.toSet())
                 .map(dl -> Demographics
                             .builder()

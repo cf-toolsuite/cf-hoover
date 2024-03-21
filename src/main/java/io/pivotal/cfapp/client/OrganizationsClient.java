@@ -32,7 +32,7 @@ public class OrganizationsClient {
     public Mono<List<Organization>> assembleOrganizations() {
         Flux<Map.Entry<String, String>> butlers = Flux.fromIterable(settings.getButlers().entrySet());
         Flux<Organization> organizations =
-            butlers.flatMap(b -> obtainOrganizations("https://" + b.getValue())
+            butlers.flatMap(b -> obtainOrganizations(b.getValue())
                                     .flatMapMany(lo -> Flux.fromIterable(lo))
                                     .map(o -> Organization.from(o).foundation(b.getKey()).build()));
         return organizations.collectList();

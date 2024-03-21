@@ -36,7 +36,7 @@ public class SpaceUsersClient {
 	public Flux<SpaceUsers> findAll() {
 		Flux<Map.Entry<String, String>> butlers = Flux.fromIterable(settings.getButlers().entrySet());
 		return
-			butlers.flatMap(b -> obtainSpaceUsers("https://" + b.getValue())
+			butlers.flatMap(b -> obtainSpaceUsers(b.getValue())
 									.map(su -> SpaceUsers.from(su).foundation(b.getKey()).build()));
 	}
 

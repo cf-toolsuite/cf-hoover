@@ -18,4 +18,15 @@ public class HooverSettings {
 	private boolean sslValidationSkipped;
 	private Duration timeout = Duration.ofMinutes(2);
 
+	public void setButlers(Map<String, String> butlers) {
+		butlers.replaceAll((k, v) -> butlerURL(v));
+		this.butlers = butlers;
+	}
+
+	private String butlerURL(String url) {
+		if (!url.startsWith("http")) {
+			url = "https://" + url;
+		}
+		return url;
+	}
 }

@@ -32,7 +32,7 @@ public class SpacesClient {
     public Mono<List<Space>> assembleSpaces() {
         Flux<Map.Entry<String, String>> butlers = Flux.fromIterable(settings.getButlers().entrySet());
         Flux<Space> spaces =
-            butlers.flatMap(b -> obtainSpaces("https://" + b.getValue())
+            butlers.flatMap(b -> obtainSpaces(b.getValue())
                                     .flatMapMany(ls -> Flux.fromIterable(ls))
                                     .map(s -> Space.from(s).foundation(b.getKey()).build()));
         return spaces.collectList();

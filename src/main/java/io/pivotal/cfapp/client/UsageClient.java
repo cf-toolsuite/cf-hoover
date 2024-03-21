@@ -33,7 +33,7 @@ public class UsageClient {
     }
 
     protected Mono<TaskUsageReport> getTaskReport(String butlerRoute) {
-        String uri = "https://" + butlerRoute + "/accounting/tasks";
+        String uri = butlerRoute + "/accounting/tasks";
         return client
                 .get()
                     .uri(uri)
@@ -50,7 +50,7 @@ public class UsageClient {
     }
 
     protected Mono<AppUsageReport> getApplicationReport(String butlerRoute) {
-        String uri = "https://" + butlerRoute + "/accounting/applications";
+        String uri = butlerRoute + "/accounting/applications";
         return client
                 .get()
                     .uri(uri)
@@ -67,7 +67,7 @@ public class UsageClient {
     }
 
     protected Mono<ServiceUsageReport> getServiceReport(String butlerRoute) {
-        String uri = "https://" + butlerRoute + "/accounting/services";
+        String uri = butlerRoute + "/accounting/services";
         return client
                 .get()
                     .uri(uri)

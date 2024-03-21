@@ -37,7 +37,7 @@ public class SpringApplicationClient {
         Flux<Map.Entry<String, String>> butlers = Flux.fromIterable(settings.getButlers().entrySet());
         return
             butlers
-                .flatMap(b -> obtainSpringApplicationDetail("https://" + b.getValue())
+                .flatMap(b -> obtainSpringApplicationDetail(b.getValue())
                 .map(ad -> JavaAppDetail.from(ad).foundation(b.getKey()).build()))
                 .collectList();
     }
@@ -63,7 +63,7 @@ public class SpringApplicationClient {
         Flux<Map.Entry<String, String>> butlers = Flux.fromIterable(settings.getButlers().entrySet());
         return
             butlers
-                .flatMap(b -> obtainSpringApplicationDependencyFrequency("https://" + b.getValue()))
+                .flatMap(b -> obtainSpringApplicationDependencyFrequency(b.getValue()))
                 .flatMapIterable(Map::entrySet)
                 .collect(Collectors.toMap(
                     Map.Entry::getKey,
