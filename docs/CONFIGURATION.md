@@ -16,35 +16,29 @@ A sample repository exists for your perusal [here](https://github.com/cf-toolsui
 
 ### Minimum required keys
 
-At a minimum you should supply values for the following keys
+At a minimum you should supply values for the `cf.butlers` map of butler routes via one of the following methods
 
-* `cf.butlers` -  a map of cf-butler routes
+#### Properties
+```
+cf.butlers.pws=cf-butler-grateful-mouse.cfapps.io
+cf.butlers.pcfone=cf-butler-active-tasmaniandevil.apps.pcfone.io
+```
 
-    For example
-
-    properties
-    ```
-    cf.butlers.pws=cf-butler-grateful-mouse.cfapps.io
-    cf.butlers.pcfone=cf-butler-active-tasmaniandevil.apps.pcfone.io
-    ```
-
-    yaml
-    ```
-    cf:
-      butlers:
-        pws: cf-butler-grateful-mouse.cfapps.io
-        pcfone: cf-butler-active-tasmaniandevil.apps.pcfone.io
-    ```
-    > Each key is an alias for a foundation and each value is the route to an application instance of cf-butler deployed on that foundation
+#### application.yml
+```yaml
+cf:
+  butlers:
+    pws: cf-butler-grateful-mouse.cfapps.io
+    pcfone: cf-butler-active-tasmaniandevil.apps.pcfone.io
+```
+Each key is an alias for a foundation and each value is the route to an application instance of cf-butler deployed on that foundation. If you don't include a protocol, it'll default to `https`.
 
 ### General configuration notes
 
-If you copied and appended a suffix to the original `application.yml` then you would set `spring.profiles.active` to be that suffix
-
-E.g., if you had a configuration file named `application-pws.yml`
+If you copied and appended a suffix to the original `application.yml` then you would set `spring-boot.run.profiles` to be that suffix. For example if you had a configuration file named `application-pws.yml`:
 
 ```
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=pws
 ```
 
-> Consult the [samples](../samples) directory for examples.
+Consult the [samples](../samples) directory for additional examples.
