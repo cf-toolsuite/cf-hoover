@@ -57,7 +57,7 @@ public class SnapshotClient {
     public Mono<List<AppDetail>> assembleApplicationDetail() {
         Flux<Map.Entry<String, String>> butlers = Flux.fromIterable(settings.getButlers().entrySet());
         Flux<AppDetail> detail =
-            butlers.flatMap(b -> obtainSnapshotDetail("https://" + b.getValue())
+            butlers.flatMap(b -> obtainSnapshotDetail(b.getValue())
                                     .flatMapMany(sd -> Flux.fromIterable(sd.getApplications()))
                                     .map(ad -> AppDetail.from(ad).foundation(b.getKey()).build()));
         return detail.collectList();
@@ -66,7 +66,7 @@ public class SnapshotClient {
     public Mono<List<ServiceInstanceDetail>> assembleServiceInstanceDetail() {
         Flux<Map.Entry<String, String>> butlers = Flux.fromIterable(settings.getButlers().entrySet());
         Flux<ServiceInstanceDetail> detail =
-            butlers.flatMap(b -> obtainSnapshotDetail("https://" + b.getValue())
+            butlers.flatMap(b -> obtainSnapshotDetail(b.getValue())
                                     .flatMapMany(sd -> Flux.fromIterable(sd.getServiceInstances()))
                                     .map(ad -> ServiceInstanceDetail.from(ad).foundation(b.getKey()).build()));
         return detail.collectList();
@@ -75,7 +75,7 @@ public class SnapshotClient {
     public Mono<List<AppRelationship>> assembleApplicationRelationships() {
         Flux<Map.Entry<String, String>> butlers = Flux.fromIterable(settings.getButlers().entrySet());
         Flux<AppRelationship> relations =
-            butlers.flatMap(b -> obtainSnapshotDetail("https://" + b.getValue())
+            butlers.flatMap(b -> obtainSnapshotDetail(b.getValue())
                                     .flatMapMany(sd -> Flux.fromIterable(sd.getApplicationRelationships()))
                                     .map(ad -> AppRelationship.from(ad).foundation(b.getKey()).build()));
         return relations.collectList();
@@ -137,7 +137,7 @@ public class SnapshotClient {
     public Mono<Set<String>> assembleUserAccounts() {
         Flux<Map.Entry<String, String>> butlers = Flux.fromIterable(settings.getButlers().entrySet());
         Flux<String> accounts =
-            butlers.flatMap(b -> obtainSnapshotDetail("https://" + b.getValue())
+            butlers.flatMap(b -> obtainSnapshotDetail(b.getValue())
                                     .flatMapMany(sd -> Flux.fromIterable(sd.getUserAccounts())));
         return accounts.collect(Collectors.toCollection(TreeSet::new));
     }
@@ -145,7 +145,7 @@ public class SnapshotClient {
     public Mono<Set<String>> assembleServiceAccounts() {
         Flux<Map.Entry<String, String>> butlers = Flux.fromIterable(settings.getButlers().entrySet());
         Flux<String> accounts =
-            butlers.flatMap(b -> obtainSnapshotDetail("https://" + b.getValue())
+            butlers.flatMap(b -> obtainSnapshotDetail(b.getValue())
                                     .flatMapMany(sd -> Flux.fromIterable(sd.getServiceAccounts())));
         return accounts.collect(Collectors.toCollection(TreeSet::new));
     }
@@ -153,7 +153,7 @@ public class SnapshotClient {
     protected Mono<ApplicationCounts> assembleApplicationCounts() {
         Flux<Map.Entry<String, String>> butlers = Flux.fromIterable(settings.getButlers().entrySet());
         return butlers
-                .flatMap(b -> obtainSnapshotSummary("https://" + b.getValue()))
+                .flatMap(b -> obtainSnapshotSummary(b.getValue()))
                                 .map(sd -> sd.getApplicationCounts())
                                 .collectList()
                                 .map(acl -> ApplicationCounts.aggregate(acl));
@@ -162,7 +162,7 @@ public class SnapshotClient {
     protected Mono<ServiceInstanceCounts> assembleServiceInstanceCounts() {
         Flux<Map.Entry<String, String>> butlers = Flux.fromIterable(settings.getButlers().entrySet());
         return butlers
-                .flatMap(b -> obtainSnapshotSummary("https://" + b.getValue()))
+                .flatMap(b -> obtainSnapshotSummary(b.getValue()))
                                 .map(sd -> sd.getServiceInstanceCounts())
                                 .collectList()
                                 .map(acl -> ServiceInstanceCounts.aggregate(acl));

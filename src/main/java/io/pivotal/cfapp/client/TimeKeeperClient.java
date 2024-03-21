@@ -35,7 +35,7 @@ public class TimeKeeperClient {
     public Mono<Set<TimeKeeper>> assembleDateTimeCollection() {
         Flux<Map.Entry<String, String>> butlers = Flux.fromIterable(settings.getButlers().entrySet());
         Flux<TimeKeeper> result =
-            butlers.flatMap(b -> obtainDateTimeCollected("https://" + b.getValue())
+            butlers.flatMap(b -> obtainDateTimeCollected(b.getValue())
                                     .map(dtc -> TimeKeeper.builder().foundation(b.getKey()).collectionDateTime(dtc).build()));
         return result.collectList().map(l -> Set.copyOf(l));
     }
