@@ -30,8 +30,8 @@
 
         <Logger name="com.netflix.discovery" lever="debug" />
 
-        <!-- 
-        <Logger name="io.pivotal.cfapp" level="trace" />
+        <!--
+        <Logger name="org.cftoolsuite.cfapp" level="trace" />
         <Logger name="reactor.core" level="debug" />
         <Logger name="org.springframework" level="debug" />
         -->
