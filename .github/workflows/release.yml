@@ -6,8 +6,14 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
+      checks: write
+      actions: read
+      issues: read
       packages: write
+      pull-requests: read
+      repository-projects: read
+      statuses: read
     steps:
       - uses: actions/checkout@v4
       - name: Set up Java
@@ -15,7 +21,14 @@ jobs:
         with:
           distribution: liberica
           java-version: 21
-      - name: Publish package
-        run: ./mvnw versions:set -DnewVersion=${{ github.event.release.tag_name }} && ./mvnw --batch-mode --update-snapshots -Pexpose-runtime-metadata clean deploy
+      - name: Install GitHub CLI
+        run: |
+          sudo apt update && sudo apt install gh -y
+      - name: Publish package capable of targeting H2 in-memory backend
+        run: |
+          ./mvnw versions:set -DnewVersion=${{ github.event.release.tag_name }} && ./mvnw --batch-mode --update-snapshots -Pexpose-runtime-metadata clean deploy
+          SUFFIX="${{ github.event.release.tag_name }}"
+          echo "Uploading cf-hoover-$SUFFIX.jar to release ${{ github.event.release.tag_name }}"
+          gh release upload "${{ github.event.release.tag_name }}" "/home/runner/.m2/repository/org/cftoolsuite/cfapp/cf-hoover/$SUFFIX/cf-hoover-$SUFFIX.jar" --clobber
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
