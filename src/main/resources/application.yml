@@ -12,6 +12,9 @@ spring:
       enabled: false
     discovery:
       enabled: false
+  threads:
+    virtual:
+      enabled: true
 
 eureka:
   client:
@@ -37,7 +40,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,httptrace,loggers,metrics,prometheus
+        include: health,info,httptrace,loggers,metrics,prometheus,sbom
   endpoint:
     health:
       show-details: always
@@ -52,6 +55,9 @@ spring:
     config:
       enabled: true
     discovery:
+      enabled: true
+  threads:
+    virtual:
       enabled: true
 
 management:
