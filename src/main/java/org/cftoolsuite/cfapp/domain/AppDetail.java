@@ -51,18 +51,26 @@ public class AppDetail {
 	private String lastEvent;
 	private String lastEventActor;
 	private LocalDateTime lastEventTime;
+	private String buildpackReleaseType;
+    private LocalDateTime buildpackReleaseDate;
+    private String buildpackLatestVersion;
+    private String buildpackLatestUrl;
 	private String requestedState;
 
 	public String toCsv() {
-		return String.join(",", wrap(getFoundation()), wrap(getOrganization()), wrap(getSpace()), wrap(getAppId()), wrap(getAppName()),
-				wrap(getBuildpack()), wrap(getBuildpackVersion()), wrap(getImage()), wrap(getStack()), wrap(String.valueOf(getRunningInstances())),
-				wrap(String.valueOf(getTotalInstances())), wrap(Double.toString(toGigabytes(getMemoryUsed()))),
-				wrap(Double.toString(toGigabytes(getDiskUsed()))),
-				(wrap(String.join(",", getUrls() != null ? getUrls(): Collections.emptyList()))),
-				wrap(getLastPushed() != null ? getLastPushed().toString() : ""), wrap(getLastEvent()),
-				wrap(getLastEventActor()), wrap(getLastEventTime() != null ? getLastEventTime().toString() : ""),
-				wrap(getRequestedState()));
-	}
+        return String.join(",", wrap(getFoundation()), wrap(getOrganization()), wrap(getSpace()), wrap(getAppId()), wrap(getAppName()),
+                wrap(getBuildpack()), wrap(getBuildpackVersion()), wrap(getImage()), wrap(getStack()), wrap(String.valueOf(getRunningInstances())),
+                wrap(String.valueOf(getTotalInstances())), wrap(Double.toString(toGigabytes(getMemoryUsed()))), wrap(Double.toString(toGigabytes(getMemoryQuota()))),
+                wrap(Double.toString(toGigabytes(getDiskUsed()))), wrap(Double.toString(toGigabytes(getDiskQuota()))),
+                (wrap(String.join(",", getUrls() != null ? getUrls(): Collections.emptyList()))),
+                wrap(getLastPushed() != null ? getLastPushed().toString() : ""), wrap(getLastEvent()),
+                wrap(getLastEventActor()), wrap(getLastEventTime() != null ? getLastEventTime().toString() : ""),
+                wrap(getRequestedState()),
+                wrap(getBuildpackReleaseType()),
+                wrap(getBuildpackReleaseDate() != null ? getBuildpackReleaseDate().toString() : ""),
+                wrap(getBuildpackLatestVersion()),
+                wrap(getBuildpackLatestUrl()));
+    }
 
 	private static String wrap(String value) {
 		return value != null ? StringUtils.wrap(value, '"') : StringUtils.wrap("", '"');
@@ -75,7 +83,8 @@ public class AppDetail {
 	public static String headers() {
 		return String.join(",", "foundation", "organization", "space", "application id", "application name", "buildpack", "buildpack version", "image",
                 "stack", "running instances", "total instances", "memory used (in gb)", "memory quota (in gb)", "disk used (in gb)", "disk quota (in gb)", "urls", "last pushed", "last event",
-                "last event actor", "last event time", "requested state");
+                "last event actor", "last event time", "requested state",
+                "latest buildpack release type", "latest buildpack release date", "latest buildpack version", "latest buildpack Url" );
 	}
 
 	public static AppDetailBuilder from(AppDetail detail) {
@@ -101,6 +110,10 @@ public class AppDetail {
 						.lastEvent(detail.getLastEvent())
 						.lastEventActor(detail.getLastEventActor())
 						.lastEventTime(detail.getLastEventTime())
-						.requestedState(detail.getRequestedState());
+						.requestedState(detail.getRequestedState())
+						.buildpackReleaseType(detail.getBuildpackReleaseType())
+						.buildpackReleaseDate(detail.getBuildpackReleaseDate())
+						.buildpackLatestVersion(detail.getBuildpackLatestVersion())
+						.buildpackLatestUrl(detail.getBuildpackLatestUrl());
 	}
 }
