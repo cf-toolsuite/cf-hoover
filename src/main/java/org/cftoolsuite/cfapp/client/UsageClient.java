@@ -2,15 +2,14 @@ package org.cftoolsuite.cfapp.client;
 
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
-
 import org.cftoolsuite.cfapp.config.HooverSettings;
 import org.cftoolsuite.cfapp.domain.accounting.application.AppUsageReport;
 import org.cftoolsuite.cfapp.domain.accounting.service.ServiceUsageReport;
 import org.cftoolsuite.cfapp.domain.accounting.task.TaskUsageReport;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
+
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -24,7 +23,6 @@ public class UsageClient {
     private final WebClient client;
     private final HooverSettings settings;
 
-    @Autowired
     public UsageClient(
         WebClient client,
         HooverSettings settings) {
@@ -43,7 +41,7 @@ public class UsageClient {
                             .onErrorResume(
                                 WebClientResponseException.class,
                                 e -> {
-                                    log.warn(String.format("Could not obtain TaskUsageReport from %s", uri), e);
+                                    log.warn("Could not obtain TaskUsageReport from %s".formatted(uri), e);
                                     return Mono.just(TaskUsageReport.builder().build());
                                 }
                             );
@@ -60,7 +58,7 @@ public class UsageClient {
                             .onErrorResume(
                                 WebClientResponseException.class,
                                 e -> {
-                                    log.warn(String.format("Could not obtain AppUsageReport from %s", uri), e);
+                                    log.warn("Could not obtain AppUsageReport from %s".formatted(uri), e);
                                     return Mono.just(AppUsageReport.builder().build());
                                 }
                             );
@@ -77,7 +75,7 @@ public class UsageClient {
                             .onErrorResume(
                                 WebClientResponseException.class,
                                 e -> {
-                                    log.warn(String.format("Could not obtain ServiceUsageReport from %s", uri), e);
+                                    log.warn("Could not obtain ServiceUsageReport from %s".formatted(uri), e);
                                     return Mono.just(ServiceUsageReport.builder().build());
                                 }
                             );

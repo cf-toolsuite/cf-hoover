@@ -3,14 +3,13 @@ package org.cftoolsuite.cfapp.client;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.cftoolsuite.cfapp.config.HooverSettings;
+import org.cftoolsuite.cfapp.domain.Demographic;
+import org.cftoolsuite.cfapp.domain.Demographics;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
-import org.cftoolsuite.cfapp.config.HooverSettings;
-import org.cftoolsuite.cfapp.domain.Demographic;
-import org.cftoolsuite.cfapp.domain.Demographics;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -23,7 +22,6 @@ public class DemographicsClient {
 	private final WebClient client;
     private final HooverSettings settings;
 
-    @Autowired
     public DemographicsClient(
         SnapshotClient snapshotClient,
         WebClient client,
@@ -62,7 +60,7 @@ public class DemographicsClient {
                     .onErrorResume(
                         WebClientResponseException.class,
                         e -> {
-                            log.warn(String.format("Could not obtain Demographic from %s", uri), e);
+                            log.warn("Could not obtain Demographic from %s".formatted(uri), e);
                             return Mono.just(Demographic.builder().build());
                         }
                     )

@@ -6,11 +6,6 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
-
 import org.cftoolsuite.cfapp.config.HooverSettings;
 import org.cftoolsuite.cfapp.domain.AppDetail;
 import org.cftoolsuite.cfapp.domain.AppRelationship;
@@ -23,6 +18,10 @@ import org.cftoolsuite.cfapp.report.AppDetailCsvReport;
 import org.cftoolsuite.cfapp.report.ServiceInstanceDetailCsvReport;
 import org.cftoolsuite.cfapp.task.AppDetailRetrievedEvent;
 import org.cftoolsuite.cfapp.task.ServiceInstanceDetailRetrievedEvent;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
+
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -34,7 +33,6 @@ public class SnapshotClient {
     private final WebClient client;
     private final HooverSettings settings;
 
-    @Autowired
     public SnapshotClient(
         WebClient client,
         HooverSettings settings) {
@@ -92,7 +90,7 @@ public class SnapshotClient {
                     .onErrorResume(
                         WebClientResponseException.class,
                         e -> {
-                            log.warn(String.format("Could not obtain SnapshotDetail from %s", uri), e);
+                            log.warn("Could not obtain SnapshotDetail from %s".formatted(uri), e);
                             return Mono.just(SnapshotDetail.builder().build());
                         }
                     );
@@ -109,7 +107,7 @@ public class SnapshotClient {
                     .onErrorResume(
                         WebClientResponseException.class,
                         e -> {
-                            log.warn(String.format("Could not obtain SnapshotSummary from %s", uri), e);
+                            log.warn("Could not obtain SnapshotSummary from %s".formatted(uri), e);
                             return Mono.just(SnapshotSummary.builder().build());
                         }
                     );

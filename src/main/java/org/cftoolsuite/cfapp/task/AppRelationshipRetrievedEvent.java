@@ -1,13 +1,14 @@
 package org.cftoolsuite.cfapp.task;
 
+import java.io.Serial;
 import java.util.List;
 
-import org.springframework.context.ApplicationEvent;
-
 import org.cftoolsuite.cfapp.domain.AppRelationship;
+import org.springframework.context.ApplicationEvent;
 
 public class AppRelationshipRetrievedEvent extends ApplicationEvent {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private List<AppRelationship> relations;

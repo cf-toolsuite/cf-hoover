@@ -26,7 +26,7 @@ public class WebClientConfig {
     @ConditionalOnProperty(name = "cf.sslValidationSkipped", havingValue="true")
     public WebClient insecureWebClient(
         WebClient.Builder builder,
-        @Value("${spring.codec.max-in-memory-size}") Integer maxInMemorySize) throws SSLException {
+        @Value("${spring.http.codecs.max-in-memory-size}") Integer maxInMemorySize) throws SSLException {
         SslContext context =
             SslContextBuilder
                 .forClient()
@@ -57,7 +57,7 @@ public class WebClientConfig {
     @ConditionalOnProperty(name = "cf.sslValidationSkipped", havingValue="false", matchIfMissing=true)
     public WebClient secureWebClient(
         WebClient.Builder builder,
-        @Value("${spring.codec.max-in-memory-size}") Integer maxInMemorySize) {
+        @Value("${spring.http.codecs.max-in-memory-size}") Integer maxInMemorySize) {
         return
             builder
                 .exchangeStrategies(

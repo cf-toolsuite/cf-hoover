@@ -3,13 +3,12 @@ package org.cftoolsuite.cfapp.client;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.cftoolsuite.cfapp.config.HooverSettings;
+import org.cftoolsuite.cfapp.domain.Organization;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
-import org.cftoolsuite.cfapp.config.HooverSettings;
-import org.cftoolsuite.cfapp.domain.Organization;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -21,7 +20,6 @@ public class OrganizationsClient {
     private final WebClient client;
     private final HooverSettings settings;
 
-    @Autowired
     public OrganizationsClient(
         WebClient client,
         HooverSettings settings) {
@@ -50,7 +48,7 @@ public class OrganizationsClient {
                     .onErrorResume(
                         WebClientResponseException.class,
                         e -> {
-                            log.warn(String.format("Could not obtain organizations from %s", uri), e);
+                            log.warn("Could not obtain organizations from %s".formatted(uri), e);
                             return Mono.empty();
                         }
                     );

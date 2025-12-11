@@ -69,7 +69,7 @@ public class ServiceUsageMonthly {
 
     @JsonIgnore
     public String getYearAndMonth() {
-        return String.join("-", String.valueOf(year), String.format("%02d", month));
+        return String.join("-", String.valueOf(year), "%02d".formatted(month));
     }
 
 }

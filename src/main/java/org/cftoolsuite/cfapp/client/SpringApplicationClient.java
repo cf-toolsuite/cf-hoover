@@ -5,14 +5,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.cftoolsuite.cfapp.config.HooverSettings;
+import org.cftoolsuite.cfapp.domain.JavaAppDetail;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
-import org.cftoolsuite.cfapp.config.HooverSettings;
-import org.cftoolsuite.cfapp.domain.JavaAppDetail;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -24,7 +23,6 @@ public class SpringApplicationClient {
     private final WebClient client;
     private final HooverSettings settings;
 
-    @Autowired
     public SpringApplicationClient(
         WebClient client,
         HooverSettings settings) {
@@ -53,7 +51,7 @@ public class SpringApplicationClient {
                     .onErrorResume(
                         WebClientResponseException.class,
                         e -> {
-                            log.warn(String.format("Could not obtain Spring application details from %s", uri), e);
+                            log.warn("Could not obtain Spring application details from %s".formatted(uri), e);
                             return Mono.just(JavaAppDetail.builder().build());
                         }
                     );
@@ -83,7 +81,7 @@ public class SpringApplicationClient {
                     .onErrorResume(
                         WebClientResponseException.class,
                         e -> {
-                            log.warn(String.format("Could not obtain Spring dependency frequency from %s", uri), e);
+                            log.warn("Could not obtain Spring dependency frequency from %s".formatted(uri), e);
                             return Mono.just(Collections.emptyMap());
                         }
                     );

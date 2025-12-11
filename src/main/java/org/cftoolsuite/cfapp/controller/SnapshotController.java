@@ -1,15 +1,14 @@
 package org.cftoolsuite.cfapp.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.cftoolsuite.cfapp.client.SnapshotClient;
+import org.cftoolsuite.cfapp.domain.SnapshotDetail;
+import org.cftoolsuite.cfapp.domain.SnapshotSummary;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.cftoolsuite.cfapp.domain.SnapshotDetail;
-import org.cftoolsuite.cfapp.domain.SnapshotSummary;
-import org.cftoolsuite.cfapp.client.SnapshotClient;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -17,7 +16,6 @@ public class SnapshotController {
 
 	private final SnapshotClient client;
 
-	@Autowired
 	public SnapshotController(
 		SnapshotClient client) {
 		this.client = client;

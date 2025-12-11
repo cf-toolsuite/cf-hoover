@@ -3,15 +3,14 @@ package org.cftoolsuite.cfapp.controller;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.cftoolsuite.cfapp.client.SpaceUsersClient;
+import org.cftoolsuite.cfapp.domain.SpaceUsers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.cftoolsuite.cfapp.domain.SpaceUsers;
-import org.cftoolsuite.cfapp.client.SpaceUsersClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -20,7 +19,6 @@ public class SpaceUsersController {
 
 	private final SpaceUsersClient client;
 
-	@Autowired
 	public SpaceUsersController(
 		SpaceUsersClient client) {
 		this.client = client;

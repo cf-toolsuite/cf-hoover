@@ -5,14 +5,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.cftoolsuite.cfapp.config.HooverSettings;
+import org.cftoolsuite.cfapp.domain.TimeKeeper;
+import org.cftoolsuite.cfapp.domain.TimeKeepers;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
-import org.cftoolsuite.cfapp.config.HooverSettings;
-import org.cftoolsuite.cfapp.domain.TimeKeeper;
-import org.cftoolsuite.cfapp.domain.TimeKeepers;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -24,7 +23,6 @@ public class TimeKeeperClient {
     private final WebClient client;
     private final HooverSettings settings;
 
-    @Autowired
     public TimeKeeperClient(
         WebClient client,
         HooverSettings settings) {
@@ -52,7 +50,7 @@ public class TimeKeeperClient {
                     .onErrorResume(
                         WebClientResponseException.class,
                         e -> {
-                            log.warn(String.format("Could not obtain X-DateTime-Collected from %s", uri), e);
+                            log.warn("Could not obtain X-DateTime-Collected from %s".formatted(uri), e);
                             return Mono.empty();
                         }
                     );

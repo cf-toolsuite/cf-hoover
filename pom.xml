@@ -66,7 +66,7 @@
   </licenses>
 
   <properties>
-    <java.version>21</java.version>
+    <java.version>25</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -85,17 +85,17 @@
       <artifactId>commons-lang3</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <groupId>tools.jackson.dataformat</groupId>
       <artifactId>jackson-dataformat-cbor</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-jsr310</artifactId>
+      <groupId>tools.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.uuid</groupId>
       <artifactId>java-uuid-generator</artifactId>
-      <version>5.1.1</version>
+      <version>5.2.0</version>
     </dependency>
     <dependency>
       <groupId>io.pivotal.cfenv</groupId>
@@ -128,6 +128,10 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-webflux</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-webclient</artifactId>
     </dependency>
     <dependency>
       <groupId>io.pivotal.spring.cloud</groupId>
@@ -185,6 +189,13 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>tools.jackson</groupId>
+        <artifactId>jackson-bom</artifactId>
+        <version>3.0.2</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
       <dependency>
         <groupId>io.pivotal.spring.cloud</groupId>
         <artifactId>spring-cloud-services-dependencies</artifactId>
@@ -505,7 +516,7 @@
           <image>
             <builder>paketobuildpacks/builder-jammy-tiny</builder>
             <env>
-              <BP_JVM_VERSION>21.0.0</BP_JVM_VERSION>
+              <BP_JVM_VERSION>25.0.1</BP_JVM_VERSION>
               <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
             </env>
           </image>
@@ -593,6 +604,19 @@
           <info>Commit: ${git.commit.id.abbrev}, Version: ${project.version}, Active Profiles: ${spring.profiles.active:default}</info>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>com.diffplug.spotless</groupId>
+        <artifactId>spotless-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <java>
+            <removeUnusedImports/>
+            <importOrder>
+              <order>java,jakarta,javax,org,com</order>
+            </importOrder>
+          </java>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
@@ -641,21 +665,11 @@
         <dependency>
           <groupId>org.cftoolsuite.actuator</groupId>
           <artifactId>spring-boot-starter-runtime-metadata</artifactId>
-          <version>0.7.0</version>
+          <version>1.0.0</version>
         </dependency>
       </dependencies>
     </profile>
 
-    <profile>
-      <id>wavefront</id>
-      <dependencies>
-        <dependency>
-          <groupId>com.wavefront</groupId>
-          <artifactId>wavefront-spring-boot-starter</artifactId>
-          <version>3.2.0</version>
-        </dependency>
-      </dependencies>
-    </profile>
   </profiles>
 
   <reporting>

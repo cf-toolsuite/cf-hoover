@@ -5,8 +5,6 @@ cf:
 spring:
   application:
     name: cf-hoover
-  codec:
-    max-in-memory-size: 512000000
   cloud:
     config:
       enabled: false
@@ -15,6 +13,7 @@ spring:
   threads:
     virtual:
       enabled: true
+  http.codecs.max-in-memory-size: 512000000
 
 eureka:
   client:
@@ -40,27 +39,8 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,httptrace,loggers,metrics,prometheus,sbom
+        include: health,info,httpexchanges,loggers,metrics,prometheus,sbom
   endpoint:
     health:
       show-details: always
 
----
-spring:
-  config:
-    activate:
-      on-profile: cloud
-
-  cloud:
-    config:
-      enabled: true
-    discovery:
-      enabled: true
-  threads:
-    virtual:
-      enabled: true
-
-management:
-  cloudfoundry:
-    enabled: true
-    skip-ssl-validation: true

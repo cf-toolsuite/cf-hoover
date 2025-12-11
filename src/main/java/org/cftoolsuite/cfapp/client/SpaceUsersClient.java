@@ -4,13 +4,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.cftoolsuite.cfapp.config.HooverSettings;
+import org.cftoolsuite.cfapp.domain.SpaceUsers;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
-import org.cftoolsuite.cfapp.config.HooverSettings;
-import org.cftoolsuite.cfapp.domain.SpaceUsers;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -23,7 +22,6 @@ public class SpaceUsersClient {
 	private final HooverSettings settings;
 	private final SnapshotClient snapshotClient;
 
-    @Autowired
     public SpaceUsersClient(
         WebClient client,
 		HooverSettings settings,
@@ -51,7 +49,7 @@ public class SpaceUsersClient {
                     .onErrorResume(
                         WebClientResponseException.class,
                         e -> {
-                            log.warn(String.format("Could not obtain SpaceUsers from %s", uri), e);
+                            log.warn("Could not obtain SpaceUsers from %s".formatted(uri), e);
                             return Flux.just(SpaceUsers.builder().build());
                         }
                     );

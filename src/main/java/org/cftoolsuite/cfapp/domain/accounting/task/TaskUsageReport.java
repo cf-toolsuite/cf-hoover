@@ -76,4 +76,3 @@ public class TaskUsageReport {
         return report.build();
     }
 }
-

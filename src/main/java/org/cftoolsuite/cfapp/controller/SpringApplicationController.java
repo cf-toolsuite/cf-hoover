@@ -3,13 +3,12 @@ package org.cftoolsuite.cfapp.controller;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.cftoolsuite.cfapp.client.SpringApplicationClient;
+import org.cftoolsuite.cfapp.domain.JavaAppDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.cftoolsuite.cfapp.client.SpringApplicationClient;
-import org.cftoolsuite.cfapp.domain.JavaAppDetail;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -17,7 +16,6 @@ public class SpringApplicationController {
 
     private final SpringApplicationClient client;
 
-    @Autowired
     public SpringApplicationController(SpringApplicationClient client) {
         this.client = client;
     }

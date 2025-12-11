@@ -1,14 +1,13 @@
 package org.cftoolsuite.cfapp.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.cftoolsuite.cfapp.client.UsageClient;
+import org.cftoolsuite.cfapp.domain.accounting.application.AppUsageReport;
+import org.cftoolsuite.cfapp.domain.accounting.service.ServiceUsageReport;
+import org.cftoolsuite.cfapp.domain.accounting.task.TaskUsageReport;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.cftoolsuite.cfapp.domain.accounting.application.AppUsageReport;
-import org.cftoolsuite.cfapp.domain.accounting.service.ServiceUsageReport;
-import org.cftoolsuite.cfapp.domain.accounting.task.TaskUsageReport;
-import org.cftoolsuite.cfapp.client.UsageClient;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -16,7 +15,6 @@ public class UsageController {
 
     private final UsageClient client;
 
-    @Autowired
     public UsageController(UsageClient client) {
         this.client = client;
     }

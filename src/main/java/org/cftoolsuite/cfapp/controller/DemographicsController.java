@@ -1,12 +1,11 @@
 package org.cftoolsuite.cfapp.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.cftoolsuite.cfapp.client.DemographicsClient;
+import org.cftoolsuite.cfapp.domain.Demographics;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.cftoolsuite.cfapp.domain.Demographics;
-import org.cftoolsuite.cfapp.client.DemographicsClient;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -14,7 +13,6 @@ public class DemographicsController {
 
     private final DemographicsClient client;
 
-    @Autowired
     public DemographicsController(DemographicsClient client) {
         this.client = client;
     }
