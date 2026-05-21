@@ -8,7 +8,6 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
-import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import io.netty.handler.ssl.SslContext;
@@ -38,17 +37,7 @@ public class WebClientConfig {
                 .secure(t -> t.sslContext(context));
         return
             builder
-                .exchangeStrategies(
-                    ExchangeStrategies
-                        .builder()
-                        .codecs(
-                            configurer ->
-                                configurer
-                                    .defaultCodecs()
-                                    .maxInMemorySize(maxInMemorySize)
-                        )
-                        .build()
-                )
+                .codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(maxInMemorySize))
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
                 .build();
     }
@@ -60,17 +49,7 @@ public class WebClientConfig {
         @Value("${spring.http.codecs.max-in-memory-size}") Integer maxInMemorySize) {
         return
             builder
-                .exchangeStrategies(
-                    ExchangeStrategies
-                        .builder()
-                        .codecs(
-                            configurer ->
-                                configurer
-                                    .defaultCodecs()
-                                    .maxInMemorySize(maxInMemorySize)
-                        )
-                        .build()
-                )
+                .codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(maxInMemorySize))
                 .build();
     }
 }
