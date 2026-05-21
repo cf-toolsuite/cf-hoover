@@ -19,8 +19,9 @@ public class HooverSettings {
 	private Duration timeout = Duration.ofMinutes(2);
 
 	public void setButlers(Map<String, String> butlers) {
-		butlers.replaceAll((k, v) -> butlerURL(v));
-		this.butlers = butlers;
+		Map<String, String> copy = new HashMap<>(butlers);
+		copy.replaceAll((k, v) -> butlerURL(v));
+		this.butlers = copy;
 	}
 
 	private String butlerURL(String url) {

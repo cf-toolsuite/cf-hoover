@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+
+    <!--
+        EI_EXPOSE_REP2: Spring beans receive dependencies via constructor injection.
+        Storing an injected singleton in a field is the correct pattern — SpotBugs
+        incorrectly treats every injected collaborator as an "externally mutable object"
+        that requires a defensive copy.
+        Also covers domain/product value objects and report helpers where constructor
+        parameters are owned exclusively by the receiving object.
+    -->
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Or>
+            <Package name="~org\.cftoolsuite\.cfapp\.task.*"/>
+            <Package name="~org\.cftoolsuite\.cfapp\.config.*"/>
+            <Package name="~org\.cftoolsuite\.cfapp\.client.*"/>
+            <Package name="~org\.cftoolsuite\.cfapp\.controller.*"/>
+            <Package name="~org\.cftoolsuite\.cfapp\.report.*"/>
+            <Package name="~org\.cftoolsuite\.cfapp\.domain.*"/>
+        </Or>
+    </Match>
+
+    <!--
+        EI_EXPOSE_REP: Task event classes expose internal List references via getters.
+        These are in-process Spring ApplicationEvents that are never serialised or
+        shared across thread boundaries after publication — defensive copies would add
+        cost without safety benefit.
+    -->
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Package name="~org\.cftoolsuite\.cfapp\.task.*"/>
+    </Match>
+
+    <!--
+        SE_BAD_FIELD: Task event classes extend ApplicationEvent (which implements
+        Serializable) but hold List fields whose element types are not Serializable.
+        Spring ApplicationEvents are dispatched in-process only and are never actually
+        serialised, so this is a false positive for this usage pattern.
+    -->
+    <Match>
+        <Bug pattern="SE_BAD_FIELD"/>
+        <Package name="~org\.cftoolsuite\.cfapp\.task.*"/>
+    </Match>
+
+</FindBugsFilter>

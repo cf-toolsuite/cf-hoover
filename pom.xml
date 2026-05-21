@@ -53,7 +53,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>4.0.0</version>
+    <version>4.0.3</version>
     <relativePath/>
     <!-- lookup parent from repository -->
   </parent>
@@ -100,22 +100,22 @@
     <dependency>
       <groupId>io.pivotal.cfenv</groupId>
       <artifactId>java-cfenv</artifactId>
-      <version>3.5.0</version>
+      <version>4.0.0</version>
     </dependency>
     <dependency>
       <groupId>io.pivotal.cfenv</groupId>
       <artifactId>java-cfenv-boot</artifactId>
-      <version>3.5.0</version>
+      <version>4.0.0</version>
     </dependency>
     <dependency>
       <groupId>com.cedarsoftware</groupId>
       <artifactId>json-io</artifactId>
-      <version>4.70.0</version>
+      <version>4.102.0</version>
     </dependency>
     <dependency>
       <groupId>org.bouncycastle</groupId>
       <artifactId>bcprov-jdk18on</artifactId>
-      <version>1.83</version>
+      <version>1.84</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -144,7 +144,7 @@
     <dependency>
       <groupId>org.codehaus.jettison</groupId>
       <artifactId>jettison</artifactId>
-      <version>1.5.4</version>
+      <version>1.5.5</version>
     </dependency>
     <dependency>
       <groupId>io.micrometer</groupId>
@@ -192,7 +192,7 @@
       <dependency>
         <groupId>tools.jackson</groupId>
         <artifactId>jackson-bom</artifactId>
-        <version>3.0.3</version>
+        <version>3.1.0</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
@@ -206,7 +206,7 @@
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
-        <version>2025.1.0</version>
+        <version>2025.1.1</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
@@ -219,7 +219,7 @@
         <plugin>
           <groupId>org.sonarsource.scanner.maven</groupId>
           <artifactId>sonar-maven-plugin</artifactId>
-          <version>5.5.0.6356</version>
+          <version>5.6.0.6792</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -556,9 +556,10 @@
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>4.9.8.2</version>
+        <version>4.9.8.3</version>
         <configuration>
           <xmlOutput>true</xmlOutput>
+          <excludeFilterFile>src/main/resources/spotbugs-exclude.xml</excludeFilterFile>
         </configuration>
       </plugin>
       <plugin>
@@ -607,7 +608,7 @@
       <plugin>
         <groupId>com.diffplug.spotless</groupId>
         <artifactId>spotless-maven-plugin</artifactId>
-        <version>3.1.0</version>
+        <version>3.5.1</version>
         <configuration>
           <java>
             <removeUnusedImports/>
@@ -677,7 +678,7 @@
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>4.9.8.2</version>
+        <version>4.9.8.3</version>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
